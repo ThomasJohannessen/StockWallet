@@ -7,8 +7,9 @@ import android.util.Log;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
-import com.crazzyghost.alphavantage.parameters.Interval;
-import com.crazzyghost.alphavantage.parameters.OutputSize;
+
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,24 +17,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AlphaVan();
+        //AlphaVantageInit();
+        Thread thread = new Thread(() -> Yahoo());
+
+        thread.start();
+
     }
-public void AlphaVan() {
-    Config cfg = Config.builder()
-            .key("04C7U8DGXKH0OY8B")
-            .timeOut(10)
-            .build();
 
-    AlphaVantage.api().init(cfg);
-    AlphaVantage.api()
-            .timeSeries()
-            .intraday()
-            .forSymbol("AAPL")
-            .onSuccess(e->Log.d("Alpha123",e.toString()))
-            .onFailure(e->Log.d("Alpha123",e.toString()))
-            .fetch();
+    public void AlphaVantageInit() {
+        Config cfg = Config.builder()
+                .key("04C7U8DGXKH0OY8B")
+                .timeOut(10)
+                .build();
+
+        AlphaVantage.api().init(cfg);
+    }
+
+    public void Yahoo() {
 
 
-}
-
+        try {
+            Stock aksje = YahooFinance.get("NHyY.OL");
+            Log.d("Yahoo", aksje.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
