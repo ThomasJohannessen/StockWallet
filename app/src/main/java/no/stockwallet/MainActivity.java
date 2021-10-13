@@ -24,6 +24,15 @@ public void AlphaVan() {
             .timeOut(10)
             .build();
 
+    AlphaVantage.api().init(cfg);
+    AlphaVantage.api()
+            .timeSeries()
+            .intraday()
+            .forSymbol("AAPL")
+            .onSuccess(e->Log.d("Alpha123",e.toString()))
+            .onFailure(e->Log.d("Alpha123",e.toString()))
+            .fetch();
+
 
 }
 
