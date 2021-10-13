@@ -18,9 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //AlphaVantageInit();
-        Thread thread = new Thread(() -> Yahoo());
-
-        thread.start();
+        //Yahoo();
 
     }
 
@@ -34,13 +32,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Yahoo() {
-
-
-        try {
-            Stock aksje = YahooFinance.get("NHyY.OL");
-            Log.d("Yahoo", aksje.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Stock aksje = YahooFinance.get("NHY.OL");
+                    //Log.d("Yahoo", aksje.getName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
         }
-    }
 }
