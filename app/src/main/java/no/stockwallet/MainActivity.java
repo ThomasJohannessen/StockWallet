@@ -17,11 +17,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home_fragments_wrapper);
-        //AlphaVantageInit();
-        //Yahoo();
 
     }
 
+
+
+/*
     public void AlphaVantageInit() {
         Config cfg = Config.builder()
                 .key("04C7U8DGXKH0OY8B")
@@ -44,5 +45,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         thread.start();
-        }
+        }*/
 }
