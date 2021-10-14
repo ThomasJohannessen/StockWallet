@@ -15,7 +15,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-
+    // TODO Recycler view i søk - oppdatert dynamisk fra api
+    // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
 
     public void AlphaVantageInit() {
