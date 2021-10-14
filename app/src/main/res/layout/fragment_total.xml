@@ -8,7 +8,7 @@
     tools:context=".Fragments.HomeFragments.TotalValuesFragment">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/Total_Invested"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Totalt investert PH"
@@ -21,26 +21,7 @@
         app:layout_constraintVertical_bias="0.78" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="pros endret pr periode"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.62" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/Total_invested_title"
         android:layout_width="196dp"
         android:layout_height="38dp"
         android:text="Totalt investert:"
@@ -54,7 +35,19 @@
         app:layout_constraintVertical_bias="0.332" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/Prcent_change_earnings_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pros endret pr periode PH"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/Prcent_change_earnings_period_Title"
         android:layout_width="204dp"
         android:layout_height="35dp"
         android:text="Prosent avkas periode"
@@ -73,6 +66,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50121653" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
