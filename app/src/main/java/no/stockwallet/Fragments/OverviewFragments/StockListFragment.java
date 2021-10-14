@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,6 @@ public class StockListFragment extends Fragment {
 
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
         stockRecyclerView.setAdapter(new StockRecyclerAdapter());
-        stockRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
     }
 }
