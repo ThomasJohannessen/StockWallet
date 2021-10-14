@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.crazzyghost.alphavantage.*;
 import com.crazzyghost.alphavantage.exchangerate.ExchangeRateResponse;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         addDummyInvestments(investments);
         //getTotalInvestments();
-        Log.d("KALL:",currencyConverter(investments.get("LCID")));
 
+        Log.d("RESULTAT i kall",currencyConverter(investments.get("LCID")));
 
 
     }
@@ -93,33 +94,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String currencyConverter(Investment foreignCurrencyInvestment) {
-        StringBuilder sb = new StringBuilder();
-        String result = sb.toString();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        Thread thread = new Thread(() -> {
+            Log.d("Hello World", String.valueOf(foreignCurrencyInvestment.getPrice()));
+            AlphaVantage.api()
+                    .exchangeRate()
+                    .fromCurrency(foreignCurrencyInvestment.currency)
+                    .toCurrency("NOK")
+                    .onSuccess(e -> {
+                        Log.d("Hello World", e.toString());
+                        Log.d("Result", String.valueOf(foreignCurrencyInvestment.getPrice() * e.getExchangeRate()));
+                        new ValueSetterSupport().setValue((foreignCurrencyInvestment.getPrice() * e.getExchangeRate()), foreignCurrencyInvestment);
+                    })
+                    .onFailure(e -> {
+                        e.printStackTrace();
+                    })
+                    .fetch();
 
-                Log.d("RESULTAT-VAluta",foreignCurrencyInvestment.currency);
-
-                AlphaVantage.api()
-                        .exchangeRate()
-                        .fromCurrency(foreignCurrencyInvestment.currency)
-                        .toCurrency("NOK")
-                        .onSuccess(e -> sb.append(e.getExchangeRate()))
-                        .onFailure(e -> Log.d("RESULTAT-feil",e.getMessage()))
-                        .fetch();
-
-                Log.d("RESULTAT",result);
-
-            }
         });
         thread.start();
-
-        return result;
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("Hello World", String.valueOf(foreignCurrencyInvestment.getPrice()));
+        return "YO";
     }
-
-
 
     public double getTotalInvestments(){
         double totSumInvested = 0;

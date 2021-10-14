@@ -8,9 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import no.stockwallet.Investment;
+import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
+    ArrayList<Investment> data = new ArrayList<>(MainActivity.investments.values());
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
@@ -35,15 +41,15 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.stockEarning.setText("Earning" + String.valueOf(position));
-        holder.stockNameView.setText("StockName" + String.valueOf(position));
-        holder.stockValueView.setText("Value" + String.valueOf(position));
-        holder.stockPercentEarning.setText("Percent" + String.valueOf(position));
+        holder.stockEarning.setText("Earning " + String.valueOf((data.get(position).getPrice() * data.get(position).getVolum())));
+        holder.stockNameView.setText("StockName " + data.get(position).getTicker());
+        holder.stockValueView.setText("Value " + String.valueOf((data.get(position).getPrice() * data.get(position).getVolum())));
+        holder.stockPercentEarning.setText("Percent +2,5%");
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return data.size();
     }
 
 }
