@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582" />
+        app:layout_constraintVertical_bias="0.78" />
 
     <TextView
         android:id="@+id/textView4"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.578" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
@@ -48,10 +48,10 @@
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
+        app:layout_constraintVertical_bias="0.332" />
 
     <TextView
         android:id="@+id/textView6"
@@ -59,13 +59,13 @@
         android:layout_height="35dp"
         android:text="Prosent avkas periode"
         android:textAlignment="center"
-        android:textSize="18dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.418" />
+        app:layout_constraintVertical_bias="0.196" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
