@@ -1,12 +1,14 @@
 package no.stockwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 
 import com.crazzyghost.alphavantage.*;
 import com.google.android.material.navigation.NavigationView;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         addDummyInvestments(investments);
         setContentView(R.layout.activity_main);
-        AlphaVantageInit();
+        //AlphaVantageInit();
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
@@ -42,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.openDrawer(Gravity.LEFT);
+        });
 
 
-
-        Log.d("RESULTAT i kall",String.valueOf(getTotalInvestments()));
+       // Log.d("RESULTAT i kall",String.valueOf(getTotalInvestments()));
 
 
     }
