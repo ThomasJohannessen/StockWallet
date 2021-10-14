@@ -13,10 +13,34 @@
         <action
             android:id="@+id/action_homeFragmentsWrapper_to_overviewFragmentsWrapper"
             app:destination="@id/overviewFragmentsWrapper" />
+        <action
+            android:id="@+id/action_homeFragmentsWrapper_to_buySellFragmentsWrapper"
+            app:destination="@id/buySellFragmentsWrapper" />
+        <action
+            android:id="@+id/action_homeFragmentsWrapper_to_searchFragmentsWrapper"
+            app:destination="@id/searchFragmentsWrapper" />
+        <action
+            android:id="@+id/action_homeFragmentsWrapper_to_settingsFragmentsWrapper"
+            app:destination="@id/settingsFragmentsWrapper" />
     </fragment>
     <fragment
         android:id="@+id/overviewFragmentsWrapper"
         android:name="no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper"
         android:label="fragment_overview_fragments_wrapper"
         tools:layout="@layout/fragment_overview_fragments_wrapper" />
+    <fragment
+        android:id="@+id/buySellFragmentsWrapper"
+        android:name="no.stockwallet.Fragments.Wrappers.BuySellFragmentsWrapper"
+        android:label="fragment_buy_sell_fragments_wrapper"
+        tools:layout="@layout/fragment_buy_sell_fragments_wrapper" />
+    <fragment
+        android:id="@+id/searchFragmentsWrapper"
+        android:name="no.stockwallet.Fragments.Wrappers.SearchFragmentsWrapper"
+        android:label="fragment_search_fragments_wrapper"
+        tools:layout="@layout/fragment_search_fragments_wrapper" />
+    <fragment
+        android:id="@+id/settingsFragmentsWrapper"
+        android:name="no.stockwallet.Fragments.Wrappers.SettingsFragmentsWrapper"
+        android:label="fragment_settings_fragments_wrapper"
+        tools:layout="@layout/fragment_settings_fragments_wrapper" />
 </navigation>

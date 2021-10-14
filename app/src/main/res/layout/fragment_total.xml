@@ -24,7 +24,7 @@
         android:id="@+id/Total_invested_title"
         android:layout_width="196dp"
         android:layout_height="38dp"
-        android:text="Totalt investert:"
+        android:text="@string/home_total_title"
         android:textAlignment="center"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"

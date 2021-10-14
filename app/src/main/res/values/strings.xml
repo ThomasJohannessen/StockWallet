@@ -2,7 +2,9 @@
     <string name="app_name">StockWallet</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Aksje_pcentPH">aksje_prosent</string>
-    <string name="menu_overview">Overview</string>
-    <string name="menu_home">Home</string>
+    <string name="menu_overview">Oversikt</string>
+    <string name="menu_home">Hjem</string>
+    <string name="menu_search">Søk</string>
+    <string name="menu_buy_sell">Kjøp og Salg</string>
+    <string name="menu_settings">Innstillinger</string>
 </resources>

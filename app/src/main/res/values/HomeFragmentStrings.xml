@@ -3,4 +3,6 @@
     <string name="gain_title">Størst endring 24t</string>
     <string name="aksje_navn_ph">Askje navn PH</string>
     <string name="aksje_kost_ph">Aksje kost PH</string>
+    <string name="Aksje_pcentPH">aksje_prosent</string>
+    <string name="home_total_title">Totalt investert:</string>
 </resources>
