@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //getTotalInvestments();
 
-        Log.d("RESULTAT i kall",String.valueOf(currencyConverter(investments.get("LCID"))));
+
+        Log.d("RESULTAT i kall",String.valueOf(getTotalInvestments()));
 
 
     }
@@ -113,11 +113,10 @@ public class MainActivity extends AppCompatActivity {
         double totSumInvested = 0;
         for (Investment x: investments.values()){
             if (!x.currency.equals("NOK")){
-                //totSumInvested += currencyConverter(x) * x.volum;
-                currencyConverter(x);
+                totSumInvested += (currencyConverter(x) * x.volum);
             }
             else {
-                totSumInvested += x.price * x.volum;
+                totSumInvested += x.price * x.volum;            //TODO: må endres tilå hente nå pris fremfor kjøpt-pris
             }
         }
         return totSumInvested;
