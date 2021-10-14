@@ -3,37 +3,48 @@ package no.stockwallet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import yahoofinance.*;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.crazzyghost.alphavantage.AlphaVantage;
-import com.crazzyghost.alphavantage.Config;
+import com.crazzyghost.alphavantage.*;
+import com.crazzyghost.alphavantage.exchangerate.ExchangeRateResponse;
 import com.google.android.material.navigation.NavigationView;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
+
+    public void AlphaVantageInit() {
+        Config cfg = Config.builder()
+                .key("04C7U8DGXKH0OY8B")
+                .timeOut(5)
+                .build();
+
+        AlphaVantage.api().init(cfg);
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AlphaVantageInit();
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
-        HashMap<String, Investment> investments = new HashMap<String, Investment>();
+
 
         addDummyInvestments(investments);
+        //getTotalInvestments();
+        Log.d("KALL:",currencyConverter(investments.get("LCID")));
+
+
 
     }
 
@@ -62,18 +73,73 @@ public class MainActivity extends AppCompatActivity {
         list.put(invest10.ticker,invest10);
     }   //adds dummy investments for testing for now
 
+    public void checkIfAlreadyInvestedIn(String key){
+
+        if (investments.containsKey(key)){
+            investments.get(key);
+        }
+    }
+
+    public void ApiResponsMethode(ExchangeRateResponse response){
+        Log.d("NOK", String.valueOf(response.getExchangeRate()));
+        Log.d("NOK", String.valueOf(response.getBidPrice()));
+        Log.d("NOK", String.valueOf(response.getAskPrice()));
+        Log.d("NOK",response.getFromCurrencyCode());
+        Log.d("NOK",response.getFromCurrencyName());
+        Log.d("NOK",response.getToCurrencyCode());
+        Log.d("NOK",response.getToCurrencyName());
+        Log.d("NOK",response.getLastRefreshed());
+        Log.d("NOK",response.getTimeZone());
+    }
+
+    public String currencyConverter(Investment foreignCurrencyInvestment) {
+        StringBuilder sb = new StringBuilder();
+        String result = sb.toString();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Log.d("RESULTAT-VAluta",foreignCurrencyInvestment.currency);
+
+                AlphaVantage.api()
+                        .exchangeRate()
+                        .fromCurrency(foreignCurrencyInvestment.currency)
+                        .toCurrency("NOK")
+                        .onSuccess(e -> sb.append(e.getExchangeRate()))
+                        .onFailure(e -> Log.d("RESULTAT-feil",e.getMessage()))
+                        .fetch();
+
+                Log.d("RESULTAT",result);
+
+            }
+        });
+        thread.start();
+
+        return result;
+    }
+
+
+
+    public double getTotalInvestments(){
+        double totSumInvested = 0;
+        for (Investment x: investments.values()){
+            if (!x.currency.equals("NOK")){
+                //totSumInvested += currencyConverter(x);
+                currencyConverter(x);
+            }
+            else {
+                totSumInvested += x.price;
+            }
+        }
+        return totSumInvested;
+    }
+
+
 
 
 
 /*
-    public void AlphaVantageInit() {
-        Config cfg = Config.builder()
-                .key("04C7U8DGXKH0OY8B")
-                .timeOut(10)
-                .build();
-
-        AlphaVantage.api().init(cfg);
-    }
 
     public void Yahoo() {
         Thread thread = new Thread(new Runnable() {
