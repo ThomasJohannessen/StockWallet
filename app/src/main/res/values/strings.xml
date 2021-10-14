@@ -15,11 +15,11 @@
     <string name="stock_volume_label">Volum</string>
     <string name="stock_exchange_label">Kurs</string>
     <string name="input_stock_volume">F eks: "15"</string>
-    <string name="input_stock_exchange">1 : 4,2</string>
+    <string name="input_stock_exchange">1,42</string>
     <string name="stock_currency_label">Valuta</string>
     <string name="input_stock_currency">NOK</string>
     <string name="stock_fee_label">Kurtasje</string>
-    <string name="input_stock_fee">175 NOK</string>
+    <string name="input_stock_fee">175</string>
     <string name="stock_date_label">Dato</string>
     <string name="input_stock_date">25.05.2015</string>
     <string name="buy_sell_button">Registrer</string>

@@ -49,11 +49,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
+                android:autoText="false"
                 android:ems="10"
+                android:hint="@string/input_stock_name"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StockNameLabel" />
 
@@ -73,11 +73,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
                 android:ems="10"
+                android:hint="@string/input_stock_volume"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_volume"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StockVolumeLabel" />
 
@@ -97,11 +96,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
                 android:ems="10"
+                android:hint="@string/input_stock_exchange"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_exchange"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StockExchangeRateLabel" />
 
@@ -121,11 +119,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
                 android:ems="10"
+                android:hint="@string/input_stock_currency"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_currency"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StockCurrencyLabel" />
 
@@ -145,11 +142,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
                 android:ems="10"
+                android:hint="@string/input_stock_fee"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_fee"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StockFeeLabel" />
 
@@ -169,11 +165,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:alpha="0.4"
                 android:ems="10"
+                android:hint="@string/input_stock_date"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/input_stock_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stockDateLabel" />
 
