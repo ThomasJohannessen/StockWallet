@@ -7,10 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.HomeFragments.GainFragment">
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="@color/purple_500"
+        app:layout_constraintBottom_toTopOf="@+id/GainRow4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
     <TableRow
         android:id="@+id/GainRow2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="#070505"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -278,9 +289,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Aksje_pcentPH"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stockPriceR1"
+                app:layout_constraintEnd_toStartOf="@+id/stockNameR1"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stockNameR1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -289,9 +300,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/aksje_navn_ph"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stockPCR1"
+                app:layout_constraintEnd_toStartOf="@+id/stockPriceR1"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/stockPCR1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -302,7 +313,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/stockPCR1"
+                app:layout_constraintStart_toEndOf="@+id/stockNameR1"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -357,7 +368,7 @@
         android:fontFamily="sans-serif-black"
         android:includeFontPadding="false"
         android:text="@string/gain_title"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
