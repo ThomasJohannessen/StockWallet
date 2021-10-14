@@ -1,12 +1,18 @@
 package no.stockwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
 import yahoofinance.*;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
+import com.google.android.material.navigation.NavigationView;
 
 
 import java.io.IOException;
@@ -18,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        NavController navController = Navigation.findNavController(this, R.id.NavHost);
+        NavigationView navView = findViewById(R.id.NavigationViewMain);
+        NavigationUI.setupWithNavController(navView, navController);
     }
 
 
