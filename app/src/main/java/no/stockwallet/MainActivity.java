@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.crazzyghost.alphavantage.*;
-import com.crazzyghost.alphavantage.exchangerate.ExchangeRateResponse;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -29,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
         AlphaVantage.api().init(cfg);
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addDummyInvestments(investments);
         setContentView(R.layout.activity_main);
         AlphaVantageInit();
 
@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        addDummyInvestments(investments);
+
         //getTotalInvestments();
 
-        Log.d("RESULTAT i kall",currencyConverter(investments.get("LCID")));
+        Log.d("RESULTAT i kall",String.valueOf(currencyConverter(investments.get("LCID"))));
 
 
     }
@@ -81,56 +81,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ApiResponsMethode(ExchangeRateResponse response){
-        Log.d("NOK", String.valueOf(response.getExchangeRate()));
-        Log.d("NOK", String.valueOf(response.getBidPrice()));
-        Log.d("NOK", String.valueOf(response.getAskPrice()));
-        Log.d("NOK",response.getFromCurrencyCode());
-        Log.d("NOK",response.getFromCurrencyName());
-        Log.d("NOK",response.getToCurrencyCode());
-        Log.d("NOK",response.getToCurrencyName());
-        Log.d("NOK",response.getLastRefreshed());
-        Log.d("NOK",response.getTimeZone());
-    }
 
-    public String currencyConverter(Investment foreignCurrencyInvestment) {
+    public double currencyConverter(Investment foreignCurrencyInvestment) {
+        ValueSetterSupport valueSetterSupport = new ValueSetterSupport();
 
         Thread thread = new Thread(() -> {
-            Log.d("Hello World", String.valueOf(foreignCurrencyInvestment.getPrice()));
+
             AlphaVantage.api()
                     .exchangeRate()
                     .fromCurrency(foreignCurrencyInvestment.currency)
                     .toCurrency("NOK")
                     .onSuccess(e -> {
-                        Log.d("Hello World", e.toString());
-                        Log.d("Result", String.valueOf(foreignCurrencyInvestment.getPrice() * e.getExchangeRate()));
-                        new ValueSetterSupport().setValue((foreignCurrencyInvestment.getPrice() * e.getExchangeRate()), foreignCurrencyInvestment);
+                        valueSetterSupport.setReturnValue((foreignCurrencyInvestment.getPrice() * e.getExchangeRate()));
                     })
-                    .onFailure(e -> {
-                        e.printStackTrace();
-                    })
+                    .onFailure(Throwable::printStackTrace)
                     .fetch();
-
         });
+
         thread.start();
+
         try {
-            Thread.sleep(5000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Log.d("Hello World", String.valueOf(foreignCurrencyInvestment.getPrice()));
-        return "YO";
+        return valueSetterSupport.getReturnValue();
+
     }
 
     public double getTotalInvestments(){
         double totSumInvested = 0;
         for (Investment x: investments.values()){
             if (!x.currency.equals("NOK")){
-                //totSumInvested += currencyConverter(x);
+                //totSumInvested += currencyConverter(x) * x.volum;
                 currencyConverter(x);
             }
             else {
-                totSumInvested += x.price;
+                totSumInvested += x.price * x.volum;
             }
         }
         return totSumInvested;

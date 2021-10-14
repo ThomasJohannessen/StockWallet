@@ -1,7 +1,13 @@
 package no.stockwallet;
 
 public class ValueSetterSupport {
-    public void setValue(Double value, Investment obj) {
-        obj.setPrice(value);
+    double returnValue;
+
+    public void setReturnValue(Double value) {
+        this.returnValue = value;
+    }
+
+    public double getReturnValue() {
+        return returnValue;
     }
 }
