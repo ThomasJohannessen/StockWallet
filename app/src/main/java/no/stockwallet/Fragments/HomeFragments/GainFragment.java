@@ -2,65 +2,55 @@ package no.stockwallet.Fragments.HomeFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import no.stockwallet.Investment;
+import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GainFragment extends Fragment {
+    private TextView tempView, tempView2, tempView3, tempView4, tempView5, tempView6;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public GainFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GainFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GainFragment newInstance(String param1, String param2) {
-        GainFragment fragment = new GainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public GainFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gain, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ArrayList<Investment> data = new ArrayList<>(MainActivity.investments.values());
+
+
+        tempView = view.findViewById(R.id.stockNameR1);
+        tempView2 = view.findViewById(R.id.stockPCR1);
+        tempView3 = view.findViewById(R.id.stockPriceR1);
+
+        tempView4 = view.findViewById(R.id.stockNameR4);
+        tempView5 = view.findViewById(R.id.stockPCR4);
+        tempView6 = view.findViewById(R.id.stockPriceR4);
+
+        tempView.setText(data.get(0).getTicker());
+        tempView2.setText("+20%");
+        tempView3.setText(String.valueOf(data.get(0).getPrice()) + " " + data.get(0).getCurrency());
+
+        tempView4.setText(data.get(2).getTicker());
+        tempView5.setText("-25%");
+        tempView6.setText(String.valueOf(data.get(2).getPrice()) + " " + data.get(2).getCurrency());
     }
 }
