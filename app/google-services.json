@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052068400184",
+    "project_id": "stockwallet-2021",
+    "storage_bucket": "stockwallet-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052068400184:android:cd3fbd08a9515784646acd",
+        "android_client_info": {
+          "package_name": "no.stockwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052068400184-euneienjnbptvk4h1gl82mhqruvm4mqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAny7ZzpP4uLKWClWOavqfj5i-2iVVFWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052068400184-euneienjnbptvk4h1gl82mhqruvm4mqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
