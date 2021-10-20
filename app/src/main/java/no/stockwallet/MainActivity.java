@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import com.crazzyghost.alphavantage.*;
 import com.google.android.material.navigation.NavigationView;
@@ -53,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
        // Log.d("RESULTAT i kall",String.valueOf(getTotalInvestments()));
 
 
+    }
+
+    public void setToolbarTitle(String title){
+        TextView navTitle = (TextView) findViewById (R.id.NavBar_Title);
+        navTitle.setText(title);
     }
 
 

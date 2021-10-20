@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 
 /**
@@ -61,6 +62,7 @@ public class TotalValuesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //((MainActivity)getActivity()).setToolbarTitle("Søk");
         return inflater.inflate(R.layout.fragment_total, container, false);
     }
 }
