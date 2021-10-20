@@ -8,9 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 
 public class HomeFragmentsWrapper extends Fragment {
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)getActivity()).setToolbarTitle("Hjem");
+    }
+
     public HomeFragmentsWrapper() {
         // Required empty public constructor
     }
