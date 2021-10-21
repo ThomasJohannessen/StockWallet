@@ -32,4 +32,7 @@ public class StockViewModel extends ViewModel {
         stockMap.put(invest10.ticker,invest10);
     }
 
+    public HashMap<String, Investment> getStockMap() {
+        return stockMap;
+    }
 }

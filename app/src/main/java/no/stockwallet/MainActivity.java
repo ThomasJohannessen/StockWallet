@@ -35,24 +35,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addDummyInvestments(investments);
         setContentView(R.layout.activity_main);
-        //AlphaVantageInit();
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
-
-
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
         });
-
-
-       // Log.d("RESULTAT i kall",String.valueOf(getTotalInvestments()));
-
 
     }
 
@@ -60,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
         TextView navTitle = (TextView) findViewById (R.id.NavBar_Title);
         navTitle.setText(title);
     }
-
-
-    public void addDummyInvestments(HashMap<String, Investment> list){
-
-    }   //adds dummy investments for testing for now
 
     public void checkIfAlreadyInvestedIn(String key){
 

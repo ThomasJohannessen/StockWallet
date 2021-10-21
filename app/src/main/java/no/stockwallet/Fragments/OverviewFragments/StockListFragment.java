@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
 import no.stockwallet.R;
 
 
@@ -25,15 +27,21 @@ public class StockListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stock_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_stock_list, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        OverviewFragmentsWrapper parent = (OverviewFragmentsWrapper) getParentFragment();
+        parent.getData();
+
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
         stockRecyclerView.setAdapter(new StockRecyclerAdapter());
         stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
+
     }
+
 }
