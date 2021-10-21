@@ -22,6 +22,7 @@ import no.stockwallet.StockViewModel;
 import yahoofinance.Stock;
 
 public class OverviewFragmentsWrapper extends Fragment {
+    public StockViewModel viewModel;
 
     public OverviewFragmentsWrapper() {
         // Required empty public constructor
@@ -31,11 +32,16 @@ public class OverviewFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_overview_fragments_wrapper, container, false);
+    }
+
+    public HashMap<String, Investment> getData() {
+        return viewModel.getStockMap().getValue();
     }
 }

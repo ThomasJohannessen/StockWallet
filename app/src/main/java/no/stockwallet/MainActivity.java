@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-        Log.d("ViewModel", "ViewModel Main" + viewModel.hashCode() + " " + viewModel.toString());
+        viewModel.fillWithDummyData();
 
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);

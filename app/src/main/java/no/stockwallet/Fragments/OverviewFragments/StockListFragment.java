@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
+import no.stockwallet.Investment;
+import no.stockwallet.MainActivity;
 import no.stockwallet.R;
+import no.stockwallet.StockViewModel;
 
 
 public class StockListFragment extends Fragment {
-
+    private StockRecyclerAdapter adapter;
     public StockListFragment() {
         // Required empty public constructor
     }
@@ -33,12 +40,19 @@ public class StockListFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Observer<HashMap<String, Investment>> observer = stringInvestmentHashMap -> adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         OverviewFragmentsWrapper parent = (OverviewFragmentsWrapper) getParentFragment();
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
-        stockRecyclerView.setAdapter(null);
+        adapter = new StockRecyclerAdapter(parent.getData());
+        stockRecyclerView.setAdapter(adapter);
         stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
 
     }

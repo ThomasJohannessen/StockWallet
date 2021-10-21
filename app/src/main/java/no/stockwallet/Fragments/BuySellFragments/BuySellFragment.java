@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class BuySellFragment extends Fragment {
             String ticker = tickerName.getText().toString();
 
             EditText stockPrice = view.findViewById(R.id.InputStockPrice);
-            float price = Float.parseFloat(stockPrice.getText().toString());
+            float price = Math.round(Float.parseFloat(stockPrice.getText().toString()) * 100) / 100;
 
             EditText stockVolume = view.findViewById(R.id.InputStockVolume);
             int volume = Integer.parseInt(stockVolume.getText().toString());
@@ -60,7 +61,7 @@ public class BuySellFragment extends Fragment {
             String currency = stockCurrency.getText().toString();
 
             EditText stockFee = view.findViewById(R.id.InputStockFee);
-            float fee = Float.parseFloat(stockFee.getText().toString());
+            float fee = Math.round(Float.parseFloat(stockFee.getText().toString()) * 100) / 100;
 
             EditText stockDate = view.findViewById(R.id.InputStockDate);
             String date = stockDate.getText().toString();
