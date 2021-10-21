@@ -40,4 +40,8 @@ public class OverviewFragmentsWrapper extends Fragment {
         viewModel.fillWithDummyData();
         return viewModel.getStockMap();
     }
+
+    public StockViewModel getViewModel() {
+        return viewModel;
+    }
 }

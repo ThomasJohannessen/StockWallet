@@ -1,12 +1,13 @@
 package no.stockwallet;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.HashMap;
 
 public class StockViewModel extends ViewModel {
 
-    public HashMap<String, Investment> stockMap = new HashMap<>();
+    private MutableLiveData<HashMap<String, Investment>> stockMap;
 
     public void fillWithDummyData() {
         Investment invest1 = new Investment("NHY.OL",200,60,"NOK",1);
@@ -20,21 +21,28 @@ public class StockViewModel extends ViewModel {
         Investment invest9 = new Investment("MSFT",1000,200,"USD",3);
         Investment invest10 = new Investment("AKSO.OL",200,12,"NOK",50);
 
-        stockMap.put(invest1.ticker,invest1);
-        stockMap.put(invest2.ticker,invest2);
-        stockMap.put(invest3.ticker,invest3);
-        stockMap.put(invest4.ticker,invest4);
-        stockMap.put(invest5.ticker,invest5);
-        stockMap.put(invest6.ticker,invest6);
-        stockMap.put(invest7.ticker,invest7);
-        stockMap.put(invest8.ticker,invest8);
-        stockMap.put(invest9.ticker,invest9);
-        stockMap.put(invest10.ticker,invest10);
+        HashMap<String, Investment> temp = new HashMap<>();
+        temp.put(invest1.ticker,invest1);
+        temp.put(invest2.ticker,invest2);
+        temp.put(invest3.ticker,invest3);
+        temp.put(invest4.ticker,invest4);
+        temp.put(invest5.ticker,invest5);
+        temp.put(invest6.ticker,invest6);
+        temp.put(invest7.ticker,invest7);
+        temp.put(invest8.ticker,invest8);
+        temp.put(invest9.ticker,invest9);
+        temp.put(invest10.ticker,invest10);
+
+        stockMap.setValue(temp);
     }
 
     public void addInvestment(String ticker, int volume, float price, String currency, float brokerage) {
         Investment newInvestment = new Investment(ticker, volume, price, currency, brokerage);
-        stockMap.put(ticker, newInvestment);
+        HashMap<String, Investment> temp = stockMap.getValue();
+        if (temp != null) {
+            temp.put(ticker, newInvestment);
+        }
+        stockMap.setValue(temp);
     }
 
     public void editInvestment() {}
@@ -42,14 +50,20 @@ public class StockViewModel extends ViewModel {
     public void sellInvestment(String ticker, int volume) {} //TEMP
 
     public void removeInvestment(String ticker) {
-        stockMap.remove(ticker);
+        HashMap<String, Investment> temp = stockMap.getValue();
+        if (temp != null) {
+            temp.remove(ticker);
+        }
+        stockMap.setValue(temp);
     }
 
     public void updateUserPortfolio() {}
 
     public void fetchUserPortfolio() {}
 
-    public HashMap<String, Investment> getStockMap() {
+    public MutableLiveData<HashMap<String, Investment>> getStockMap() {
+        if(stockMap == null)
+            stockMap = new MutableLiveData<HashMap<String, Investment>>();
         return stockMap;
     }
 }

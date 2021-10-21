@@ -19,6 +19,7 @@ import no.stockwallet.R;
 
 
 public class StockListFragment extends Fragment {
+
     public StockListFragment() {
         // Required empty public constructor
     }

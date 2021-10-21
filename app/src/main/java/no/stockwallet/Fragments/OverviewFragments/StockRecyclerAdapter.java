@@ -15,12 +15,14 @@ import java.util.HashMap;
 import no.stockwallet.Investment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
+import no.stockwallet.StockViewModel;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;
 
     public StockRecyclerAdapter(HashMap<String, Investment> data) {
         this.data = new ArrayList<>(data.values());
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -35,6 +37,8 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
         }
     }
+
+
 
     @NonNull
     @Override

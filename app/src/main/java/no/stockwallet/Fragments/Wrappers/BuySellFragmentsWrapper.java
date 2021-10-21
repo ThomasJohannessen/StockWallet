@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.stockwallet.Fragments.OverviewFragments.StockListFragment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 import no.stockwallet.StockViewModel;
