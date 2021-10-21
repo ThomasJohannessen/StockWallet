@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import no.stockwallet.Investment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
-    ArrayList<Investment> data = new ArrayList<>(MainActivity.investments.values());
+    ArrayList<Investment> data;
+
+    public StockRecyclerAdapter(HashMap<String, Investment> data) {
+        this.data = new ArrayList<>(data.values());
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
