@@ -32,4 +32,8 @@ public class BuySellFragmentsWrapper extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_buy_sell_fragments_wrapper, container, false);
     }
+
+    public void registerStockSale(String ticker, int volume, float price, String currency, float brokerage) {
+        viewModel.addInvestment(ticker, volume, price, currency, brokerage);
+    }
 }

@@ -32,6 +32,23 @@ public class StockViewModel extends ViewModel {
         stockMap.put(invest10.ticker,invest10);
     }
 
+    public void addInvestment(String ticker, int volume, float price, String currency, float brokerage) {
+        Investment newInvestment = new Investment(ticker, volume, price, currency, brokerage);
+        stockMap.put(ticker, newInvestment);
+    }
+
+    public void editInvestment() {}
+
+    public void sellInvestment(String ticker, int volume) {} //TEMP
+
+    public void removeInvestment(String ticker) {
+        stockMap.remove(ticker);
+    }
+
+    public void updateUserPortfolio() {}
+
+    public void fetchUserPortfolio() {}
+
     public HashMap<String, Investment> getStockMap() {
         return stockMap;
     }
