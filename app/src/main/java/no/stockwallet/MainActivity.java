@@ -7,7 +7,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     // TODO Recycler view i søk - oppdatert dynamisk fra api
     // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
+
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
 
     public void AlphaVantageInit() {
@@ -86,11 +86,12 @@ public class MainActivity extends AppCompatActivity {
         list.put(invest10.ticker,invest10);
     }   //adds dummy investments for testing for now
 
-    public void checkIfAlreadyInvestedIn(String key){
+    public Investment checkIfAlreadyInvestedIn(String key){
 
         if (investments.containsKey(key)){
-            investments.get(key);
+            return investments.get(key);
         }
+        return null;
     }
 
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(4000);                     //TODO: fjerne forsnikelse til api kallet når legges som preload
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
