@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class StockViewModel extends ViewModel {
 
-    private MutableLiveData<HashMap<String, Investment>> stockMap;
+    private MutableLiveData<HashMap<String, Investment>> stockMap = new MutableLiveData<>();
 
     public void fillWithDummyData() {
         Investment invest1 = new Investment("NHY.OL",200,60,"NOK",1);

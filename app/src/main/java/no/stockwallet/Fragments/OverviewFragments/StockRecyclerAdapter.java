@@ -25,6 +25,11 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
     }
 
+    public void setData(HashMap<String, Investment> newData) {
+        data = new ArrayList<>(newData.values());
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
 
@@ -37,8 +42,6 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
         }
     }
-
-
 
     @NonNull
     @Override
