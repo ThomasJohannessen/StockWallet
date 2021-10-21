@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 
 import java.util.HashMap;
 
+import no.stockwallet.BinderSingleton;
 import no.stockwallet.Fragments.OverviewFragments.StockRecyclerAdapter;
 import no.stockwallet.Investment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 import no.stockwallet.StockViewModel;
+import yahoofinance.Stock;
 
 public class OverviewFragmentsWrapper extends Fragment {
-    private StockViewModel viewModel;
-    private StockRecyclerAdapter adapter;
 
     public OverviewFragmentsWrapper() {
         // Required empty public constructor
@@ -31,33 +31,11 @@ public class OverviewFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
-
-        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-
-        adapter = new StockRecyclerAdapter(getData());
-
-        Observer<HashMap<String, Investment>> hashMapObserver = stringInvestmentHashMap -> {
-            adapter.setData(stringInvestmentHashMap);
-        };
-        viewModel.getStockMap().observe(this, hashMapObserver);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_overview_fragments_wrapper, container, false);
-    }
-
-    public HashMap<String, Investment> getData() {
-        viewModel.fillWithDummyData();
-        return viewModel.getStockMap().getValue();
-    }
-
-    public StockViewModel getViewModel() {
-        return viewModel;
-    }
-
-    public StockRecyclerAdapter getAdapter() {
-        return adapter;
     }
 }

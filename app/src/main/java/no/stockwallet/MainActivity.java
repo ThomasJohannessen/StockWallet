@@ -2,6 +2,7 @@ package no.stockwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO Recycler view i søk - oppdatert dynamisk fra api
     // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
-
+    private StockViewModel viewModel;
     public void AlphaVantageInit() {
         Config cfg = Config.builder()
                 .key("04C7U8DGXKH0OY8B")
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
+
+        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        Log.d("ViewModel", "ViewModel Main" + viewModel.hashCode() + " " + viewModel.toString());
 
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -25,7 +25,7 @@ public class StockViewFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setToolbarTitle("Aksje");
-        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
     }
 
     @Override

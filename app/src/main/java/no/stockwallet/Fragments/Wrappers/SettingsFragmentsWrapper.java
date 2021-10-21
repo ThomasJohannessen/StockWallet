@@ -24,7 +24,7 @@ public class SettingsFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setToolbarTitle("Innstillinger");
-        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

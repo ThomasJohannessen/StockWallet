@@ -37,9 +37,8 @@ public class StockListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         OverviewFragmentsWrapper parent = (OverviewFragmentsWrapper) getParentFragment();
-
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
-        stockRecyclerView.setAdapter(parent.getAdapter());
+        stockRecyclerView.setAdapter(null);
         stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
 
     }
