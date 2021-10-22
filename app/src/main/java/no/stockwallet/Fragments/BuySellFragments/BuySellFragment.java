@@ -67,7 +67,8 @@ public class BuySellFragment extends Fragment {
             String date = stockDate.getText().toString();
 
             BuySellFragmentsWrapper parent = (BuySellFragmentsWrapper) getParentFragment();
-            parent.registerStockSale(ticker, volume, price,  currency, fee);
+            Investment newInvestment = new Investment(ticker, volume, price, currency, fee);
+            parent.registerStockSale(newInvestment);
         });
     }
 }

@@ -36,11 +36,11 @@ public class StockViewModel extends ViewModel {
         stockMap.setValue(temp);
     }
 
-    public void addInvestment(String ticker, int volume, float price, String currency, float brokerage) {
-        Investment newInvestment = new Investment(ticker, volume, price, currency, brokerage);
+    public void addInvestment(Investment investment) {
+
         HashMap<String, Investment> temp = stockMap.getValue();
         if (temp != null) {
-            temp.put(ticker, newInvestment);
+            temp.put(investment.getTicker(), investment);
         }
         stockMap.setValue(temp);
     }
