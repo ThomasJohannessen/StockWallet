@@ -1,6 +1,6 @@
 package no.stockwallet;
 
-import no.stockwallet.Fragments.OverviewFragments.StockRecyclerAdapter;
+import no.stockwallet.Adapters.StockRecyclerAdapter;
 
 public class BinderSingleton {
     private static BinderSingleton instance;

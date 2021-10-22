@@ -6,23 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
 
+import no.stockwallet.Adapters.StockRecyclerAdapter;
 import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
 import no.stockwallet.Investment;
-import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
 
 
 public class StockListFragment extends Fragment {

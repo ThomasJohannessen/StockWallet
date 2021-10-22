@@ -1,4 +1,4 @@
-package no.stockwallet.Fragments.OverviewFragments;
+package no.stockwallet.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,14 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.stockwallet.Investment;
-import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;
