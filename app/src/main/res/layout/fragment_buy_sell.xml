@@ -65,7 +65,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/stock_volume_label"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/InputStockName" />
+                app:layout_constraintTop_toBottomOf="@+id/InputStockPrice" />
 
             <EditText
                 android:id="@+id/InputStockVolume"
@@ -183,6 +183,29 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/InputStockDate" />
+
+            <TextView
+                android:id="@+id/StockPriceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/stock_price_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/InputStockName" />
+
+            <EditText
+                android:id="@+id/InputStockPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/aksje_pris_ph"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StockPriceLabel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

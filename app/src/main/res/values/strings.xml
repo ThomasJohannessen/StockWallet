@@ -23,4 +23,6 @@
     <string name="stock_date_label">Dato</string>
     <string name="input_stock_date">25.05.2015</string>
     <string name="buy_sell_button">Registrer</string>
+    <string name="stock_price_label">Pris</string>
+    <string name="aksje_pris_ph">15.3</string>
 </resources>

@@ -34,7 +34,7 @@ public class GainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<Investment> data = new ArrayList<>(MainActivity.investments.values());
+        /*ArrayList<Investment> data = new ArrayList<>(MainActivity.investments.values());
 
 
         tempView = view.findViewById(R.id.stockNameR1);
@@ -51,6 +51,6 @@ public class GainFragment extends Fragment {
 
         tempView4.setText(data.get(2).getTicker());
         tempView5.setText("-25%");
-        tempView6.setText(String.valueOf(data.get(2).getPrice()) + " " + data.get(2).getCurrency());
+        tempView6.setText(String.valueOf(data.get(2).getPrice()) + " " + data.get(2).getCurrency());*/
     }
 }
