@@ -1,5 +1,7 @@
 package no.stockwallet;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,22 +9,35 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
 import com.crazzyghost.alphavantage.*;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseUser;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    // TODO Recycler view i søk - oppdatert dynamisk fra api
-    // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
-    public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
+    private FirebaseUser user;
     private StockViewModel viewModel;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            result -> onSignInResult(result)
+    );
+
+    public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
     public void AlphaVantageInit() {
         Config cfg = Config.builder()
                 .key("04C7U8DGXKH0OY8B")
@@ -31,6 +46,40 @@ public class MainActivity extends AppCompatActivity {
 
         AlphaVantage.api().init(cfg);
 
+    }
+
+    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+
+    }
+
+    private void createSignInIntent() {
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build()
+        );
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+
+        signInLauncher.launch(signInIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build()
+        );
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+
+        signInLauncher.launch(signInIntent);
     }
 
     @Override

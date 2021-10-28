@@ -28,7 +28,10 @@ android {
 }
 
 dependencies {
+    apply plugin: 'com.google.gms.google-services'
 
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-core:9.6.1'
 
     implementation "androidx.navigation:navigation-fragment:2.3.5"
     implementation "androidx.navigation:navigation-ui:2.3.5"
