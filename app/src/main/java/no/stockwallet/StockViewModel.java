@@ -9,6 +9,11 @@ public class StockViewModel extends ViewModel {
 
     private MutableLiveData<HashMap<String, Investment>> stockMap = new MutableLiveData<>();
 
+    public String[] getInvestmentTickers(){
+        //TODO:TBD
+        return new String[] {"NHY.OL", "AKH.OL", "NOD.OL", "ITERA.OL", "MPCC.OL","KAHOT.OL", "FLYR.OL", "LCID", "MSFT", "AKSO.OL"};
+    }
+
     public void fillWithDummyData() {
         Investment invest1 = new Investment("NHY.OL",200,60,"NOK",1);
         Investment invest2 = new Investment("AKH.OL",100,30,"NOK",10);
