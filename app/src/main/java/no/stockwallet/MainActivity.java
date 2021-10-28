@@ -23,15 +23,10 @@ public class MainActivity extends AppCompatActivity {
     // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
     private StockViewModel viewModel;
-    public void AlphaVantageInit() {
-        Config cfg = Config.builder()
-                .key("04C7U8DGXKH0OY8B")
-                .timeOut(5)
-                .build();
 
-        AlphaVantage.api().init(cfg);
+    //StockDataRetriever stock = StockDataRetriever.getInstance();
+    //Stock stock1 = StockDataRetriever.getStock("aapl");
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
         viewModel.fillWithDummyData();
 
+        Log.d("hei", "HEi");
+        //String.valueOf(StockDataRetriever.getInstance().getStockPrice("NHY.OL"));
+        StockDataRetriever.getInstance().getMultipleStockPrice(viewModel.getInvestmentTickers());
+        Log.d("hei1", String.valueOf((StockDataRetriever.getInstance().getMultipleStockPrice(viewModel.getInvestmentTickers()))));
+
+        Log.d("TEST", "test");
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
