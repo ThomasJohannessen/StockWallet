@@ -46,8 +46,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPause() {
+        super.onPause();
+        Log.d("onPause", "signing out");
+        auth.signOut();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         user = auth.getCurrentUser();
         if(user == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
@@ -56,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        auth = FirebaseAuth.getInstance();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
@@ -86,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkIfAlreadyInvestedIn(String key){
-
         if (investments.containsKey(key)){
             investments.get(key);
         }
