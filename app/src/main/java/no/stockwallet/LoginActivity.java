@@ -86,28 +86,10 @@ public class LoginActivity extends AppCompatActivity {
         googleClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void handleGoogleSignIn(String idToken) {
-        Log.d("googlesignin", "Test");
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        auth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
-            if(task.isSuccessful()) {
-                hideKeyboard();
-
-                Intent toMainActivity = new Intent(this, MainActivity.class);
-                startActivity(toMainActivity);
-            }
-            else {
-                Log.d("loginAttempt", "No success");
-                Snackbar.make(getWindow().getDecorView().getRootView(), "Given credentials are wrong", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == GOOGLE_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
