@@ -64,18 +64,24 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
 
-        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
-            if(task.isSuccessful()) {
-                hideKeyboard();
+        try {
+            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
+                if(task.isSuccessful()) {
+                    hideKeyboard();
 
-                Intent toMainActivity = new Intent(this, MainActivity.class);
-                startActivity(toMainActivity);
-            }
-            else {
-                Log.d("loginAttempt", "No success");
-                Snackbar.make(view, "Given credentials are wrong", Snackbar.LENGTH_SHORT).show();
-            }
-        });
+                    Intent toMainActivity = new Intent(this, MainActivity.class);
+                    startActivity(toMainActivity);
+                }
+                else {
+                    Log.d("loginAttempt", "No success");
+                    Snackbar.make(view, "Given credentials are wrong", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch(IllegalArgumentException e) {
+            Snackbar.make(view, "Input fields cannot be empty", Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpGoogleClient() {
@@ -131,41 +137,3 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

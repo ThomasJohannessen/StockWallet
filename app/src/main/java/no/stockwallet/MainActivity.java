@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
+
+        //TODO : Grab userID and send it to viewmodel. Viewmodel uses API class to grab it's required DATA before displaying it.
     }
 
     @Override
