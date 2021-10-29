@@ -30,14 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseUser user;
     private FirebaseAuth auth;
+    private FirebaseUser user;
     private StockViewModel viewModel;
-
-    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new FirebaseAuthUIActivityResultContract(),
-            result -> onSignInResult(result)
-    );
 
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
     public void AlphaVantageInit() {
@@ -50,32 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        user = auth.getCurrentUser();
-    }
-
-    private void createSignInIntent() {
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        );
-
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-
-        signInLauncher.launch(signInIntent);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
+        user = auth.getCurrentUser();
         if(user == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -83,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        auth = FirebaseAuth.getInstance();
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);

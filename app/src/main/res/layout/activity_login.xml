@@ -29,17 +29,17 @@
                 app:srcCompat="@drawable/fui_ic_googleg_color_24dp" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buttonSignGoogle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/fui_sign_in_with_google"
-                app:layout_constraintEnd_toEndOf="@+id/button3"
-                app:layout_constraintStart_toStartOf="@+id/button3"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintEnd_toEndOf="@+id/buttonRegisterEmail"
+                app:layout_constraintStart_toStartOf="@+id/buttonRegisterEmail"
+                app:layout_constraintTop_toBottomOf="@+id/buttonRegisterEmail" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/buttonLogIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -73,14 +73,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/buttonRegisterEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
                 android:text="Register with email"
-                app:layout_constraintEnd_toEndOf="@+id/button2"
-                app:layout_constraintStart_toStartOf="@+id/button2"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                app:layout_constraintEnd_toEndOf="@+id/buttonLogIn"
+                app:layout_constraintStart_toStartOf="@+id/buttonLogIn"
+                app:layout_constraintTop_toBottomOf="@+id/buttonLogIn" />
 
             <EditText
                 android:id="@+id/inputPassword"
