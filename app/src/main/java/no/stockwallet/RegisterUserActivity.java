@@ -1,28 +1,18 @@
 package no.stockwallet;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
@@ -41,18 +31,21 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     private void registerUser(View view) {
         Thread thread = new Thread(() -> {
-            EditText passwordInput = findViewById(R.id.inputPassword);
+            EditText passwordInput = findViewById(R.id.passwordInput);
             EditText emailInput = findViewById(R.id.emailInput);
+
+            Log.d("Heyoheyo", "Inside registerUser");
 
             String password = passwordInput.getText().toString();
             String email = emailInput.getText().toString();
 
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getParent(), task -> {
+
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
                 if(task.isSuccessful()) {
                     FirebaseUser user = auth.getCurrentUser();
                     appendUserCredentials(user);
                     runOnUiThread(() -> {
-                        Intent toMainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent toMainActivity = new Intent(this, MainActivity.class);
                         startActivity(toMainActivity);
                     });
                 }
@@ -66,16 +59,14 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     private void appendUserCredentials(FirebaseUser user) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference("test");
-        ref.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                Log.d("Heyoheyo", String.valueOf(task.getResult().getValue()));
-            }
-            else {
-                Log.d("Heyoheyo", "Failed");
-            }
-        });
-    }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        EditText firstNameField = findViewById(R.id.firstNameInput);
+        EditText lastNameField = findViewById(R.id.firstNameInput);
+
+        HashMap<String, String> credMap = new HashMap<>();
+        credMap.put("firstName", );
+
+        db.collection("StockWallet").document(user.getUid()).set();
+    }
 }
