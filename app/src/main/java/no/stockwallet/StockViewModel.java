@@ -27,16 +27,16 @@ public class StockViewModel extends ViewModel {
         Investment invest10 = new Investment("AKSO.OL",200,12,"NOK",50);
 
         HashMap<String, Investment> temp = new HashMap<>();
-        temp.put(invest1.ticker,invest1);
-        temp.put(invest2.ticker,invest2);
-        temp.put(invest3.ticker,invest3);
-        temp.put(invest4.ticker,invest4);
-        temp.put(invest5.ticker,invest5);
-        temp.put(invest6.ticker,invest6);
-        temp.put(invest7.ticker,invest7);
-        temp.put(invest8.ticker,invest8);
-        temp.put(invest9.ticker,invest9);
-        temp.put(invest10.ticker,invest10);
+        temp.put(invest1.getTicker(),invest1);
+        temp.put(invest2.getTicker(),invest2);
+        temp.put(invest3.getTicker(),invest3);
+        temp.put(invest4.getTicker(),invest4);
+        temp.put(invest5.getTicker(),invest5);
+        temp.put(invest6.getTicker(),invest6);
+        temp.put(invest7.getTicker(),invest7);
+        temp.put(invest8.getTicker(),invest8);
+        temp.put(invest9.getTicker(),invest9);
+        temp.put(invest10.getTicker(),invest10);
 
         stockMap.setValue(temp);
     }
@@ -60,6 +60,11 @@ public class StockViewModel extends ViewModel {
             temp.remove(ticker);
         }
         stockMap.setValue(temp);
+    }
+
+    public void checkIfAlreadyInvestedIn(){
+
+
     }
 
     public void updateUserPortfolio() {}

@@ -2,9 +2,9 @@ package no.stockwallet;
 
 public class Investment {
 
-    String ticker,currency;
-    double price;
-    int volum;
+    private String ticker,currency;
+    private double price;
+    private int volum;
 
     public Investment(String ticker, int volum, double price, String currency, double brokerage) {
         this.ticker = ticker;
