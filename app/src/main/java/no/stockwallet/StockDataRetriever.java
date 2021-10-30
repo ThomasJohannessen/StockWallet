@@ -84,6 +84,9 @@ public class StockDataRetriever {
                     for (Map.Entry<String,Stock> entry : stocks.entrySet())
                         returnVar.put(entry.getKey(), entry.getValue().getQuote().getPrice());
 
+                    while (returnVar.size() < stocks.size()){
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
                 }
                 catch (Exception e) {
                     e.printStackTrace();
