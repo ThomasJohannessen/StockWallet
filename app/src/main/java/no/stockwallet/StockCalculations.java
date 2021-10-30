@@ -114,6 +114,8 @@ long start = System.currentTimeMillis();
             }
         }
 
+        currencyCache.clear();
+
         long end = System.currentTimeMillis();
         long elapsedTime = (end - start);
         Log.d("TotaltInvestert-tid", String.valueOf(elapsedTime));
