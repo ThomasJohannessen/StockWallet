@@ -4,14 +4,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class StockViewModel extends ViewModel {
 
     private MutableLiveData<HashMap<String, Investment>> stockMap = new MutableLiveData<>();
 
     public String[] getInvestmentTickers(){
-        //TODO:TBD
-        return new String[] {"NHY.OL", "AKH.OL", "NOD.OL", "ITERA.OL", "MPCC.OL","KAHOT.OL", "FLYR.OL", "LCID", "MSFT", "AKSO.OL"};
+        String[] investedStocksTickers = new String[getStockMap().getValue().size()];
+        int i = 0;
+
+        for (Map.Entry<String, Investment> x : getStockMap().getValue().entrySet()) {
+            investedStocksTickers[i] = x.getValue().getTicker();
+            i++;
+        }
+        return investedStocksTickers;
     }
 
     public void fillWithDummyData() {
