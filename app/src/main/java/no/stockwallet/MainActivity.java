@@ -19,17 +19,12 @@ import com.google.android.material.navigation.NavigationView;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     // TODO Recycler view i søk - oppdatert dynamisk fra api
     // TODO ViewModel for hele main activity som skal ha ansvar for å kommunisere med api og oppdatere data "realtime"
     public static HashMap<String, Investment> investments = new HashMap<String, Investment>();
     private StockViewModel viewModel;
-
-    //StockDataRetriever stock = StockDataRetriever.getInstance();
-    //Stock stock1 = StockDataRetriever.getStock("aapl");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,73 +69,3 @@ public class MainActivity extends AppCompatActivity {
         TextView navTitle = (TextView) findViewById (R.id.NavBar_Title);
         navTitle.setText(title);
     }
-
-    public void checkIfAlreadyInvestedIn(String key){
-
-        if (investments.containsKey(key)){
-            investments.get(key);
-        }
-    }
-
-
-    public double currencyConverter(Investment foreignCurrencyInvestment) {
-        ValueSetterSupport valueSetterSupport = new ValueSetterSupport();
-
-        Thread thread = new Thread(() -> {
-
-            AlphaVantage.api()
-                    .exchangeRate()
-                    .fromCurrency(foreignCurrencyInvestment.currency)
-                    .toCurrency("NOK")
-                    .onSuccess(e -> {
-                        valueSetterSupport.setReturnValue((foreignCurrencyInvestment.getPrice() * e.getExchangeRate()));
-                    })
-                    .onFailure(Throwable::printStackTrace)
-                    .fetch();
-        });
-
-        thread.start();
-
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return valueSetterSupport.getReturnValue();
-
-    }
-
-    public double getTotalInvestments(){
-        double totSumInvested = 0;
-        for (Investment x: investments.values()){
-            if (!x.currency.equals("NOK")){
-                totSumInvested += (currencyConverter(x) * x.volum);
-            }
-            else {
-                totSumInvested += x.price * x.volum;            //TODO: må endres tilå hente nå pris fremfor kjøpt-pris
-            }
-        }
-        return totSumInvested;
-    }
-
-
-
-
-
-/*
-
-    public void Yahoo() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Stock aksje = YahooFinance.get("NHY.OL");
-                    //Log.d("Yahoo", aksje.getName());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-        }*/
-}
