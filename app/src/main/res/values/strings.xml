@@ -36,4 +36,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="login_username">email</string>
     <string name="login_password">Password</string>
+    <string name="stock_wallet_logo">Stock Wallet</string>
+    <string name="register_user_title">Register new user</string>
 </resources>

@@ -55,6 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton logInGoogleButton = findViewById(R.id.buttonSignGoogle);
         logInGoogleButton.setSize(SignInButton.SIZE_WIDE);
         logInGoogleButton.setOnClickListener(view -> startActivityForResult(signInIntent, GOOGLE_CODE));
+
+        Button registerButton = findViewById(R.id.buttonRegisterEmail);
+        registerButton.setOnClickListener(view -> handleRegisterNewUserClick());
+    }
+
+    public void handleRegisterNewUserClick() {
+        Intent toRegisterScreen = new Intent(this, RegisterUserActivity.class);
+        startActivity(toRegisterScreen);
     }
 
     private void handleSignInAttempt(View view) {
@@ -68,9 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
                 if(task.isSuccessful()) {
                     hideKeyboard();
-
-                    Intent toMainActivity = new Intent(this, MainActivity.class);
-                    startActivity(toMainActivity);
+                    changeActivity();
                 }
                 else {
                     Log.d("loginAttempt", "No success");
@@ -123,10 +129,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void changeActivity() {
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(mainActivityIntent);
     }
+
     private void hideKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
