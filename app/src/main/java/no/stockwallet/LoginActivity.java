@@ -1,14 +1,8 @@
 package no.stockwallet;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +24,13 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleClient;
@@ -58,6 +57,12 @@ public class LoginActivity extends AppCompatActivity {
 
         Button registerButton = findViewById(R.id.buttonRegisterEmail);
         registerButton.setOnClickListener(view -> handleRegisterNewUserClick());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        auth = FirebaseAuth.getInstance();
     }
 
     public void handleRegisterNewUserClick() {
@@ -106,15 +111,15 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
+                firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.w("TEST", "Google sign in failed", e);
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -122,12 +127,30 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d("TEST", "AUTH COMPLETED");
                             hideKeyboard();
+                            checkIfFirstTimeSignIn(account.getGivenName(), account.getFamilyName());
                             changeActivity();
                         } else {
                             Log.w("TEST", "Google sign in failed");
                         }
                     }
                 });
+    }
+
+    private void checkIfFirstTimeSignIn(String firstname, String lastname) {
+        FirebaseUser user = auth.getCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("StockWallet").document(user.getUid());
+
+        docRef.get().addOnCompleteListener(task -> {
+           if(task.getResult().exists() == false) {
+               Log.d("TEST", "USER CREDS SAVING");
+               HashMap<String, String> userCred = new HashMap<>();
+               userCred.put("firstName", firstname);
+               userCred.put("lastName", lastname);
+               docRef.set(userCred);
+           }
+        });
     }
 
     private void changeActivity() {
