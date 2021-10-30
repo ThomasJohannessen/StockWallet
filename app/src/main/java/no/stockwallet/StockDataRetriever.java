@@ -42,57 +42,19 @@ public class StockDataRetriever {
         //TODO: TBD
     }
 
-    public BigDecimal getStockPrice(String ticker){
+    public void getStockPrice(Map<String, BigDecimal> returVar, String ticker){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                BigDecimal stockValue = null;
-
-                    try {
-                        Stock stock = YahooFinance.get(ticker);
-                        TimeUnit.SECONDS.sleep(3);
-                        stockValue = stock.getQuote().getPrice();
-                        Log.d("Stock-class", String.valueOf(stockValue));
-                        StockValueSetterSupport.setReturnValue(stockValue);
-
-                    } catch (NullPointerException e) {
-                        StockValueSetterSupport.setReturnValue(null);
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    /*
-                    if (stock == null){
-                        //stock = alphaVantageStockRetriever(ticker);
-                    }*/
-            }});
-        thread.start();
-        return StockValueSetterSupport.getReturnValue();
-    }
-
-    public Map<String, BigDecimal> getMultipleStockPrice(String[] tickerArr){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
                 try {
-                    Map<String, Stock> stocks = YahooFinance.get(tickerArr);
-                    TimeUnit.SECONDS.sleep(3);
+                    BigDecimal stockValue = null;
+                    Stock stock = null;
+                    stock = YahooFinance.get(ticker);
 
-                    Map<String, BigDecimal> stocksValue = new HashMap<>();
-
-                    for (Map.Entry<String,Stock> entry : stocks.entrySet())
-                        stocksValue.put(entry.getKey(), entry.getValue().getQuote().getPrice());
-
-
-
-                    //Log.d("Stock-class", String.valueOf(stockValue));
-                    StockValueSetterSupport.setReturnValueMultiple(stocksValue);
-
-                } catch (NullPointerException e) {
-                    StockValueSetterSupport.setReturnValueMultiple(null);
+                    while (stock == null){
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
+                    returVar.put("Stock",stock.getQuote().getPrice());
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -102,10 +64,37 @@ public class StockDataRetriever {
                     if (stock == null){
                         //stock = alphaVantageStockRetriever(ticker);
                     }*/
-            }});
+            }
+        });
         thread.start();
-        return StockValueSetterSupport.getReturnValueMultiple();
     }
 
+    public void getMultipleStockPrices(Map<String, BigDecimal> returnVar, String[] tickerArr){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Map<String, Stock> stocks = YahooFinance.get(tickerArr);
+
+                    while (stocks.isEmpty()){
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
+
+                    //gives the right format of the key-value pair
+                    for (Map.Entry<String,Stock> entry : stocks.entrySet())
+                        returnVar.put(entry.getKey(), entry.getValue().getQuote().getPrice());
+
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                    /*
+                    if (stock == null){
+                        //stock = alphaVantageStockRetriever(ticker);
+                    }*/ //TODO:fix if not found: send to Alpha Vantage
+            }
+        });
+        thread.start();
+    }
 
 }
