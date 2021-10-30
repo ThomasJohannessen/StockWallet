@@ -62,11 +62,12 @@ public class RegisterUserActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         EditText firstNameField = findViewById(R.id.firstNameInput);
-        EditText lastNameField = findViewById(R.id.firstNameInput);
+        EditText lastNameField = findViewById(R.id.lastNameINput);
 
         HashMap<String, String> credMap = new HashMap<>();
-        credMap.put("firstName", );
+        credMap.put("firstName", firstNameField.getText().toString());
+        credMap.put("lastName", lastNameField.getText().toString());
 
-        db.collection("StockWallet").document(user.getUid()).set();
+        db.collection("StockWallet").document(user.getUid()).set(credMap);
     }
 }
