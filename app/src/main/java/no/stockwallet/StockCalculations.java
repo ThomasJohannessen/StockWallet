@@ -168,4 +168,68 @@ public class StockCalculations {
     public ArrayList<Pair<String, BigDecimal>> getBottomThreeLoserStocks() {
         return bottomThreeLoserStocks;
     }
+
+    public HashMap<String, Double> getMarkedValueNOKMultipleStocks(HashMap<String, Investment> investments){
+
+        HashMap<String, Double> markedValueNOK = new HashMap<>();
+        Map<String, BigDecimal> investedStockPrices = new HashMap<>();
+        String[] investedStocksTickers = new String[investments.size()];
+        int i = 0;
+
+        for (Map.Entry<String, Investment> x : investments.entrySet()) {
+            investedStocksTickers[i] = x.getValue().getTicker();
+            i++;
+        }
+
+        StockDataRetriever.getInstance().getMultipleStockPrices(investedStockPrices, investedStocksTickers);
+
+        while (investedStockPrices.size() < investedStocksTickers.length){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
+        for (Investment x: investments.values()){
+            if (!x.getCurrency().equals("NOK")){
+                double exchangeCourse = currencyConverter(x);
+                currencyCache.put(x.getCurrency(),exchangeCourse);
+
+                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * exchangeCourse * x.getVolum()));
+            }
+            else {
+                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * x.getVolum()));
+            }
+        }
+
+        currencyCache.clear();
+
+        return markedValueNOK;
+    }
+
+    public double getMarkedValueNOKSingleStock(HashMap<String, Investment> investment, String investedStocksTicker){
+
+        double markedValueNOK = 0;
+        Map<String, BigDecimal> investedStockPrice = new HashMap<>();
+
+        StockDataRetriever.getInstance().getStockPrice(investedStockPrice,investedStocksTicker);
+
+        while (investedStockPrice.size() == 0){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
+        if (!investment.get(investedStocksTicker).getCurrency().equals("NOK")){
+            double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
+
+            BigDecimal currentPriceStock = investedStockPrice.get("Stock");
+            markedValueNOK = (currentPriceStock.doubleValue() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+        }
+        else {
+            BigDecimal currentPriceStock = investedStockPrice.get("Stock");
+            markedValueNOK = currentPriceStock.doubleValue() * investment.get(investedStocksTicker).getVolum();
+        }
+
+        return markedValueNOK;
+    }
 }
