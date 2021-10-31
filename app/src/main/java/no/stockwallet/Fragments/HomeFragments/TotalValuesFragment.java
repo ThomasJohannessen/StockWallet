@@ -2,14 +2,24 @@ package no.stockwallet.Fragments.HomeFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+
+import no.stockwallet.Fragments.Wrappers.HomeFragmentsWrapper;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
+import no.stockwallet.StockCalculations;
+import no.stockwallet.StockViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +62,8 @@ public class TotalValuesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,8 +73,22 @@ public class TotalValuesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //((MainActivity)getActivity()).setToolbarTitle("Søk");
+
+
         return inflater.inflate(R.layout.fragment_total, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
+        parent.getViewModel().fillWithDummyData();
+
+        TextView test = view.findViewById(R.id.Total_Invested);
+        int markedValue = StockCalculations.getInstance().getTotalMarkedValue(parent.getViewModel().getStockMap().getValue());
+        test.setText(String.valueOf(markedValue) + " kr");
+
+        TextView test1 = view.findViewById(R.id.Prcent_change_earnings_period);
+        //TBD when total percent methode is done
     }
 }
