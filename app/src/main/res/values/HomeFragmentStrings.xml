@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="gain_title">Størst endring 24t</string>
+    <string name="gain_title">Størst endring i dag:</string>
     <string name="aksje_navn_ph">Askje navn PH</string>
     <string name="aksje_kost_ph">Aksje kost PH</string>
     <string name="Aksje_pcentPH">aksje_prosent</string>
