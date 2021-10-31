@@ -1,13 +1,22 @@
 package no.stockwallet;
 
+import android.util.Log;
+
 public class ValueSetterSupport {
-    double returnValue;
+    double returnValue, checkValue;
 
     public void setReturnValue(Double value) {
         this.returnValue = value;
+        this.checkValue = value;
     }
 
     public double getReturnValue() {
-        return returnValue;
+        double temp = returnValue;
+        returnValue = 0;
+        checkValue = 0;
+        return temp;
+    }
+    public double getCheckValue() {
+        return checkValue;
     }
 }
