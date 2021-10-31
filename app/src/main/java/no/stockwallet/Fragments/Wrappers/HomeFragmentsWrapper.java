@@ -16,6 +16,10 @@ import no.stockwallet.StockViewModel;
 public class HomeFragmentsWrapper extends Fragment {
     private StockViewModel viewModel;
 
+    public StockViewModel getViewModel(){
+        return viewModel;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
