@@ -25,12 +25,12 @@ public class StockViewModel extends ViewModel {
         Investment invest1 = new Investment("NHY.OL",200,60,"NOK",1);
         Investment invest2 = new Investment("AKH.OL",100,30,"NOK",10);
         Investment invest3= new Investment("NOD.OL",10,250,"NOK",100);
-        Investment invest4 = new Investment("ITERA.OL",1000,8.20,"NOK",1.05);
+        Investment invest4 = new Investment("ITERA.OL",1000,12.20,"NOK",1.05);
         Investment invest5 = new Investment("MPCC.OL",65,20,"NOK",35);
-        Investment invest6 = new Investment("KAHOT.OL",100,60,"NOK",5);
-        Investment invest7 = new Investment("FLYR.OL",50,2.58,"NOK",3);
+        Investment invest6 = new Investment("KAHOT.OL",80,60,"NOK",5);
+        Investment invest7 = new Investment("FLYR.OL",50,1.58,"NOK",3);
         Investment invest8 = new Investment("LCID",100,20,"USD",9);
-        Investment invest9 = new Investment("MSFT",1000,200,"USD",3);
+        Investment invest9 = new Investment("MSFT",1000,250,"USD",3);
         Investment invest10 = new Investment("AKSO.OL",200,12,"NOK",50);
 
         HashMap<String, Investment> temp = new HashMap<>();
