@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1052068400184-600fgplne8drudpc93s2f0b4u69a4rob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "no.stockwallet",
+            "certificate_hash": "0b9af4a8f1aa2bff61888dc1bc3d51e8f539d503"
+          }
+        },
+        {
+          "client_id": "1052068400184-nc3ev264c9a9gcmapf75u3ecd6hcgmpf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "no.stockwallet",
+            "certificate_hash": "c2be00eb9315921b610d2bf6fe36aa58e925bb18"
+          }
+        },
+        {
           "client_id": "1052068400184-euneienjnbptvk4h1gl82mhqruvm4mqn.apps.googleusercontent.com",
           "client_type": 3
         }
