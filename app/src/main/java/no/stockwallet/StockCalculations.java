@@ -145,6 +145,19 @@ public class StockCalculations {
         return investedStockChangePercent;
     }
 
+    /*public int getIntradayChangesTotalPercent(HashMap<String, Investment> investments){
+        //gets the total change for in inputed stocks this day in percent. Returns int with percent
+
+        int totalChange = 0;
+        HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
+
+        investedStockChangePercent = StockCalculations.getInstance().getIntradayChangesInStocksPercent(investments);
+
+
+
+        return investedStockChangePercent;
+    }*/
+
     public void findBiggestGainerAndLoserInInvestedStocks(HashMap<String, BigDecimal> hashmapChangesInInvestedStocksPercent) {
         //finds top 3 looser this day and top 3 gainers. Puts them in array with separet getters.
 
