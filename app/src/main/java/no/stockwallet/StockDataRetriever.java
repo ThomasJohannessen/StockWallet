@@ -5,6 +5,7 @@ import android.util.Log;
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -128,4 +129,25 @@ public class StockDataRetriever {
 
     }
 
+    public void getStockObject(Map<String, Stock> returVar, String ticker){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    Stock stock = YahooFinance.get(ticker);
+
+                    while (stock == null) {
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
+
+                    returVar.put("Stock",stock);
+
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
 }
