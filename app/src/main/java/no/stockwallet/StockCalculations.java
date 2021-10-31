@@ -1,24 +1,26 @@
 package no.stockwallet;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import no.stockwallet.Investment;
-import no.stockwallet.ValueSetterSupport;
 
 public class StockCalculations {
 
     private static StockCalculations StockCalculationInstance = null;
 
-    Map<String, Double> currencyCache = new HashMap<>();
+    private Map<String, Double> currencyCache = new HashMap<>();
+    private ArrayList<Pair<String, BigDecimal>> topThreeGainerStocks = new ArrayList<>();
+    private ArrayList<Pair<String, BigDecimal>> bottomThreeLoserStocks = new ArrayList<>();
 
     public static StockCalculations getInstance(){
         if (StockCalculationInstance == null)
@@ -39,7 +41,6 @@ public class StockCalculations {
     private StockCalculations(){
         AlphaVantageInit();
     }
-
 
     private double currencyConverter(Investment foreignCurrencyInvestment) {
 
@@ -81,7 +82,6 @@ public class StockCalculations {
         Investment USD_currency_get_invest = new Investment("AAPL",0,0,"USD",1);
         currencyCache.put(USD_currency_get_invest.getCurrency(),currencyConverter(USD_currency_get_invest));
 
-long start = System.currentTimeMillis();
         double totSumMarkedValue = 0;
 
         Map<String, BigDecimal> investedStockPrices = new HashMap<>();
@@ -116,32 +116,56 @@ long start = System.currentTimeMillis();
 
         currencyCache.clear();
 
-        long end = System.currentTimeMillis();
-        long elapsedTime = (end - start);
-        Log.d("TotaltInvestert-tid", String.valueOf(elapsedTime));
         return (int) totSumMarkedValue;
     }
 
+    public HashMap<String, BigDecimal> getIntradayChangesInStocksPercent(HashMap<String, Investment> investments){
 
+        HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
+        String[] investedStocksTickers = new String[investments.size()];
+        int i = 0;
 
+        for (Map.Entry<String, Investment> x : investments.entrySet()) {
+            investedStocksTickers[i] = x.getValue().getTicker();
+            i++;
+        }
 
+        StockDataRetriever.getInstance().getIntradayChangePercent(investedStockChangePercent, investedStocksTickers);
 
+        while (investedStockChangePercent.size() < investedStocksTickers.length){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) { e.printStackTrace(); }
+        }
 
+        findBiggestGainerAndLoserInInvestedStocks(investedStockChangePercent);
 
+        return investedStockChangePercent;
+    }
 
+    public void findBiggestGainerAndLoserInInvestedStocks(HashMap<String, BigDecimal> hashmapChangesInInvestedStocksPercent) {
 
+        List<Map.Entry<String, BigDecimal> > list =
+                new LinkedList<Map.Entry<String, BigDecimal> >(hashmapChangesInInvestedStocksPercent.entrySet());
 
+        list.sort(Map.Entry.comparingByValue());
 
+        for (int i = 0; i < 3; i++) {
+            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
+            bottomThreeLoserStocks.add(pair);
+        }
 
+        int listSize = list.size();
+        for (int i = listSize-1; i > (listSize - 4); i--) {
+            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
+            topThreeGainerStocks.add(pair);
+        }
+    }
 
+    public ArrayList<Pair<String, BigDecimal>> getTopThreeGainerStocks() {
+        return topThreeGainerStocks;
+    }
 
-
-
-
-
-
-
-
-
-
+    public ArrayList<Pair<String, BigDecimal>> getBottomThreeLoserStocks() {
+        return bottomThreeLoserStocks;
+    }
 }

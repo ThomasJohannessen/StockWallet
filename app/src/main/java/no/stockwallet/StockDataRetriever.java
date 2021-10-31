@@ -6,7 +6,6 @@ import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -98,6 +97,35 @@ public class StockDataRetriever {
             }
         });
         thread.start();
+    }
+
+    public void getIntradayChangePercent(Map<String, BigDecimal> returnVar, String[] tickerArr){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (String x : tickerArr) {
+                        BigDecimal stockChangePercent = null;
+                        stockChangePercent = YahooFinance.get(x).getQuote().getChangeInPercent();
+
+                        while (stockChangePercent == null) {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        }
+
+                        returnVar.put(x,stockChangePercent);
+                    }
+
+                    while (returnVar.size() < tickerArr.length){
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
     }
 
 }
