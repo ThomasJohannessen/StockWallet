@@ -1,8 +1,13 @@
 package no.stockwallet;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +51,7 @@ public class StockViewModel extends ViewModel {
         temp.put(invest10.getTicker(),invest10);
 
         stockMap.setValue(temp);
+        toJson();
     }
 
     public void addInvestment(Investment investment) {
@@ -83,4 +89,10 @@ public class StockViewModel extends ViewModel {
             stockMap = new MutableLiveData<HashMap<String, Investment>>();
         return stockMap;
     }
+
+    private void toJson() {
+
+        Log.d("JSON", new Gson().toJson(stockMap.getValue()));
+    }
+
 }
