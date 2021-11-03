@@ -2,6 +2,7 @@ package no.stockwallet;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         setUpGoogleClient();
 
         Intent signInIntent = googleClient.getSignInIntent();
-
 
         Button logInButton = findViewById(R.id.buttonLogIn);
         logInButton.setOnClickListener(view -> handleSignInAttempt(view));

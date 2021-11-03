@@ -87,7 +87,7 @@ public class TotalValuesFragment extends Fragment {
         //int markedValue = StockCalculations.getInstance().getTotalMarkedValue(parent.getViewModel().getStockMap().getValue());
         //test.setText(String.valueOf(markedValue) + " kr");
 
-        TextView test1 = view.findViewById(R.id.Prcent_change_earnings_period);
+        //TextView test1 = view.findViewById(R.id.Prcent_change_earnings_period);
         //TBD when total percent methode is done
     }
 }

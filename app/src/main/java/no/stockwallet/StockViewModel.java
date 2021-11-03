@@ -39,8 +39,9 @@ public class StockViewModel extends ViewModel {
         HashMap<String, Investment> temp = stockMap.getValue();
         if (temp != null) {
             temp.put(investment.getTicker(), investment);
+            FireBaseJsonSupport.writeDB(stockMap.getValue());
+            stockMap.setValue(temp);
         }
-        stockMap.setValue(temp);
     }
 
     public void editInvestment() {}

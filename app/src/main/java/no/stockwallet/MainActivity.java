@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         auth.signOut();
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -67,19 +65,24 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-
-        setUpViewModel();
-
-        //TODO : Grab userID and send it to viewmodel. Viewmodel uses API class to grab it's required DATA before displaying it.
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
+        if(user == null) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+        new Thread(() -> {
+            setUpViewModel();
+        }).start();
+
+        setContentView(R.layout.activity_main);
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
