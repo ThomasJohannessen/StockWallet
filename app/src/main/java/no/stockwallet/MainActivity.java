@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         auth.signOut();
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,8 +91,11 @@ public class StockViewModel extends ViewModel {
     }
 
     private void toJson() {
-
-        Log.d("JSON", new Gson().toJson(stockMap.getValue()));
+        String data = FireBaseJsonSupport.convertToJson(stockMap.getValue());
+        Log.d("JSONTWO", new Gson().fromJson(data, new TypeToken<HashMap<String, Investment>>(){}.getType()).toString());
+        Log.d("JSON", FireBaseJsonSupport.convertToJson(stockMap.getValue()));
+        FireBaseJsonSupport.test(stockMap.getValue());
+        FireBaseJsonSupport.readDB();
     }
 
 }
