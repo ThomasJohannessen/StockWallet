@@ -9,9 +9,10 @@
 
     <TextView
         android:id="@+id/Total_Invested"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="38dp"
         android:text="Totalt investert PH"
+        android:textAlignment="center"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,21 +37,23 @@
 
     <TextView
         android:id="@+id/Prcent_change_earnings_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="49dp"
         android:text="pros endret pr periode PH"
-        android:textSize="16dp"
+        android:textAlignment="center"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="0.794" />
 
     <TextView
         android:id="@+id/Prcent_change_earnings_period_Title"
-        android:layout_width="204dp"
-        android:layout_height="35dp"
-        android:text="Prosent avkas periode"
+        android:layout_width="315dp"
+        android:layout_height="39dp"
+        android:text="Total Prosent Avkastning:"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
