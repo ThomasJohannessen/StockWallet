@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-        viewModel.fillWithDummyData();
+
+        setUpViewModel();
+
         //TODO : Grab userID and send it to viewmodel. Viewmodel uses API class to grab it's required DATA before displaying it.
     }
 
@@ -83,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
-        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
     public void setToolbarTitle(String title) {
         TextView navTitle = (TextView) findViewById(R.id.NavBar_Title);
         navTitle.setText(title);
+    }
+
+    public void setUpViewModel() {
+        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        viewModel.fetchUserData();
     }
 
 }

@@ -79,7 +79,6 @@ public class StockCalculations {
 
     public int getTotalMarkedValue(HashMap<String, Investment> investments){
         //calculated the total of all invedsted stocks and converts to NOK. returns the number
-
         //fake invest to cache currency-conversion-rate for USD to not use time for this later
         Investment USD_currency_get_invest = new Investment("AAPL",0,0,"USD",1);
         currencyCache.put(USD_currency_get_invest.getCurrency(),currencyConverter(USD_currency_get_invest));

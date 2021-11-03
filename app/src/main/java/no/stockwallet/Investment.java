@@ -6,6 +6,8 @@ public class Investment {
     private double price;
     private int volum;
 
+    public Investment(){}
+
     public Investment(String ticker, int volum, double price, String currency, double brokerage) {
         this.ticker = ticker;
         this.volum = volum;
