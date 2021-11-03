@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class GainFragment extends Fragment {
          TextView stockName1, stockName2, stockName3, stockName4, stockName5, stockName6,
                 stockPrcnt1, stockPrcnt2, stockPrcnt3, stockPrcnt4, stockPrcnt5, stockPrcnt6,
                 stockPrice1, stockPrice2, stockPrice3, stockPrice4, stockPrice5, stockPrice6;
+        DecimalFormat df = new DecimalFormat("#.##");
 
         super.onViewCreated(view, savedInstanceState);
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
@@ -78,14 +80,14 @@ public class GainFragment extends Fragment {
 
         stockPrcnt1.setText(String.valueOf(topp3Arr.get(0).second + " %"));
         stockName1.setText(String.valueOf(topp3Arr.get(0).first));
-        stockPrice1.setText(String.valueOf(stockPrices.get(topp3Arr.get(0).first) + " " + investments.get(topp3Arr.get(0).first).getCurrency()));
+        stockPrice1.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(0).first))) + " " + investments.get(topp3Arr.get(0).first).getCurrency()));
 
         stockPrcnt2 = view.findViewById(R.id.stockPCR2);
         stockName2 = view.findViewById(R.id.stockNameR2);
         stockPrice2 = view.findViewById(R.id.stockPriceR2);
         stockPrcnt2.setText(String.valueOf(topp3Arr.get(1).second + " %"));
         stockName2.setText(String.valueOf(topp3Arr.get(1).first));
-        stockPrice2.setText(String.valueOf(stockPrices.get(topp3Arr.get(1).first) + " " + investments.get(topp3Arr.get(1).first).getCurrency()));
+        stockPrice2.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(1).first))) + " " + investments.get(topp3Arr.get(1).first).getCurrency()));
 
 
         stockPrcnt3 = view.findViewById(R.id.stockPCR3);
@@ -93,7 +95,7 @@ public class GainFragment extends Fragment {
         stockPrice3 = view.findViewById(R.id.stockPriceR3);
         stockPrcnt3.setText(String.valueOf(topp3Arr.get(2).second + " %"));
         stockName3.setText(String.valueOf(topp3Arr.get(2).first));
-        stockPrice3.setText(String.valueOf(stockPrices.get(topp3Arr.get(2).first) + " " + investments.get(topp3Arr.get(2).first).getCurrency()));
+        stockPrice3.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(2).first))) + " " + investments.get(topp3Arr.get(2).first).getCurrency()));
 
 
         stockPrcnt4 = view.findViewById(R.id.stockPCR4);
@@ -101,14 +103,14 @@ public class GainFragment extends Fragment {
         stockPrice4 = view.findViewById(R.id.stockPriceR4);
         stockPrcnt4.setText(String.valueOf(bottom3Arr.get(0).second + " %"));
         stockName4.setText(String.valueOf(bottom3Arr.get(0).first));
-        stockPrice4.setText(String.valueOf(stockPrices.get(bottom3Arr.get(0).first) + " " + investments.get(bottom3Arr.get(0).first).getCurrency()));
+        stockPrice4.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(0).first))) + " " + investments.get(bottom3Arr.get(0).first).getCurrency()));
 
         stockPrcnt5 = view.findViewById(R.id.stockPCR5);
         stockName5 = view.findViewById(R.id.stockNameR5);
         stockPrice5 = view.findViewById(R.id.stockPriceR5);
         stockPrcnt5.setText(String.valueOf(bottom3Arr.get(1).second + " %"));
         stockName5.setText(String.valueOf(bottom3Arr.get(1).first));
-        stockPrice5.setText(String.valueOf(stockPrices.get(bottom3Arr.get(1).first) + " " + investments.get(bottom3Arr.get(1).first).getCurrency()));
+        stockPrice5.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(1).first))) + " " + investments.get(bottom3Arr.get(1).first).getCurrency()));
 
 
         stockPrcnt6 = view.findViewById(R.id.stockPCR6);
@@ -116,6 +118,6 @@ public class GainFragment extends Fragment {
         stockPrice6 = view.findViewById(R.id.stockPriceR6);
         stockPrcnt6.setText(String.valueOf(bottom3Arr.get(2).second + " %"));
         stockName6.setText(String.valueOf(bottom3Arr.get(2).first));
-        stockPrice6.setText(String.valueOf(stockPrices.get(bottom3Arr.get(2).first) + " " + investments.get(bottom3Arr.get(2).first).getCurrency()));
+        stockPrice6.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(2).first))) + " " + investments.get(bottom3Arr.get(2).first).getCurrency()));
     }
 }
