@@ -7,6 +7,7 @@ import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -120,6 +121,29 @@ public class StockCalculations {
 
         return (int) totSumMarkedValue;
     }
+
+
+    public double getIntradayChangesTotalPercent(HashMap<String, Investment> investments){
+        //gets the total change for in inputed stocks this day in percent. Returns double with percent
+
+        double totalChange = 0;
+        double totalEarned = 0;
+        HashMap<String, Double> investedStockEarnedNOK = new HashMap<>();
+        investedStockEarnedNOK = getEarningsNOKMultipleStocks(investments);
+
+        for (HashMap.Entry<String, Double> x : investedStockEarnedNOK.entrySet()) {
+            totalEarned += x.getValue();
+        }
+        int markedValue = getTotalMarkedValue(investments);
+
+        totalChange = ((totalEarned / markedValue) * 100);
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        totalChange = Double.parseDouble(df.format(totalChange));
+
+        return Double.parseDouble(df.format(totalChange));
+    }
+
 
     public HashMap<String, BigDecimal> getIntradayChangesInStocksPercent(HashMap<String, Investment> investments){
         //gets the change for in inputed stocks this day in percent. Returns hashmap with ticker-change percent
