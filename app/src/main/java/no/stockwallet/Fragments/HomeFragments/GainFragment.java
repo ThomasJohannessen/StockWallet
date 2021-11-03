@@ -75,9 +75,6 @@ public class GainFragment extends Fragment {
         stockPrcnt1 = view.findViewById(R.id.stockPCR1);
         stockName1 = view.findViewById(R.id.stockNameR1);
         stockPrice1 = view.findViewById(R.id.stockPriceR1);
-        Log.d("TotaltInvestert-ticker",topp3Arr.get(0).first);
-        Log.d("TotaltInvestert-Økning", String.valueOf(topp3Arr.get(0).second));
-
 
         stockPrcnt1.setText(String.valueOf(topp3Arr.get(0).second + " %"));
         stockName1.setText(String.valueOf(topp3Arr.get(0).first));
@@ -120,6 +117,5 @@ public class GainFragment extends Fragment {
         stockPrcnt6.setText(String.valueOf(bottom3Arr.get(2).second + " %"));
         stockName6.setText(String.valueOf(bottom3Arr.get(2).first));
         stockPrice6.setText(String.valueOf(stockPrices.get(bottom3Arr.get(2).first) + " " + investments.get(bottom3Arr.get(2).first).getCurrency()));
-
     }
 }
