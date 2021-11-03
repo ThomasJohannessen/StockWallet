@@ -6,14 +6,21 @@ import android.util.Pair;
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.quotes.fx.FxQuote;
+import yahoofinance.quotes.fx.FxSymbols;
 
 public class StockCalculations {
 
@@ -48,20 +55,21 @@ public class StockCalculations {
         ValueSetterSupport valueSetterSupport = new ValueSetterSupport();
 
             Thread thread = new Thread(() -> {
-                if (currencyCache.containsKey(foreignCurrencyInvestment.getCurrency())){
+
+                String inputCurr = foreignCurrencyInvestment.getCurrency();
+
+                if (currencyCache.containsKey(inputCurr)){
                     valueSetterSupport.setReturnValue(currencyCache.get(foreignCurrencyInvestment.getCurrency()));
+                }else {
+                    try {
+                        String FxSymbol = inputCurr.toUpperCase(Locale.ROOT) + "NOK=X";
+                        BigDecimal conversionRate = YahooFinance.getFx(FxSymbol).getPrice();
+                        valueSetterSupport.setReturnValue(conversionRate.doubleValue());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                else {
-                AlphaVantage.api()
-                        .exchangeRate()
-                        .fromCurrency(foreignCurrencyInvestment.getCurrency())
-                        .toCurrency("NOK")
-                        .onSuccess(e -> {
-                            valueSetterSupport.setReturnValue(e.getExchangeRate());
-                        })
-                        .onFailure(Throwable::printStackTrace)
-                        .fetch();
-                }
+
             });
 
             thread.start();
@@ -123,7 +131,7 @@ public class StockCalculations {
     }
 
 
-    public double getIntradayChangesTotalPercent(HashMap<String, Investment> investments){
+    public double getTotalPercentEarnings(HashMap<String, Investment> investments){
         //gets the total change for in inputed stocks this day in percent. Returns double with percent
 
         double totalChange = 0;
@@ -168,19 +176,6 @@ public class StockCalculations {
 
         return investedStockChangePercent;
     }
-
-    /*public int getIntradayChangesTotalPercent(HashMap<String, Investment> investments){
-        //gets the total change for in inputed stocks this day in percent. Returns int with percent
-
-        int totalChange = 0;
-        HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
-
-        investedStockChangePercent = StockCalculations.getInstance().getIntradayChangesInStocksPercent(investments);
-
-
-
-        return investedStockChangePercent;
-    }*/
 
     public void findBiggestGainerAndLoserInInvestedStocks(HashMap<String, BigDecimal> hashmapChangesInInvestedStocksPercent) {
         //finds top 3 looser this day and top 3 gainers. Puts them in array with separet getters.
