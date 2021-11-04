@@ -187,7 +187,7 @@ public class StockCalculations {
 
         list.sort(Map.Entry.comparingByValue());
         int listSize = list.size();
-        Log.d("TotaltInvestert-liste",list.toString());
+        
 
         if(listSize >= 6) {
             for (int i = 0; i < 3; i++) {
@@ -201,57 +201,6 @@ public class StockCalculations {
             }
         }
         else{
-            /*ArrayList<String> shownStocks = new ArrayList<>();
-
-            int stop = 3;
-            if (listSize < 3){stop=listSize-1;}
-
-            for (int i = 0; i < stop; i++) {
-
-                if (list.get(i) != null) {
-                    if (list.get(i).getValue().doubleValue() < 0) {
-
-
-                        if (!shownStocks.contains(list.get(i).getKey())) {
-                            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
-                            bottomThreeLoserStocks.add(pair);
-                            shownStocks.add(list.get(i).getKey());
-                        } else {
-                            Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                            bottomThreeLoserStocks.add(pair);
-                        }
-                    } else {
-                        Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                        bottomThreeLoserStocks.add(pair);
-                    }
-                }else {
-                    Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                    bottomThreeLoserStocks.add(pair);
-                }
-            }
-            int stop_end = listSize - 4;
-            if (listSize < 3){stop_end=;}
-            for (int i = listSize - 1; i > stop_end; i--) {
-                if (list.get(i) != null) {
-                    if (Integer.getInteger(String.valueOf(list.get(i).getValue())) >= 0) {
-                        if (!shownStocks.contains(list.get(i).getKey())) {
-                            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
-                            topThreeGainerStocks.add(pair);
-                            shownStocks.add(list.get(i).getKey());
-                        } else {
-                            Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                            topThreeGainerStocks.add(pair);
-                        }
-                    } else {
-                        Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                        topThreeGainerStocks.add(pair);
-                    }
-                }
-                else {
-                    Pair<String, BigDecimal> pair = new Pair<>("", empty);
-                    topThreeGainerStocks.add(pair);
-                }
-            }*/
             for (int i = 0; i < 3; i++) {
                 Pair<String, BigDecimal> pair = new Pair<>(null, null);
                 topThreeGainerStocks.add(pair);
