@@ -26,18 +26,10 @@ import yahoofinance.Stock;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;
-    long fetchedTime = 0;
-    HashMap<String, Investment> HashMapData;
-    HashMap<String, String> stockNames = new HashMap<>();
-    HashMap<String, Double> earnings = new HashMap<>();
-    HashMap<String, Double> earningsPercent = new HashMap<>();
-    HashMap<String, Double> markedValues = new HashMap<>();
-
     DecimalFormat df = new DecimalFormat("#.##");
 
 
     public StockRecyclerAdapter(HashMap<String, Investment> data) {
-        this.HashMapData = data;
         this.data = new ArrayList<>(data.values());
     }
 
@@ -69,50 +61,15 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        String stockName;
-        double earning, earningsPrcent;
-        int markedValue;
+        String stockName = data.get(position).getFullName();
+        double earning = Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
+        double earningsPrcent = Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
+        int markedValue = (int) Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
 
-        //get stockname logic
-        if (!stockNames.containsKey(data.get(position).getTicker())){
-            HashMap<String, Stock> temp = new HashMap<>();
-            StockDataRetriever.getInstance().getStockObject(temp,data.get(position).getTicker());
-            while (temp.size() < 1){
-                try {TimeUnit.MILLISECONDS.sleep(10);}
-                catch (InterruptedException e) {e.printStackTrace();}
-            }
-            stockName = temp.get("Stock").getName();
-            stockNames.put(data.get(position).getTicker(),temp.get("Stock").getName());
-        }
-        else{
-            stockName = stockNames.get(data.get(position).getTicker());
-        }
-
-        if (System.currentTimeMillis() > (fetchedTime + 120000)){
-            Log.d("TotaltInvestert-earningsNOK", String.valueOf(earnings.size()));
-            Log.d("TotaltInvestert-names", String.valueOf(stockNames.size()));
-            Log.d("TotaltInvestert-earnings%", String.valueOf(earningsPercent.size()));
-            Log.d("TotaltInvestert-value", String.valueOf(markedValues.size()));
-
-            fetchedTime = System.currentTimeMillis();
-            earnings = StockCalculations.getInstance().getEarningsNOKMultipleStocks(HashMapData);
-            earningsPercent = StockCalculations.getInstance().getEarningsPercentMultipleStocks(HashMapData);
-            markedValues = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(HashMapData);
-
-        }
-
-        earning = Double.parseDouble(df.format(earnings.get(data.get(position).getTicker())));
-        earningsPrcent = Double.parseDouble(df.format(earningsPercent.get(data.get(position).getTicker())));
-        markedValue = (int) Double.parseDouble(df.format(markedValues.get(data.get(position).getTicker())));
-
-        if (data.get(position).getTicker() != holder.stockNameView.getText()){
-
-            holder.stockEarning.setText(String.valueOf(earning + " NOK"));
-            holder.stockNameView.setText(stockName);
-            holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
-            holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + " %"));
-        }
-
+        holder.stockEarning.setText(String.valueOf(earning + " NOK"));
+        holder.stockNameView.setText(stockName);
+        holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
+        holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + " %"));
     }
 
     @Override
