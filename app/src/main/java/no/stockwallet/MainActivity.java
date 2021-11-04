@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-        new Thread(() -> {
-            setUpViewModel();
-        }).start();
+        setUpViewModel();
 
         setContentView(R.layout.activity_main);
 
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-        viewModel.fetchUserData();
+        //viewModel.fetchUserData();
     }
 
 }
