@@ -32,6 +32,8 @@ import no.stockwallet.StockViewModel;
 import yahoofinance.Stock;
 
 public class LoadingFragment extends Fragment {
+    StockViewModel viewModel;
+    FirebaseUser user;
 
     public LoadingFragment() {
         // Required empty public constructor
@@ -41,14 +43,30 @@ public class LoadingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StockViewModel viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null) {
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
         }
 
+        fetchViewModel();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_loading, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void fetchViewModel() {
         DocumentReference db = FirebaseFirestore.getInstance().collection("StockWallet").document(user.getUid());
         db.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -68,17 +86,5 @@ public class LoadingFragment extends Fragment {
                 Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loading, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 }
