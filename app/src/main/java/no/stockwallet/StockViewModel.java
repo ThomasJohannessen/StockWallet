@@ -1,5 +1,7 @@
 package no.stockwallet;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -46,6 +48,14 @@ public class StockViewModel extends ViewModel {
         temp.put(invest10.getTicker(),invest10);
 
         stockMap.setValue(temp);
+    }
+
+    public void addAPIvaluesToInvestmentObjects(){
+        API_InvestmentDataHandler test = new API_InvestmentDataHandler();
+        test.addTotalMarkedValueNOKOnStockToInvestment();
+        test.addFullStockNamesToInvestments();
+        test.addTotalEarningsPercentOnStockToInvestment();
+        test.addTotalEarningsNOKOnStockToInvestments();
     }
 
     public void addInvestment(Investment investment) {
