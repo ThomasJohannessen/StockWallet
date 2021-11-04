@@ -57,7 +57,13 @@ public class StockViewModel extends ViewModel {
         stockMap.setValue(temp);
     }
 
-    public void editInvestment() {}
+    public Investment getInvestment(String ticker){
+        return stockMap.getValue().get(ticker);
+    }
+
+    public void editInvestment() {
+
+    }
 
     public void sellInvestment(String ticker, int volume) {} //TEMP
 
