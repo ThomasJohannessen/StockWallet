@@ -42,8 +42,16 @@ public class BuySellFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setUpButtonListeners();
+    }
+
+    private void setUpButtonListeners() {
         Button buySellButton = getActivity().findViewById(R.id.RegisterBuySellButton);
-        buySellButton.setOnClickListener(view1 -> {
+        buySellButton.setOnClickListener(view -> handleRegisterClick(view));
+    }
+
+    private void handleRegisterClick(View view) {
+
             EditText tickerName = view.findViewById(R.id.InputStockName);
             String ticker = tickerName.getText().toString();
 
@@ -77,6 +85,5 @@ public class BuySellFragment extends Fragment {
             }
 
             Navigation.findNavController(view).navigate(R.id.overviewFragmentsWrapper);
-        });
     }
 }
