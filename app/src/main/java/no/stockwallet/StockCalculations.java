@@ -6,13 +6,21 @@ import android.util.Pair;
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.quotes.fx.FxQuote;
+import yahoofinance.quotes.fx.FxSymbols;
 
 public class StockCalculations {
 
@@ -47,20 +55,21 @@ public class StockCalculations {
         ValueSetterSupport valueSetterSupport = new ValueSetterSupport();
 
             Thread thread = new Thread(() -> {
-                if (currencyCache.containsKey(foreignCurrencyInvestment.getCurrency())){
+
+                String inputCurr = foreignCurrencyInvestment.getCurrency();
+
+                if (currencyCache.containsKey(inputCurr)){
                     valueSetterSupport.setReturnValue(currencyCache.get(foreignCurrencyInvestment.getCurrency()));
+                }else {
+                    try {
+                        String FxSymbol = inputCurr.toUpperCase(Locale.ROOT) + "NOK=X";
+                        BigDecimal conversionRate = YahooFinance.getFx(FxSymbol).getPrice();
+                        valueSetterSupport.setReturnValue(conversionRate.doubleValue());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                else {
-                AlphaVantage.api()
-                        .exchangeRate()
-                        .fromCurrency(foreignCurrencyInvestment.getCurrency())
-                        .toCurrency("NOK")
-                        .onSuccess(e -> {
-                            valueSetterSupport.setReturnValue(e.getExchangeRate());
-                        })
-                        .onFailure(Throwable::printStackTrace)
-                        .fetch();
-                }
+
             });
 
             thread.start();
@@ -82,80 +91,140 @@ public class StockCalculations {
         //fake invest to cache currency-conversion-rate for USD to not use time for this later
         Investment USD_currency_get_invest = new Investment("AAPL",0,0,"USD",1);
         currencyCache.put(USD_currency_get_invest.getCurrency(),currencyConverter(USD_currency_get_invest));
+        
+        ArrayList<Integer> totSumMarkedValueReturnArr = new ArrayList<>();
 
-        double totSumMarkedValue = 0;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        Map<String, BigDecimal> investedStockPrices = new HashMap<>();
-        String[] investedStocksTickers = new String[investments.size()];
-        int i = 0;
+                //fake invest to cache currency-conversion-rate for USD to not use time for this later
+                Investment USD_currency_get_invest = new Investment("AAPL", 0, 0, "USD", 1);
+                currencyCache.put(USD_currency_get_invest.getCurrency(), currencyConverter(USD_currency_get_invest));
 
-        for (Map.Entry<String, Investment> x : investments.entrySet()) {
-            investedStocksTickers[i] = x.getValue().getTicker();
-            i++;
-        }
+                double totSumMarkedValue = 0;
 
-        StockDataRetriever.getInstance().getMultipleStockPrices(investedStockPrices, investedStocksTickers);
+                Map<String, BigDecimal> investedStockPrices = new HashMap<>();
+                String[] investedStocksTickers = new String[investments.size()];
+                int i = 0;
 
-        while (investedStockPrices.size() < investedStocksTickers.length){
+                for (Map.Entry<String, Investment> x : investments.entrySet()) {
+                    investedStocksTickers[i] = x.getValue().getTicker();
+                    i++;
+                }
+
+                StockDataRetriever.getInstance().getMultipleStockPrices(investedStockPrices, investedStocksTickers);
+
+                while (investedStockPrices.size() < investedStocksTickers.length) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (Investment x : investments.values()) {
+                    if (!x.getCurrency().equals("NOK")) {
+                        double exchangeCourse = currencyConverter(x);
+                        currencyCache.put(x.getCurrency(), exchangeCourse);
+
+                        BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                        totSumMarkedValue += (currentPriceStock.doubleValue() * exchangeCourse * x.getVolum());
+                    } else {
+                        BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                        totSumMarkedValue += currentPriceStock.doubleValue() * x.getVolum();
+                    }
+                }
+
+                currencyCache.clear();
+
+                totSumMarkedValueReturnArr.add((int) totSumMarkedValue);
+            }
+            });
+        thread.start();
+
+        while(totSumMarkedValueReturnArr.size() == 0){
             try { TimeUnit.MILLISECONDS.sleep(10); }
-            catch (InterruptedException e) { e.printStackTrace(); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
 
-        for (Investment x: investments.values()){
-            if (!x.getCurrency().equals("NOK")){
-                double exchangeCourse = currencyConverter(x);
-                currencyCache.put(x.getCurrency(),exchangeCourse);
+        return totSumMarkedValueReturnArr.get(0);
+    }
 
-                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                totSumMarkedValue += (currentPriceStock.doubleValue() * exchangeCourse * x.getVolum());
+    public double getTotalPercentEarnings(HashMap<String, Investment> investments){
+        //gets the total change for in inputed stocks this day in percent. Returns double with percent
+
+        ArrayList<Double> totalChangeReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                double totalChange = 0;
+                double totalEarned = 0;
+                HashMap<String, Double> investedStockEarnedNOK = new HashMap<>();
+                investedStockEarnedNOK = getEarningsNOKMultipleStocks(investments);
+
+                for (HashMap.Entry<String, Double> x : investedStockEarnedNOK.entrySet()) {
+                    totalEarned += x.getValue();
+                }
+                int markedValue = getTotalMarkedValue(investments);
+
+                totalChange = ((totalEarned / markedValue) * 100);
+
+                DecimalFormat df = new DecimalFormat("#.##");
+                totalChange = Double.parseDouble(df.format(totalChange));
+
+                totalChangeReturnArr.add(Double.parseDouble(df.format(totalChange)));
+
+                getIntradayChangesInStocksPercent(investments);
             }
-            else {
-                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                totSumMarkedValue += currentPriceStock.doubleValue() * x.getVolum();
+        });
+        thread.start();
+
+            while(totalChangeReturnArr.size() == 0){
+                try { TimeUnit.MILLISECONDS.sleep(10); }
+                catch (InterruptedException e) {e.printStackTrace();}
             }
-        }
 
-        currencyCache.clear();
-
-        return (int) totSumMarkedValue;
+            return totalChangeReturnArr.get(0);
     }
 
     public HashMap<String, BigDecimal> getIntradayChangesInStocksPercent(HashMap<String, Investment> investments){
         //gets the change for in inputed stocks this day in percent. Returns hashmap with ticker-change percent
 
-        HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
-        String[] investedStocksTickers = new String[investments.size()];
-        int i = 0;
+        ArrayList<HashMap<String, BigDecimal>> investedStockChangePercentReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
+                String[] investedStocksTickers = new String[investments.size()];
+                int i = 0;
 
-        for (Map.Entry<String, Investment> x : investments.entrySet()) {
-            investedStocksTickers[i] = x.getValue().getTicker();
-            i++;
-        }
+                for (Map.Entry<String, Investment> x : investments.entrySet()) {
+                    investedStocksTickers[i] = x.getValue().getTicker();
+                    i++;
+                }
 
-        StockDataRetriever.getInstance().getIntradayChangePercent(investedStockChangePercent, investedStocksTickers);
+                StockDataRetriever.getInstance().getIntradayChangePercent(investedStockChangePercent, investedStocksTickers);
 
-        while (investedStockChangePercent.size() < investedStocksTickers.length){
-            try { TimeUnit.MILLISECONDS.sleep(10); }
-            catch (InterruptedException e) { e.printStackTrace(); }
-        }
+                while (investedStockChangePercent.size() < investedStocksTickers.length){
+                    try { TimeUnit.MILLISECONDS.sleep(10); }
+                    catch (InterruptedException e) { e.printStackTrace(); }
+                }
 
-        findBiggestGainerAndLoserInInvestedStocks(investedStockChangePercent);
+                findBiggestGainerAndLoserInInvestedStocks(investedStockChangePercent);
+                investedStockChangePercentReturnArr.add(investedStockChangePercent);
+            }
+        });
+        thread.start();
 
-        return investedStockChangePercent;
+            while(investedStockChangePercentReturnArr.size() == 0){
+                try { TimeUnit.MILLISECONDS.sleep(10); }
+                catch (InterruptedException e) {e.printStackTrace();}
+            }
+
+            return investedStockChangePercentReturnArr.get(0);
     }
-
-    /*public int getIntradayChangesTotalPercent(HashMap<String, Investment> investments){
-        //gets the total change for in inputed stocks this day in percent. Returns int with percent
-
-        int totalChange = 0;
-        HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
-
-        investedStockChangePercent = StockCalculations.getInstance().getIntradayChangesInStocksPercent(investments);
-
-
-
-        return investedStockChangePercent;
-    }*/
 
     public void findBiggestGainerAndLoserInInvestedStocks(HashMap<String, BigDecimal> hashmapChangesInInvestedStocksPercent) {
         //finds top 3 looser this day and top 3 gainers. Puts them in array with separet getters.
@@ -164,16 +233,26 @@ public class StockCalculations {
                 new LinkedList<Map.Entry<String, BigDecimal> >(hashmapChangesInInvestedStocksPercent.entrySet());
 
         list.sort(Map.Entry.comparingByValue());
-
-        for (int i = 0; i < 3; i++) {
-            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
-            bottomThreeLoserStocks.add(pair);
-        }
-
         int listSize = list.size();
-        for (int i = listSize-1; i > (listSize - 4); i--) {
-            Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
-            topThreeGainerStocks.add(pair);
+        
+
+        if(listSize >= 6) {
+            for (int i = 0; i < 3; i++) {
+                Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
+                bottomThreeLoserStocks.add(pair);
+            }
+
+            for (int i = listSize - 1; i > (listSize - 4); i--) {
+                Pair<String, BigDecimal> pair = new Pair<>(list.get(i).getKey(), list.get(i).getValue());
+                topThreeGainerStocks.add(pair);
+            }
+        }
+        else{
+            for (int i = 0; i < 3; i++) {
+                Pair<String, BigDecimal> pair = new Pair<>(null, null);
+                topThreeGainerStocks.add(pair);
+                bottomThreeLoserStocks.add(pair);
+            }
         }
     }
 
@@ -189,150 +268,236 @@ public class StockCalculations {
         //calculates the marked value for the inputed stocks. Takes in account of volume and currency,
         //and returns a hashmap with ticker-markedValueinNok(with volume and currency taken care of)
 
-        HashMap<String, Double> markedValueNOK = new HashMap<>();
-        Map<String, BigDecimal> investedStockPrices = new HashMap<>();
-        String[] investedStocksTickers = new String[investments.size()];
-        int i = 0;
+        ArrayList<HashMap<String, Double>> markedValueNOKReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        for (Map.Entry<String, Investment> x : investments.entrySet()) {
-            investedStocksTickers[i] = x.getValue().getTicker();
-            i++;
-        }
+                HashMap<String, Double> markedValueNOK = new HashMap<>();
+                Map<String, BigDecimal> investedStockPrices = new HashMap<>();
+                String[] investedStocksTickers = new String[investments.size()];
+                int i = 0;
 
-        StockDataRetriever.getInstance().getMultipleStockPrices(investedStockPrices, investedStocksTickers);
+                for (Map.Entry<String, Investment> x : investments.entrySet()) {
+                    investedStocksTickers[i] = x.getValue().getTicker();
+                    i++;
+                }
 
-        while (investedStockPrices.size() < investedStocksTickers.length){
-            try { TimeUnit.MILLISECONDS.sleep(10); }
-            catch (InterruptedException e) { e.printStackTrace(); }
-        }
+                StockDataRetriever.getInstance().getMultipleStockPrices(investedStockPrices, investedStocksTickers);
 
-        for (Investment x: investments.values()){
-            if (!x.getCurrency().equals("NOK")){
-                double exchangeCourse = currencyConverter(x);
-                currencyCache.put(x.getCurrency(),exchangeCourse);
+                while (investedStockPrices.size() < investedStocksTickers.length){
+                    try { TimeUnit.MILLISECONDS.sleep(10); }
+                    catch (InterruptedException e) { e.printStackTrace(); }
+                }
 
-                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * exchangeCourse * x.getVolum()));
+                for (Investment x: investments.values()){
+                    if (!x.getCurrency().equals("NOK")){
+                        double exchangeCourse = currencyConverter(x);
+                        currencyCache.put(x.getCurrency(),exchangeCourse);
+
+                        BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                        markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * exchangeCourse * x.getVolum()));
+                    }
+                    else {
+                        BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
+                        markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * x.getVolum()));
+                    }
+                }
+
+                currencyCache.clear();
+                markedValueNOKReturnArr.add(markedValueNOK);
             }
-            else {
-                BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * x.getVolum()));
+        });
+        thread.start();
+
+            while(markedValueNOKReturnArr.size() == 0){
+                try { TimeUnit.MILLISECONDS.sleep(10); }
+                catch (InterruptedException e) {e.printStackTrace();}
             }
-        }
 
-        currencyCache.clear();
-
-        return markedValueNOK;
+            return markedValueNOKReturnArr.get(0);
     }
 
     public double getMarkedValueNOKSingleStock(HashMap<String, Investment> investment, String investedStocksTicker){
 
-        double markedValueNOK = 0;
-        Map<String, BigDecimal> investedStockPrice = new HashMap<>();
+        ArrayList<Double> markedValueNOKReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double markedValueNOK = 0;
+                Map<String, BigDecimal> investedStockPrice = new HashMap<>();
 
-        StockDataRetriever.getInstance().getStockPrice(investedStockPrice,investedStocksTicker);
+                StockDataRetriever.getInstance().getStockPrice(investedStockPrice,investedStocksTicker);
 
-        while (investedStockPrice.size() == 0){
+                while (investedStockPrice.size() == 0){
+                    try { TimeUnit.MILLISECONDS.sleep(10); }
+                    catch (InterruptedException e) { e.printStackTrace(); }
+                }
+
+                if (!investment.get(investedStocksTicker).getCurrency().equals("NOK")){
+                    double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
+
+                    BigDecimal currentPriceStock = investedStockPrice.get("Stock");
+                    markedValueNOK = (currentPriceStock.doubleValue() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                }
+                else {
+                    BigDecimal currentPriceStock = investedStockPrice.get("Stock");
+                    markedValueNOK = currentPriceStock.doubleValue() * investment.get(investedStocksTicker).getVolum();
+                }
+                markedValueNOKReturnArr.add(markedValueNOK);
+            }
+        });
+        thread.start();
+
+        while(markedValueNOKReturnArr.size() == 0){
             try { TimeUnit.MILLISECONDS.sleep(10); }
-            catch (InterruptedException e) { e.printStackTrace(); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
-
-        if (!investment.get(investedStocksTicker).getCurrency().equals("NOK")){
-            double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
-
-            BigDecimal currentPriceStock = investedStockPrice.get("Stock");
-            markedValueNOK = (currentPriceStock.doubleValue() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
-        }
-        else {
-            BigDecimal currentPriceStock = investedStockPrice.get("Stock");
-            markedValueNOK = currentPriceStock.doubleValue() * investment.get(investedStocksTicker).getVolum();
-        }
-
-        return markedValueNOK;
+        return markedValueNOKReturnArr.get(0);
     }
 
     public double getEarningsNOKSingleStock(HashMap<String, Investment> investment,String investedStocksTicker){
         //Calculates ernings in NOK on the investment inputed. Markedvalue-buyvalue. Currency is converted. Returned double with ernings
 
-        double markedValue = StockCalculations.getInstance().getMarkedValueNOKSingleStock(investment,investedStocksTicker);
-        double buyingCost;
+        ArrayList<Double> earningsNOKReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
-            double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
-            buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                double markedValue = StockCalculations.getInstance().getMarkedValueNOKSingleStock(investment,investedStocksTicker);
+                double buyingCost;
+
+                if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
+                    double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
+                    buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                }
+                else{
+                     buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
+                }
+                earningsNOKReturnArr.add((markedValue - buyingCost));
+            }
+        });
+        thread.start();
+
+        while(earningsNOKReturnArr.size() == 0){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
-        else{
-             buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
-        }
-        return (markedValue - buyingCost);
+        return earningsNOKReturnArr.get(0);
     }
 
     public double getEarningsPercentSingleStock(HashMap<String, Investment> investment,String investedStocksTicker){
     //Calculates percent ernings on the investment inputed. Currency is converted. Returned double with percentErnings
 
-        double markedValue = StockCalculations.getInstance().getMarkedValueNOKSingleStock(investment,investedStocksTicker);
-        double buyingCost;
+        ArrayList<Double> earningsPercentReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
-            double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
-            buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
-        }
-        else{
-            buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
+                double markedValue = StockCalculations.getInstance().getMarkedValueNOKSingleStock(investment,investedStocksTicker);
+                double buyingCost;
+
+                if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
+                    double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
+                    buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                }
+                else{
+                    buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
+                }
+                earningsPercentReturnArr.add(((markedValue / buyingCost) * 100 - 100));
+            }
+        });
+        thread.start();
+
+        while(earningsPercentReturnArr.size() == 0){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
 
-        return ((markedValue / buyingCost) * 100 - 100);
+        return earningsPercentReturnArr.get(0);
     }
 
     public HashMap<String, Double> getEarningsNOKMultipleStocks(HashMap<String, Investment> investments){
     //calculates ernings in NOK on the stocks inputed. Takes care of currencyconvertion and volume. Returns in hashmap ticker - eranings in NOK
 
-        double markedValue, buyingCost;;
-        HashMap<String, Double> earningsNOK = new HashMap<>();
+        ArrayList<HashMap<String, Double>> earningsNOKReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        HashMap<String, Double> currentPriceStocks = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
+                double markedValue, buyingCost;;
+                HashMap<String, Double> earningsNOK = new HashMap<>();
 
-        for (Investment x: investments.values()){
-            if (!x.getCurrency().equals("NOK")){
-                double exchangeCourse = currencyConverter(x);
-                currencyCache.put(x.getCurrency(),exchangeCourse);
-                buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
-                markedValue = (currentPriceStocks.get(x.getTicker()));
-                earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
+                HashMap<String, Double> currentPriceStocks = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
+
+                for (Investment x: investments.values()){
+                    if (!x.getCurrency().equals("NOK")){
+                        double exchangeCourse = currencyConverter(x);
+                        currencyCache.put(x.getCurrency(),exchangeCourse);
+                        buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
+                        markedValue = (currentPriceStocks.get(x.getTicker()));
+                        earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
+                    }
+                    else {
+                        buyingCost = x.getVolum() * x.getPrice();
+                        markedValue = (currentPriceStocks.get(x.getTicker()));
+                        earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
+                    }
+                }
+                currencyCache.clear();
+
+                earningsNOKReturnArr.add(earningsNOK);
             }
-            else {
-                buyingCost = x.getVolum() * x.getPrice();
-                markedValue = (currentPriceStocks.get(x.getTicker()));
-                earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
-            }
+        });
+        thread.start();
+
+        while(earningsNOKReturnArr.size() == 0){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
-        currencyCache.clear();
-        return earningsNOK;
+
+        return earningsNOKReturnArr.get(0);
     }
 
     public HashMap<String, Double> getEarningsPercentMultipleStocks(HashMap<String, Investment> investments) {
     //calculates ernings in percent on the stocks inputed. Takes care of currencyconvertion and volume. Returns in hashmap ticker - eranings in percent
 
-        double markedValue, buyingCost;
-        ;
-        HashMap<String, Double> earningsNOK = new HashMap<>();
 
-        HashMap<String, Double> currentPriceStocks = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
+        ArrayList<HashMap<String, Double>> earningsNOKReturnArr = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double markedValue, buyingCost;
 
-        for (Investment x : investments.values()) {
-            if (!x.getCurrency().equals("NOK")) {
-                double exchangeCourse = currencyConverter(x);
-                currencyCache.put(x.getCurrency(), exchangeCourse);
-                buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
-                markedValue = (currentPriceStocks.get(x.getTicker()));
-                earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
-            } else {
-                buyingCost = x.getVolum() * x.getPrice();
-                markedValue = (currentPriceStocks.get(x.getTicker()));
-                earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
+                HashMap<String, Double> earningsNOK = new HashMap<>();
+
+                HashMap<String, Double> currentPriceStocks = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
+
+                for (Investment x : investments.values()) {
+                    if (!x.getCurrency().equals("NOK")) {
+                        double exchangeCourse = currencyConverter(x);
+                        currencyCache.put(x.getCurrency(), exchangeCourse);
+                        buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
+                        markedValue = (currentPriceStocks.get(x.getTicker()));
+                        earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
+                    } else {
+                        buyingCost = x.getVolum() * x.getPrice();
+                        markedValue = (currentPriceStocks.get(x.getTicker()));
+                        earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
+                    }
+                }
+                currencyCache.clear();
+
+                earningsNOKReturnArr.add(earningsNOK);
             }
+        });
+        thread.start();
+
+        while(earningsNOKReturnArr.size() == 0){
+            try { TimeUnit.MILLISECONDS.sleep(10); }
+            catch (InterruptedException e) {e.printStackTrace();}
         }
-        currencyCache.clear();
-        return earningsNOK;
+
+        return earningsNOKReturnArr.get(0);
     }
 }

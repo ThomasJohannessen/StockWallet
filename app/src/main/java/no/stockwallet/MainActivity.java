@@ -86,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
+        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        viewModel.fillWithDummyData();
+        viewModel.addAPIvaluesToInvestmentObjects(viewModel);
+      
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
