@@ -51,12 +51,15 @@ public class StockViewModel extends ViewModel {
     }
 
     public void addAPIvaluesToInvestmentObjects(StockViewModel viewModel){
-        API_InvestmentDataHandler test = new API_InvestmentDataHandler(viewModel);
-        test.addTotalMarkedValueNOKOnStockToInvestment();
-        test.addFullStockNamesToInvestments();
-        test.addTotalEarningsPercentOnStockToInvestment();
-        test.addTotalEarningsNOKOnStockToInvestments();
+        API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(viewModel);
+
+        APIhandler.addTotalMarkedValueNOKOnStockToInvestment();
+        APIhandler.addFullStockNamesToInvestments();
+        APIhandler.addTotalEarningsPercentOnStockToInvestment();
+        APIhandler.addTotalEarningsNOKOnStockToInvestments();
     }
+
+
 
     public void addInvestment(Investment investment) {
 
