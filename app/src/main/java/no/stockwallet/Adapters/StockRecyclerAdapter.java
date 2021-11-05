@@ -63,8 +63,8 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
         String stockName = data.get(position).getFullName();
         double earning = Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
-        double earningsPrcent = Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
-        int markedValue = (int) Double.parseDouble(df.format(data.get(position).getTotalEarningsStockNOK()));
+        double earningsPrcent = Double.parseDouble(df.format(data.get(position).getTotalEarningsStockPercent()));
+        int markedValue = (int) Double.parseDouble(df.format(data.get(position).getTotalStockMarkedValue()));
 
         holder.stockEarning.setText(String.valueOf(earning + " NOK"));
         holder.stockNameView.setText(stockName);
