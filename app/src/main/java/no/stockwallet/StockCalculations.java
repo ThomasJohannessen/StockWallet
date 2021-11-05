@@ -346,7 +346,7 @@ public class StockCalculations {
     //calculates ernings in percent on the stocks inputed. Takes care of currencyconvertion and volume. Returns in hashmap ticker - eranings in percent
 
         double markedValue, buyingCost;
-        ;
+
         HashMap<String, Double> earningsNOK = new HashMap<>();
 
         HashMap<String, Double> currentPriceStocks = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
