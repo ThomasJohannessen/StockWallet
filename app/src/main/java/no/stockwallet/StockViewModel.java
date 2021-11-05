@@ -59,7 +59,13 @@ public class StockViewModel extends ViewModel {
         APIhandler.addTotalEarningsNOKOnStockToInvestments();
     }
 
+    public void fetchDataforHomeFragment(StockViewModel viewModel){
+        API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(viewModel);
 
+        APIhandler.findTopp3AndBootom3();
+
+
+    }
 
     public void addInvestment(Investment investment) {
 

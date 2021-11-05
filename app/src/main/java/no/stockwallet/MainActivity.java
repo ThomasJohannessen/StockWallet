@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
         viewModel.fillWithDummyData();
         viewModel.addAPIvaluesToInvestmentObjects(viewModel);
-
+        viewModel.fetchDataforHomeFragment(viewModel);
 
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,45 +16,61 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import no.stockwallet.API_InvestmentDataHandler;
 import no.stockwallet.Fragments.Wrappers.HomeFragmentsWrapper;
 import no.stockwallet.Investment;
-import no.stockwallet.MainActivity;
 import no.stockwallet.R;
 import no.stockwallet.StockCalculations;
-import no.stockwallet.StockDataRetriever;
+import no.stockwallet.StockViewModel;
 
 public class GainFragment extends Fragment {
+    private StockViewModel viewModel;
 
     public GainFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gain, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-         TextView stockName1, stockName2, stockName3, stockName4, stockName5, stockName6,
+        TextView stockName1, stockName2, stockName3, stockName4, stockName5, stockName6,
                 stockPrcnt1, stockPrcnt2, stockPrcnt3, stockPrcnt4, stockPrcnt5, stockPrcnt6,
                 stockPrice1, stockPrice2, stockPrice3, stockPrice4, stockPrice5, stockPrice6,
                 errMsg1,errMsg2;
 
+        API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(viewModel);
         DecimalFormat df = new DecimalFormat("#.##");
         Boolean underSixInvestments = false;
 
         super.onViewCreated(view, savedInstanceState);
-        HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
 
-        //goes thorough all the investments and finds the biggest loss and winner and puts them in array getTop.. and getBottom..
+
+        //Is only used to get the currency. No heavy data handling
+        HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
         HashMap<String, Investment> investments = parent.getViewModel().getStockMap().getValue();
-        StockCalculations.getInstance().getIntradayChangesInStocksPercent(investments);
+
+        if ((StockCalculations.getInstance().getBottomThreeLoserStocks().size() == 0) ||
+                (StockCalculations.getInstance().getTopThreeGainerStocks().size() == 0)){
+            APIhandler.findTopp3AndBootom3();
+
+        }
+
+        while (StockCalculations.getInstance().getTopThreeGainerStocks().size() == 0){
+            try {TimeUnit.MILLISECONDS.sleep(10);}
+            catch (InterruptedException e) {e.printStackTrace();}
+        }
+        while (StockCalculations.getInstance().getBottomThreeLoserStocks().size() == 0){
+            try {TimeUnit.MILLISECONDS.sleep(10);}
+            catch (InterruptedException e) {e.printStackTrace();}
+        }
 
         ArrayList<Pair<String, BigDecimal>> topp3Arr = StockCalculations.getInstance().getTopThreeGainerStocks();
         ArrayList<Pair<String, BigDecimal>> bottom3Arr = StockCalculations.getInstance().getBottomThreeLoserStocks();
@@ -62,8 +78,14 @@ public class GainFragment extends Fragment {
         String[] tickers = new String[6];
 
         for(int i=0; i<6; i++){
-            if (bottom3Arr.get(i).first == null){
-                underSixInvestments = true;
+
+            if (i<3) {
+                if (bottom3Arr.get(i).first == null)
+                    underSixInvestments = true;
+            }
+            else if(i>3){
+                if (topp3Arr.get(i-3).first == null)
+                    underSixInvestments = true;
             }
             if (i<3) {
                 tickers[i] = bottom3Arr.get(i).first;
@@ -119,8 +141,11 @@ public class GainFragment extends Fragment {
 
         }
         else {
-            HashMap<String, BigDecimal> stockPrices = new HashMap<>();
-            StockDataRetriever.getInstance().getMultipleStockPrices(stockPrices, tickers);
+
+            if (APIhandler.getStockPricesTopp3Bottom3Map() == null){
+                APIhandler.fetchStockPricesForToppAndBottom3(tickers);
+            }
+            HashMap<String, BigDecimal> stockPrices = APIhandler.getStockPricesTopp3Bottom3Map();
 
             while (stockPrices.size() < tickers.length) {
                 try {
@@ -129,7 +154,6 @@ public class GainFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-
 
             stockPrcnt1.setText(String.valueOf(topp3Arr.get(0).second + " %"));
             stockName1.setText(String.valueOf(topp3Arr.get(0).first));
