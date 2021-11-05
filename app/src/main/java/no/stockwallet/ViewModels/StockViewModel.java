@@ -34,17 +34,17 @@ public class StockViewModel extends ViewModel {
 
     public void addInvestment(Investment investment) {
         // TODO: Hvis eksisterer
-            HashMap<String, Investment> temp = stockMap.getValue();
-            if (temp != null) {
-                temp.put(investment.getTicker(), investment);
-                API_InvestmentDataHandler api = new API_InvestmentDataHandler(this);
-                api.addTotalEarningsNOKOnSingleStockToInvestment(investment);
-                api.addTotalMarkedValueNOKOnSingleStockToInvestment(investment);
-                api.addTotalEarningsPercentOnSingleStockToInvestment(investment);
-                api.addFullStockNamesToInvestments();
-                FireBaseJsonSupport.writeDB(stockMap.getValue());
-                stockMap.setValue(temp);
-            }
+        HashMap<String, Investment> temp = stockMap.getValue();
+        if(temp.get(investment.getTicker()) == null) {
+            temp.put(investment.getTicker(), investment);
+            API_InvestmentDataHandler api = new API_InvestmentDataHandler(this);
+            api.addTotalEarningsNOKOnSingleStockToInvestment(investment);
+            api.addTotalMarkedValueNOKOnSingleStockToInvestment(investment);
+            api.addTotalEarningsPercentOnSingleStockToInvestment(investment);
+            api.addFullStockNamesToInvestments();
+            FireBaseJsonSupport.writeDB(stockMap.getValue());
+            stockMap.setValue(temp);
+        }
     }
 
     public Investment getInvestment(String ticker){

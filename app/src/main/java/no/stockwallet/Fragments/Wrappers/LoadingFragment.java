@@ -74,20 +74,22 @@ public class LoadingFragment extends Fragment {
            if(task.isSuccessful()) {
                DocumentSnapshot ss = task.getResult();
                Map<String, Object> map = ss.getData();
+
+               HashMap<String, Investment> temp = new HashMap<>();
+
                for (Map.Entry<String, Object> entry : map.entrySet()) {
                    if (entry.getKey().equals("stocks")) {
                        ObjectMapper mapper = new ObjectMapper();
                        Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
 
-                       HashMap<String, Investment> temp = new HashMap<>();
                        for(Object inv : objectMap.values()) {
                            Investment investment = mapper.convertValue(inv, Investment.class);
                            temp.put(investment.getTicker(), investment);
                        }
-                       viewModel.setStockMap(temp);
-                       Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
                    }
-           }
+               }
+               viewModel.setStockMap(temp);
+               Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
         }});
     }
 }
