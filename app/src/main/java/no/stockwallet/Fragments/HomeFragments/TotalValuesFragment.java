@@ -82,15 +82,12 @@ public class TotalValuesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
-        Log.d("ViewModel", "CREATING TOTALVALUESFRAGMENT");
-        TextView test = view.findViewById(R.id.Total_Invested);
         parent.getViewModel().fillWithDummyData();
 
         TextView totalInvestedNOKTextView = view.findViewById(R.id.Total_Invested);
         int markedValue = StockCalculations.getInstance().getTotalMarkedValue(parent.getViewModel().getStockMap().getValue());
         totalInvestedNOKTextView.setText(String.valueOf(markedValue) + " kr");
 
-        TextView test1 = view.findViewById(R.id.Prcent_change_earnings_period);
         // when total percent methode is done
         TextView totalInvestedPercentEarned = view.findViewById(R.id.Prcent_change_earnings_period);
         double totalEarnedPercent = StockCalculations.getInstance().getTotalPercentEarnings(parent.getViewModel().getStockMap().getValue());
