@@ -37,7 +37,12 @@ public class GainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-         TextView stockName1, stockName2, stockName3, stockName4, stockName5, stockName6,
+        super.onViewCreated(view, savedInstanceState);
+         fillWithData(view);
+    }
+
+    private void fillWithData(View view) {
+        TextView stockName1, stockName2, stockName3, stockName4, stockName5, stockName6,
                 stockPrcnt1, stockPrcnt2, stockPrcnt3, stockPrcnt4, stockPrcnt5, stockPrcnt6,
                 stockPrice1, stockPrice2, stockPrice3, stockPrice4, stockPrice5, stockPrice6,
                 errMsg1,errMsg2;
@@ -45,8 +50,6 @@ public class GainFragment extends Fragment {
         DecimalFormat df = new DecimalFormat("#.##");
         Boolean underSixInvestments = false;
 
-
-        super.onViewCreated(view, savedInstanceState);
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
 
         //goes thorough all the investments and finds the biggest loss and winner and puts them in array getTop.. and getBottom..
