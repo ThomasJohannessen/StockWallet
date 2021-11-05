@@ -7,7 +7,7 @@ public class Investment {
     private int volum;
 
     private String fullName;
-    private int totalStockMarkedValue;
+    private double totalStockMarkedValue;
     private double totalEarningsStockNOK,totalEarningsStockPercent;
 
     public Investment(String ticker, int volum, double price, String currency, double brokerage) {
@@ -59,11 +59,11 @@ public class Investment {
         this.fullName = fullName;
     }
 
-    public int getTotalStockMarkedValue() {
+    public double getTotalStockMarkedValue() {
         return totalStockMarkedValue;
     }
 
-    public void setTotalStockMarkedValue(int totalStockMarkedValue) {
+    public void setTotalStockMarkedValue(double totalStockMarkedValue) {
         this.totalStockMarkedValue = totalStockMarkedValue;
     }
 
