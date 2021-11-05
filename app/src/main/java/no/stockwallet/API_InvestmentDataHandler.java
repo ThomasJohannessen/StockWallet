@@ -9,112 +9,151 @@ import yahoofinance.Stock;
 
 public class API_InvestmentDataHandler {
 
-    StockViewModel svm = new StockViewModel();
+    StockViewModel svm;
+
+    public API_InvestmentDataHandler(StockViewModel viewModel) {
+        svm = viewModel;
+    }
 
     public void addFullStockNamesToInvestments(){
-        HashMap<String, Investment> investments = svm.getStockMap().getValue();
-        if(investments.size() > 0) {
-            for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-                HashMap<String, Stock> temp = new HashMap<>();
-                StockDataRetriever.getInstance().getStockObject(temp, stock.getKey());
+            HashMap<String, Investment> investments = svm.getStockMap().getValue();
 
-                while (temp.size() < 1) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            if(investments.size() > 0) {
+                for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
+
+                    HashMap<String, Stock> temp = new HashMap<>();
+                    StockDataRetriever.getInstance().getStockObject(temp, stock.getKey());
+
+                    while (temp.size() < 1) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+
+                    Investment updateInvestment = svm.getInvestment(stock.getKey());
+                    updateInvestment.setFullName(temp.get("Stock").getName());
+
+                    temp.clear();
                 }
-
-                Investment updateInvestment = svm.getInvestment(stock.getKey());
-                updateInvestment.setFullName(temp.get("Stock").getName());
-
-                temp.clear();
             }
-        }
+            }
+        });
+        thread.start();
     }
 
     public void addFullStockNameToAInvestment(Investment investment){
-        HashMap<String, Stock> temp = new HashMap<>();
-        StockDataRetriever.getInstance().getStockObject(temp,investment.getTicker());
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, Stock> temp = new HashMap<>();
+                StockDataRetriever.getInstance().getStockObject(temp,investment.getTicker());
 
-        while (temp.size() < 1){
-            try { TimeUnit.MILLISECONDS.sleep(10);}
-            catch (InterruptedException e) {e.printStackTrace();}
-        }
+                while (temp.size() < 1){
+                    try { TimeUnit.MILLISECONDS.sleep(10);}
+                    catch (InterruptedException e) {e.printStackTrace();}
+                }
 
-        Investment updateInvestment = svm.getInvestment(investment.getTicker());
-        updateInvestment.setFullName(temp.get("Stock").getName());
-        temp.clear();
+                Investment updateInvestment = svm.getInvestment(investment.getTicker());
+                updateInvestment.setFullName(temp.get("Stock").getName());
+                temp.clear();
+            }
+        });
+        thread.start();
     }
 
     public void addTotalEarningsNOKOnStockToInvestments(){
-        HashMap<String, Investment> investments = svm.getStockMap().getValue();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        if(investments.size() > 0) {
-            HashMap<String, Double> temp = StockCalculations.getInstance().getEarningsNOKMultipleStocks(investments);
+                HashMap<String, Investment> investments = svm.getStockMap().getValue();
 
-            while (temp.size() != investments.size()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if(investments.size() > 0) {
+                    HashMap<String, Double> temp = StockCalculations.getInstance().getEarningsNOKMultipleStocks(investments);
+
+                    while (temp.size() != investments.size()) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
+                        Investment updateInvestment = svm.getInvestment(stock.getKey());
+                        updateInvestment.setTotalEarningsStockNOK(temp.get(stock.getKey()));
+                    }
+                    temp.clear();
                 }
             }
-
-            for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
-                Investment updateInvestment = svm.getInvestment(stock.getKey());
-                updateInvestment.setTotalEarningsStockNOK(temp.get(stock.getKey()));
-            }
-            temp.clear();
-        }
+        });
+        thread.start();
     }
 
     public void addTotalEarningsPercentOnStockToInvestment(){
-        HashMap<String, Investment> investments = svm.getStockMap().getValue();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        if(investments.size() > 0) {
-            HashMap<String, Double> temp = StockCalculations.getInstance().getEarningsPercentMultipleStocks(investments);
+                HashMap<String, Investment> investments = svm.getStockMap().getValue();
 
-            while (temp.size() != investments.size()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if(investments.size() > 0) {
+                    HashMap<String, Double> temp = StockCalculations.getInstance().getEarningsPercentMultipleStocks(investments);
+
+                    while (temp.size() != investments.size()) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
+                        Investment updateInvestment = svm.getInvestment(stock.getKey());
+                        updateInvestment.setTotalEarningsStockPercent(temp.get(stock.getKey()));
+                    }
+                    temp.clear();
                 }
             }
-
-            for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
-                Investment updateInvestment = svm.getInvestment(stock.getKey());
-                updateInvestment.setTotalEarningsStockPercent(temp.get(stock.getKey()));
-            }
-            temp.clear();
-        }
+        });
+        thread.start();
     }
 
     public void addTotalMarkedValueNOKOnStockToInvestment(){
-        HashMap<String, Investment> investments = svm.getStockMap().getValue();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        Log.d("TotaltInvestert-dummeylength-API", String.valueOf(investments.size()));
-        Log.d("TotaltInvestert-data-API", String.valueOf(investments.get("MPCC.OL").getFullName()));
-        if(investments.size() > 0) {
+                HashMap<String, Investment> investments = svm.getStockMap().getValue();
+                //Log.d("TotaltInvestert-dummeylength-API", String.valueOf(investments.size()));
+                //Log.d("TotaltInvestert-data-API", String.valueOf(investments.get("MPCC.OL").getFullName()));
+                if(investments.size() != 0) {
 
-            HashMap<String, Double> temp = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
+                    HashMap<String, Double> temp = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
 
-            while (temp.size() != investments.size()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    while (temp.size() != investments.size()) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
+                        Investment updateInvestment = svm.getInvestment(stock.getKey());
+                        //Integer.valueOf(String.valueOf(temp.get(stock.getKey())))
+                        updateInvestment.setTotalStockMarkedValue(100);
+                    }
+                    temp.clear();
                 }
             }
-
-            for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
-                Investment updateInvestment = svm.getInvestment(stock.getKey());
-                updateInvestment.setTotalStockMarkedValue(Integer.valueOf(String.valueOf(temp.get(stock.getKey()))));
-            }
-            temp.clear();
-        }
+        });
+        thread.start();
     }
 }
