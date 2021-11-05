@@ -131,8 +131,6 @@ public class API_InvestmentDataHandler {
             public void run() {
 
                 HashMap<String, Investment> investments = svm.getStockMap().getValue();
-                //Log.d("TotaltInvestert-dummeylength-API", String.valueOf(investments.size()));
-                //Log.d("TotaltInvestert-data-API", String.valueOf(investments.get("MPCC.OL").getFullName()));
                 if(investments.size() != 0) {
 
                     HashMap<String, Double> temp = StockCalculations.getInstance().getMarkedValueNOKMultipleStocks(investments);
@@ -147,8 +145,7 @@ public class API_InvestmentDataHandler {
 
                     for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
                         Investment updateInvestment = svm.getInvestment(stock.getKey());
-                        //Integer.valueOf(String.valueOf(temp.get(stock.getKey())))
-                        updateInvestment.setTotalStockMarkedValue(100);
+                        updateInvestment.setTotalStockMarkedValue(temp.get(stock.getKey()));
                     }
                     temp.clear();
                 }
