@@ -50,8 +50,8 @@ public class StockViewModel extends ViewModel {
         stockMap.setValue(temp);
     }
 
-    public void addAPIvaluesToInvestmentObjects(){
-        API_InvestmentDataHandler test = new API_InvestmentDataHandler();
+    public void addAPIvaluesToInvestmentObjects(StockViewModel viewModel){
+        API_InvestmentDataHandler test = new API_InvestmentDataHandler(viewModel);
         test.addTotalMarkedValueNOKOnStockToInvestment();
         test.addFullStockNamesToInvestments();
         test.addTotalEarningsPercentOnStockToInvestment();
