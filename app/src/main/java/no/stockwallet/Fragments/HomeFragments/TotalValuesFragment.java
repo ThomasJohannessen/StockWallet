@@ -82,7 +82,6 @@ public class TotalValuesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
-        parent.getViewModel().fillWithDummyData();
 
         TextView totalInvestedNOKTextView = view.findViewById(R.id.Total_Invested);
         int markedValue = StockCalculations.getInstance().getTotalMarkedValue(parent.getViewModel().getStockMap().getValue());

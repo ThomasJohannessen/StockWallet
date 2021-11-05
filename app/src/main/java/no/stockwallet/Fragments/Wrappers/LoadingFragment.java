@@ -50,8 +50,9 @@ public class LoadingFragment extends Fragment {
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
         }
-
-        fetchViewModel();
+        else {
+            fetchViewModel();
+        }
     }
 
     @Override
@@ -74,14 +75,17 @@ public class LoadingFragment extends Fragment {
 
                 HashMap<String, Investment> map = new HashMap<>();
                 Map<String, String> temp = (Map<String, String>) ss.getData().get("stocks");
-
-                for(Object obj : Arrays.asList(temp).get(0).values().toArray()) {
-                    Investment inv = new Gson().fromJson(obj.toString(), Investment.class);
-                    map.put(inv.getTicker(), inv);
+                if(temp != null) {
+                    for(Object obj : Arrays.asList(temp).get(0).values().toArray()) {
+                        Investment inv = new Gson().fromJson(obj.toString(), Investment.class);
+                        map.put(inv.getTicker(), inv);
+                    }
+                    viewModel.setStockMap(map);
+                }
+                else {
+                    viewModel.setStockMap(new HashMap<>());
                 }
 
-                viewModel.setStockMap(map);
-                Log.d("ViewModel", viewModel.getStockMap().getValue().toString());
                 Log.d("ViewModel", "SWITCHING TO HOMEFRAGMENT");
                 Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
             }

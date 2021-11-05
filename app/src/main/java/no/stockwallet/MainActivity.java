@@ -74,11 +74,12 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        setUpViewModel();
+
         if(user == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-        setUpViewModel();
 
         setContentView(R.layout.activity_main);
 
@@ -86,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
-        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-        viewModel.fillWithDummyData();
-        viewModel.addAPIvaluesToInvestmentObjects(viewModel);
-      
+        //viewModel = new ViewModelProvider(this).get(StockViewModel.class)
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);

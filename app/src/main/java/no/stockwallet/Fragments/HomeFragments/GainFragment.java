@@ -49,6 +49,7 @@ public class GainFragment extends Fragment {
         DecimalFormat df = new DecimalFormat("#.##");
         Boolean underSixInvestments = false;
 
+
         super.onViewCreated(view, savedInstanceState);
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
 
@@ -62,8 +63,13 @@ public class GainFragment extends Fragment {
         String[] tickers = new String[6];
 
         for(int i=0; i<6; i++){
-            if (bottom3Arr.get(i).first == null){
-                underSixInvestments = true;
+            if (i<3) {
+                if (bottom3Arr.get(i).first == null)
+                    underSixInvestments = true;
+            }
+            else if(i>3){
+                if (topp3Arr.get(i-3).first == null)
+                    underSixInvestments = true;
             }
             if (i<3) {
                 tickers[i] = bottom3Arr.get(i).first;
