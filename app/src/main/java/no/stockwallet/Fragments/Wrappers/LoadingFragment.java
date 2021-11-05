@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.stockwallet.MainActivity;
 import no.stockwallet.Model.Investment;
 import no.stockwallet.Login.LoginActivity;
 import no.stockwallet.R;
@@ -43,7 +45,6 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
 
         user = FirebaseAuth.getInstance().getCurrentUser();

@@ -26,7 +26,7 @@ import no.stockwallet.Handlers.StockDataRetriever;
 
 public class GainFragment extends Fragment {
 
-    View view;
+    private View view;
 
     public GainFragment() {}
 
@@ -34,7 +34,9 @@ public class GainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gain, container, false);
+        View view = inflater.inflate(R.layout.fragment_gain, container, false);
+        this.view = view;
+        return view;
     }
 
     @Override
@@ -44,9 +46,13 @@ public class GainFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = view;
     }
 
     private void fillWithData(View view) {

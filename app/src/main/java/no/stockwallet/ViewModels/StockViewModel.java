@@ -32,19 +32,31 @@ public class StockViewModel extends ViewModel {
         APIhandler.addTotalEarningsNOKOnStockToInvestments();
     }
 
-    public void addInvestment(Investment investment) {
+    public void addInvestment(Investment newInvestment) {
         // TODO: Hvis eksisterer
         HashMap<String, Investment> temp = stockMap.getValue();
-        if(temp.get(investment.getTicker()) == null) {
-            temp.put(investment.getTicker(), investment);
+        if(temp.get(newInvestment.getTicker()) == null) {
+            temp.put(newInvestment.getTicker(), newInvestment);
             API_InvestmentDataHandler api = new API_InvestmentDataHandler(this);
-            api.addTotalEarningsNOKOnSingleStockToInvestment(investment);
-            api.addTotalMarkedValueNOKOnSingleStockToInvestment(investment);
-            api.addTotalEarningsPercentOnSingleStockToInvestment(investment);
+            api.addTotalEarningsNOKOnSingleStockToInvestment(newInvestment);
+            api.addTotalMarkedValueNOKOnSingleStockToInvestment(newInvestment);
+            api.addTotalEarningsPercentOnSingleStockToInvestment(newInvestment);
             api.addFullStockNamesToInvestments();
-            FireBaseJsonSupport.writeDB(stockMap.getValue());
             stockMap.setValue(temp);
         }
+        else {
+            Investment existingInvestment = temp.get(newInvestment.getTicker());
+            double existPrice = existingInvestment.getPrice() * existingInvestment.getVolum();
+            Log.d("MATTE", "ExistPrice = " + " " + String.valueOf(existPrice));
+            double newPrice = newInvestment.getPrice() * newInvestment.getVolum();
+            Log.d("MATTE", "NewPrice = " + " " + String.valueOf(newPrice));
+            existingInvestment.setVolum(existingInvestment.getVolum() + newInvestment.getVolum());
+            Log.d("MATTE", "VOLUME = " + " " + String.valueOf(existingInvestment.getVolum()));
+            double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolum());
+            Log.d("MATTE", "MeanPrice = " + " " + String.valueOf(meanPrice));
+            existingInvestment.setPrice(meanPrice);
+        }
+        FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
     public Investment getInvestment(String ticker){
