@@ -1,4 +1,4 @@
-package no.stockwallet;
+package no.stockwallet.Support;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -10,19 +10,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.stockwallet.Model.Investment;
+import no.stockwallet.ViewModels.StockViewModel;
+
 public class FireBaseJsonSupport {
-
-    public static <T, G> String convertToJson(HashMap<T, G> map) {
-        return new Gson().toJson(map);
-    }
-
-    public static void test(HashMap<String, Investment> map) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DocumentReference db = FirebaseFirestore.getInstance().collection("StockWallet").document(user.getUid());
-        HashMap<String, Object> temp = new HashMap<>();
-        temp.put("stocks", map);
-        db.update(temp);
-    }
 
     public static void readDB(StockViewModel model) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

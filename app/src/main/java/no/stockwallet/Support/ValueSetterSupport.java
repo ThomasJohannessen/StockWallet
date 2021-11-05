@@ -1,4 +1,4 @@
-package no.stockwallet;
+package no.stockwallet.Support;
 
 import android.util.Log;
 

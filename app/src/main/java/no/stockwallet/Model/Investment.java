@@ -1,15 +1,15 @@
-package no.stockwallet;
+package no.stockwallet.Model;
 
 public class Investment {
 
     private String ticker,currency;
     private double price;
     private int volum;
-
-    public Investment(){}
     private String fullName;
     private double totalStockMarkedValue;
     private double totalEarningsStockNOK,totalEarningsStockPercent;
+
+    public Investment(){}
 
     public Investment(String ticker, int volum, double price, String currency, double brokerage) {
         this.ticker = ticker;

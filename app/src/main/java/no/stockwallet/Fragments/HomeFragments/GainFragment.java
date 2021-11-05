@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +15,14 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import no.stockwallet.Fragments.Wrappers.HomeFragmentsWrapper;
-import no.stockwallet.Investment;
-import no.stockwallet.MainActivity;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
-import no.stockwallet.StockCalculations;
-import no.stockwallet.StockDataRetriever;
+import no.stockwallet.Handlers.StockCalculations;
+import no.stockwallet.Handlers.StockDataRetriever;
 
 public class GainFragment extends Fragment {
 

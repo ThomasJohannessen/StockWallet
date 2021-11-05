@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 
 import no.stockwallet.Adapters.StockRecyclerAdapter;
 import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
 
 

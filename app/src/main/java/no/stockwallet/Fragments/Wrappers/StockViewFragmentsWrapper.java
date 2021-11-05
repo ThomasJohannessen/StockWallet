@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class StockViewFragmentsWrapper extends Fragment {
 

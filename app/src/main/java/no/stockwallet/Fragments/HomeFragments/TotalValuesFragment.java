@@ -6,20 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-
 import no.stockwallet.Fragments.Wrappers.HomeFragmentsWrapper;
-import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockCalculations;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.Handlers.StockCalculations;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,8 +1,7 @@
-package no.stockwallet;
+package no.stockwallet.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,9 +29,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
+
+import no.stockwallet.MainActivity;
+import no.stockwallet.R;
 
 public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleClient;
@@ -46,7 +46,11 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         setUpGoogleClient();
+        setUpButtonListeners();
 
+    }
+
+    private void setUpButtonListeners() {
         Intent signInIntent = googleClient.getSignInIntent();
 
         Button logInButton = findViewById(R.id.buttonLogIn);
