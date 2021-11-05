@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
         viewModel.fillWithDummyData();
+        viewModel.addAPIvaluesToInvestmentObjects(viewModel);
 
 
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {

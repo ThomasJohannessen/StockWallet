@@ -48,11 +48,16 @@ public class StockDataRetriever {
             public void run() {
                 try {
                     BigDecimal stockValue = null;
-                    Stock stock = null;
+                    Stock tempStock = new Stock("");
+                    Stock stock = tempStock;
                     stock = YahooFinance.get(ticker);
 
-                    while (stock == null){
+                    while (stock == tempStock){
                         TimeUnit.MILLISECONDS.sleep(10);
+                    }
+
+                    if (stock == null){
+                        returVar.put("Stock",null);
                     }
                     returVar.put("Stock",stock.getQuote().getPrice());
                 }
