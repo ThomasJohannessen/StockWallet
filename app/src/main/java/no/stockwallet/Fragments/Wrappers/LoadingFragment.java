@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import no.stockwallet.Model.Investment;
@@ -69,25 +71,23 @@ public class LoadingFragment extends Fragment {
     private void fetchViewModel() {
         DocumentReference db = FirebaseFirestore.getInstance().collection("StockWallet").document(user.getUid());
         db.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot ss = task.getResult();
+           if(task.isSuccessful()) {
+               DocumentSnapshot ss = task.getResult();
+               Map<String, Object> map = ss.getData();
+               for (Map.Entry<String, Object> entry : map.entrySet()) {
+                   if (entry.getKey().equals("stocks")) {
+                       ObjectMapper mapper = new ObjectMapper();
+                       Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
 
-                HashMap<String, Investment> map = new HashMap<>();
-                Map<String, String> temp = (Map<String, String>) ss.getData().get("stocks");
-                if(temp != null) {
-                    for(Object obj : Arrays.asList(temp).get(0).values().toArray()) {
-                        Investment inv = new Gson().fromJson(obj.toString(), Investment.class);
-                        map.put(inv.getTicker(), inv);
-                    }
-                    viewModel.setStockMap(map);
-                }
-                else {
-                    viewModel.setStockMap(new HashMap<>());
-                }
-
-                Log.d("ViewModel", "SWITCHING TO HOMEFRAGMENT");
-                Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
-            }
-        });
+                       HashMap<String, Investment> temp = new HashMap<>();
+                       for(Object inv : objectMap.values()) {
+                           Investment investment = mapper.convertValue(inv, Investment.class);
+                           temp.put(investment.getTicker(), investment);
+                       }
+                       viewModel.setStockMap(temp);
+                       Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
+                   }
+           }
+        }});
     }
 }

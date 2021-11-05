@@ -26,6 +26,8 @@ import no.stockwallet.Handlers.StockDataRetriever;
 
 public class GainFragment extends Fragment {
 
+    View view;
+
     public GainFragment() {}
 
     @Override
@@ -36,9 +38,15 @@ public class GainFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        fillWithData(view);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         fillWithData(view);
+        this.view = view;
     }
 
     private void fillWithData(View view) {

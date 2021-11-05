@@ -16,8 +16,6 @@ public class API_InvestmentDataHandler {
     }
 
     public void addFullStockNamesToInvestments(){
-        Thread thread = new Thread(() -> {
-
         HashMap<String, Investment> investments = svm.getStockMap().getValue();
 
         if(investments.size() > 0) {
@@ -40,8 +38,6 @@ public class API_InvestmentDataHandler {
                 temp.clear();
             }
         }
-        });
-        thread.start();
     }
 
     public void addFullStockNameToAInvestment(Investment investment){
@@ -137,5 +133,59 @@ public class API_InvestmentDataHandler {
             }
         });
         thread.start();
+    }
+    public void addTotalMarkedValueNOKOnSingleStockToInvestment(Investment investment){
+            String ticker = investment.getTicker();
+
+            HashMap<String, Investment> stock = new HashMap<>();
+            stock.put(investment.getTicker(),investment);
+
+            double marketValue = 0.00000000000001;
+            marketValue = StockCalculations.getInstance().getMarkedValueNOKSingleStock(stock,ticker);
+
+            while (marketValue == 0.00000000000001) {
+                try {TimeUnit.MILLISECONDS.sleep(10);}
+                catch (InterruptedException e) {e.printStackTrace();}
+            }
+
+            Investment updateInvestment = svm.getInvestment(ticker);
+            updateInvestment.setTotalEarningsStockPercent(marketValue);
+
+    }
+
+    public void addTotalEarningsPercentOnSingleStockToInvestment(Investment investment){
+            String ticker = investment.getTicker();
+
+            HashMap<String, Investment> stock = new HashMap<>();
+            stock.put(investment.getTicker(),investment);
+
+            double earnings = 0.00000000000001;
+            earnings = StockCalculations.getInstance().getEarningsPercentSingleStock(stock,ticker);
+
+            while (earnings == 0.00000000000001) {
+                try {TimeUnit.MILLISECONDS.sleep(10);}
+                catch (InterruptedException e) {e.printStackTrace();}
+            }
+
+            Investment updateInvestment = svm.getInvestment(ticker);
+            updateInvestment.setTotalEarningsStockPercent(earnings);
+    }
+
+    public void addTotalEarningsNOKOnSingleStockToInvestment(Investment investment){
+            String ticker = investment.getTicker();
+
+            HashMap<String, Investment> stock = new HashMap<>();
+            stock.put(investment.getTicker(),investment);
+
+            double earnings = 0.00000000000001;
+            earnings = StockCalculations.getInstance().getEarningsNOKSingleStock(stock,ticker);
+
+            while (earnings == 0.00000000000001) {
+                try {TimeUnit.MILLISECONDS.sleep(10);}
+                catch (InterruptedException e) {e.printStackTrace();}
+            }
+
+            Investment updateInvestment = svm.getInvestment(ticker);
+            updateInvestment.setTotalEarningsStockNOK(earnings);
     }
 }

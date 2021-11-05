@@ -42,12 +42,12 @@ public class BuySellFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setUpButtonListeners();
+        setUpButtonListeners(view);
     }
 
-    private void setUpButtonListeners() {
+    private void setUpButtonListeners(View view) {
         Button buySellButton = getActivity().findViewById(R.id.RegisterBuySellButton);
-        buySellButton.setOnClickListener(view -> handleRegisterClick(view));
+        buySellButton.setOnClickListener(view1 -> handleRegisterClick(view));
     }
 
     private void handleRegisterClick(View view) {

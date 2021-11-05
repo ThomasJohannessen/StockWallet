@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("TEST", "AUTH COMPLETED");
                             hideKeyboard();
                             checkIfFirstTimeSignIn(account.getGivenName(), account.getFamilyName());
-                            changeActivity();
                         } else {
                             Log.w("TEST", "Google sign in failed");
                         }
@@ -162,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                userCred.put("lastName", lastname);
                docRef.set(userCred);
            }
+            changeActivity();
         });
     }
 
