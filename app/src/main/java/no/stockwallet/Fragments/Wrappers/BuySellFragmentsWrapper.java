@@ -16,6 +16,7 @@ import no.stockwallet.ViewModels.StockViewModel;
 
 public class BuySellFragmentsWrapper extends Fragment {
     public StockViewModel viewModel;
+
     public BuySellFragmentsWrapper() {
         // Required empty public constructor
     }
