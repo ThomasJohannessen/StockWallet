@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class StockListFragment extends Fragment {
 
         OverviewFragmentsWrapper parent = (OverviewFragmentsWrapper) getParentFragment();
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
+        Log.d("dataMap", parent.getData().get("AKH.OL").getClass().getSimpleName());
         adapter = new StockRecyclerAdapter(parent.getData());
         stockRecyclerView.setAdapter(adapter);
         stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));

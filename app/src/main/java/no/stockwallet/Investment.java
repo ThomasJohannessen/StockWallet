@@ -6,6 +6,7 @@ public class Investment {
     private double price;
     private int volum;
 
+    public Investment(){}
     private String fullName;
     private double totalStockMarkedValue;
     private double totalEarningsStockNOK,totalEarningsStockPercent;

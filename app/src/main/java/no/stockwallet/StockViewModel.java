@@ -5,6 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +24,11 @@ public class StockViewModel extends ViewModel {
             i++;
         }
         return investedStocksTickers;
+    }
+
+
+    public void fetchUserData() {
+        FireBaseJsonSupport.readDB(this);
     }
 
     public void fillWithDummyData() {
@@ -47,7 +55,9 @@ public class StockViewModel extends ViewModel {
         temp.put(invest9.getTicker(),invest9);
         temp.put(invest10.getTicker(),invest10);
 
-        stockMap.setValue(temp);
+
+    public void setStockMap(HashMap<String, Investment> stockMap) {
+        this.stockMap.setValue(stockMap);
     }
 
     public void addAPIvaluesToInvestmentObjects(StockViewModel viewModel){
@@ -66,8 +76,9 @@ public class StockViewModel extends ViewModel {
         HashMap<String, Investment> temp = stockMap.getValue();
         if (temp != null) {
             temp.put(investment.getTicker(), investment);
+            FireBaseJsonSupport.writeDB(stockMap.getValue());
+            stockMap.setValue(temp);
         }
-        stockMap.setValue(temp);
     }
 
     public Investment getInvestment(String ticker){
@@ -102,4 +113,12 @@ public class StockViewModel extends ViewModel {
             stockMap = new MutableLiveData<HashMap<String, Investment>>();
         return stockMap;
     }
+
+    private void toJson() {
+        String data = FireBaseJsonSupport.convertToJson(stockMap.getValue());
+        Log.d("JSONTWO", new Gson().fromJson(data, new TypeToken<HashMap<String, Investment>>(){}.getType()).toString());
+        Log.d("JSON", FireBaseJsonSupport.convertToJson(stockMap.getValue()));
+        FireBaseJsonSupport.test(stockMap.getValue());
+    }
+
 }

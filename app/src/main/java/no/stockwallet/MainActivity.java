@@ -65,17 +65,22 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-
-        //TODO : Grab userID and send it to viewmodel. Viewmodel uses API class to grab it's required DATA before displaying it.
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+
+        if(user == null) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+        setUpViewModel();
+
+        setContentView(R.layout.activity_main);
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
@@ -84,8 +89,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
         viewModel.fillWithDummyData();
         viewModel.addAPIvaluesToInvestmentObjects(viewModel);
-
-
+      
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
@@ -95,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
     public void setToolbarTitle(String title) {
         TextView navTitle = (TextView) findViewById(R.id.NavBar_Title);
         navTitle.setText(title);
+    }
+
+    public void setUpViewModel() {
+        viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        //viewModel.fetchUserData();
     }
 
 }
