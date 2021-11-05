@@ -25,11 +25,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import no.stockwallet.Investment;
-import no.stockwallet.LoginActivity;
+import no.stockwallet.Model.Investment;
+import no.stockwallet.Login.LoginActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
-import yahoofinance.Stock;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class LoadingFragment extends Fragment {
     StockViewModel viewModel;

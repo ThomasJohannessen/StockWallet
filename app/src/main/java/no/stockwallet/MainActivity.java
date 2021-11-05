@@ -1,7 +1,5 @@
 package no.stockwallet;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,26 +10,22 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Gravity;
 import android.widget.TextView;
 
 
 import com.crazzyghost.alphavantage.*;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+
+import no.stockwallet.Login.LoginActivity;
+import no.stockwallet.Model.Investment;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;

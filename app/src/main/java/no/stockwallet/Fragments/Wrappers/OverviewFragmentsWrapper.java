@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 
 import java.util.HashMap;
 
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class OverviewFragmentsWrapper extends Fragment {
     public StockViewModel viewModel;

@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Arrays;
-
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class HomeFragmentsWrapper extends Fragment {
     private StockViewModel viewModel;
