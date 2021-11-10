@@ -1,27 +1,26 @@
 package no.stockwallet.Fragments.Wrappers;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.HashMap;
-
-import no.stockwallet.BinderSingleton;
-import no.stockwallet.Fragments.OverviewFragments.StockListFragment;
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class BuySellFragmentsWrapper extends Fragment {
     public StockViewModel viewModel;
+
     public BuySellFragmentsWrapper() {
         // Required empty public constructor
     }
@@ -29,8 +28,13 @@ public class BuySellFragmentsWrapper extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity)getActivity()).setToolbarTitle("Kjøp/Salg");
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+        ((MainActivity)getActivity()).setToolbarTitle("Kjøp/Salg");
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -41,5 +45,6 @@ public class BuySellFragmentsWrapper extends Fragment {
 
     public void registerStockSale(Investment investment) {
         viewModel.addInvestment(investment);
+        viewModel.addAPIvaluesToInvestmentObjects();
     }
 }

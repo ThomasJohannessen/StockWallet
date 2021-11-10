@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
-import no.stockwallet.StockViewModel;
+import no.stockwallet.ViewModels.StockViewModel;
 
 public class HomeFragmentsWrapper extends Fragment {
     private StockViewModel viewModel;
@@ -34,6 +34,7 @@ public class HomeFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+        viewModel.addAPIvaluesToInvestmentObjects();
     }
 
     @Override

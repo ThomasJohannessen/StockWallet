@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragmentsWrapper">
+    app:startDestination="@id/loadingFragment2">
 
     <fragment
         android:id="@+id/homeFragmentsWrapper"
@@ -43,4 +43,13 @@
         android:name="no.stockwallet.Fragments.Wrappers.SettingsFragmentsWrapper"
         android:label="fragment_settings_fragments_wrapper"
         tools:layout="@layout/fragment_settings_fragments_wrapper" />
+    <fragment
+        android:id="@+id/loadingFragment2"
+        android:name="no.stockwallet.Fragments.Wrappers.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
+        <action
+            android:id="@+id/action_loadingFragment2_to_homeFragmentsWrapper"
+            app:destination="@id/homeFragmentsWrapper" />
+    </fragment>
 </navigation>

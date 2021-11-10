@@ -1,4 +1,4 @@
-package no.stockwallet;
+package no.stockwallet.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +30,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
+
+import no.stockwallet.MainActivity;
+import no.stockwallet.R;
 
 public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleClient;
@@ -44,9 +46,12 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         setUpGoogleClient();
+        setUpButtonListeners();
 
+    }
+
+    private void setUpButtonListeners() {
         Intent signInIntent = googleClient.getSignInIntent();
-
 
         Button logInButton = findViewById(R.id.buttonLogIn);
         logInButton.setOnClickListener(view -> handleSignInAttempt(view));
@@ -71,28 +76,31 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleSignInAttempt(View view) {
-        EditText usernameField = findViewById(R.id.inputUsername);
-        EditText passwordField = findViewById(R.id.inputPassword);
+        Thread thread = new Thread(() -> {
+            EditText usernameField = findViewById(R.id.inputUsername);
+            EditText passwordField = findViewById(R.id.inputPassword);
 
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
+            String username = usernameField.getText().toString();
+            String password = passwordField.getText().toString();
 
-        try {
-            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
-                if(task.isSuccessful()) {
-                    hideKeyboard();
-                    changeActivity();
-                }
-                else {
-                    Log.d("loginAttempt", "No success");
-                    Snackbar.make(view, "Given credentials are wrong", Snackbar.LENGTH_SHORT).show();
-                }
-            });
-        }
-        catch(IllegalArgumentException e) {
-            Snackbar.make(view, "Input fields cannot be empty", Snackbar.LENGTH_SHORT).show();
-        }
+            try {
+                auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()) {
+                        hideKeyboard();
+                        changeActivity();
+                    }
+                    else {
+                        Log.d("loginAttempt", "No success");
+                        Snackbar.make(view, "Given credentials are wrong", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            catch(IllegalArgumentException e) {
+                Snackbar.make(view, "Input fields cannot be empty", Snackbar.LENGTH_SHORT).show();
+            }
+        });
 
+        thread.start();
     }
 
     private void setUpGoogleClient() {
@@ -107,15 +115,19 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GOOGLE_CODE) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                Log.w("TEST", "Google sign in failed", e);
+        Thread thread = new Thread(() -> {
+            if (requestCode == GOOGLE_CODE) {
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    firebaseAuthWithGoogle(account);
+                } catch (ApiException e) {
+                    Log.w("TEST", "Google sign in failed", e);
+                }
             }
-        }
+        });
+
+        thread.start();
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
@@ -128,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("TEST", "AUTH COMPLETED");
                             hideKeyboard();
                             checkIfFirstTimeSignIn(account.getGivenName(), account.getFamilyName());
-                            changeActivity();
                         } else {
                             Log.w("TEST", "Google sign in failed");
                         }
@@ -150,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                userCred.put("lastName", lastname);
                docRef.set(userCred);
            }
+            changeActivity();
         });
     }
 

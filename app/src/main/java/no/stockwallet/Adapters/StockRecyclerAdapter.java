@@ -2,7 +2,6 @@ package no.stockwallet.Adapters;
 
 import static java.lang.Math.round;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
-import no.stockwallet.StockCalculations;
-import no.stockwallet.StockDataRetriever;
-import no.stockwallet.StockViewModel;
-import yahoofinance.Stock;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;

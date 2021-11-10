@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import no.stockwallet.Adapters.StockRecyclerAdapter;
 import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
 
 
@@ -44,13 +44,15 @@ public class StockListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setUpRecyclerView(view);
+    }
 
+    private void setUpRecyclerView(View view) {
         OverviewFragmentsWrapper parent = (OverviewFragmentsWrapper) getParentFragment();
         RecyclerView stockRecyclerView = view.findViewById(R.id.OverviewRecyclerView);
         adapter = new StockRecyclerAdapter(parent.getData());
         stockRecyclerView.setAdapter(adapter);
         stockRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
-
     }
 
 }

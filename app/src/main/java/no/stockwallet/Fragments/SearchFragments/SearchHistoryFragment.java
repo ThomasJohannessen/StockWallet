@@ -36,7 +36,10 @@ public class SearchHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setUpRecyclerView(view);
+    }
 
+    private void setUpRecyclerView(View view) {
         RecyclerView searchRecycler = view.findViewById(R.id.searchRecyclerView);
         searchRecycler.setAdapter(new SearchResultRecyclerAdapter());
         searchRecycler.setLayoutManager(new LinearLayoutManager(view.getContext()));

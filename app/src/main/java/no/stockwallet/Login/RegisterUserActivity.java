@@ -1,4 +1,4 @@
-package no.stockwallet;
+package no.stockwallet.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -14,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
+import no.stockwallet.MainActivity;
+import no.stockwallet.R;
+
 public class RegisterUserActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -24,7 +27,10 @@ public class RegisterUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
 
         auth = FirebaseAuth.getInstance();
+        setUpButtonListeners();
+    }
 
+    private void setUpButtonListeners() {
         Button registerButton = findViewById(R.id.registerUserButton);
         registerButton.setOnClickListener(view -> registerUser(view));
     }

@@ -1,17 +1,13 @@
 package no.stockwallet.Fragments.BuySellFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.HashMap;
-
 import no.stockwallet.Fragments.Wrappers.BuySellFragmentsWrapper;
-import no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper;
-import no.stockwallet.Investment;
+import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
 
 public class BuySellFragment extends Fragment {
@@ -49,8 +42,16 @@ public class BuySellFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setUpButtonListeners(view);
+    }
+
+    private void setUpButtonListeners(View view) {
         Button buySellButton = getActivity().findViewById(R.id.RegisterBuySellButton);
-        buySellButton.setOnClickListener(view1 -> {
+        buySellButton.setOnClickListener(view1 -> handleRegisterClick(view));
+    }
+
+    private void handleRegisterClick(View view) {
+
             EditText tickerName = view.findViewById(R.id.InputStockName);
             String ticker = tickerName.getText().toString();
 
@@ -84,6 +85,5 @@ public class BuySellFragment extends Fragment {
             }
 
             Navigation.findNavController(view).navigate(R.id.overviewFragmentsWrapper);
-        });
     }
 }
