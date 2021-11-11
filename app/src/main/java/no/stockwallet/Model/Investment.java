@@ -6,16 +6,24 @@ public class Investment {
     private double avgBuyPrice;
     private int volume;
     private String fullName;
-    private double markedValue;
+    private double markedValueNOK;
     private double earningsNOK, earningsPercent;
     private double intradayChange;
-    private double stockPriceNow;
+    private double currentStockPrice;
 
     public Investment(){}
 
-    public Investment(String ticker, int volume, double buyPrice, String currency, double brokerage) {
+    public Investment(String ticker, int volume, double buyPrice, double brokerage) {
         this.ticker = ticker;
         this.volume = volume;
+
+        double brokeragePrStock = brokerage / this.volume;
+        this.avgBuyPrice = buyPrice + brokeragePrStock;
+    }
+
+    public Investment(String ticker, int volum, double buyPrice, String currency, double brokerage) {
+        this.ticker = ticker;
+        this.volume = volum;
         this.currency = currency;
 
         double brokeragePrStock = brokerage / this.volume;
@@ -62,12 +70,12 @@ public class Investment {
         this.fullName = fullName;
     }
 
-    public double getMarkedValue() {
-        return markedValue;
+    public double getMarkedValueNOK() {
+        return markedValueNOK;
     }
 
-    public void setMarkedValue(double markedValue) {
-        this.markedValue = markedValue;
+    public void setMarkedValueNOK(double markedValueNOK) {
+        this.markedValueNOK = markedValueNOK;
     }
 
     public double getEarningsNOK() {
@@ -94,11 +102,11 @@ public class Investment {
         this.intradayChange = intradayChange;
     }
 
-    public double getStockPriceNow() {
-        return stockPriceNow;
+    public double getCurrentStockPrice() {
+        return currentStockPrice;
     }
 
-    public void setStockPriceNow(double stockPriceNow) {
-        this.stockPriceNow = stockPriceNow;
+    public void setCurrentStockPrice(double currentStockPrice) {
+        this.currentStockPrice = currentStockPrice;
     }
 }

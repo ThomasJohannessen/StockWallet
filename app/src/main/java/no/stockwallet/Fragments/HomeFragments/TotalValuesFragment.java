@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import no.stockwallet.Fragments.Wrappers.HomeFragmentsWrapper;
+import no.stockwallet.Handlers.API_InvestmentDataHandler;
 import no.stockwallet.R;
-import no.stockwallet.Handlers.StockCalculations;
 
 public class TotalValuesFragment extends Fragment {
 
@@ -41,13 +41,14 @@ public class TotalValuesFragment extends Fragment {
 
     private void fillWithData(View view) {
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
+        API_InvestmentDataHandler API = new API_InvestmentDataHandler(parent.getViewModel());
 
         TextView totalInvestedNOKTextView = view.findViewById(R.id.Total_Invested);
-        int markedValue = StockCalculations.getInstance().getTotalMarkedValue(parent.getViewModel().getStockMap().getValue());
+        int markedValue = API.getTotalMarkedValue();
         totalInvestedNOKTextView.setText(String.valueOf(markedValue) + " kr");
 
         TextView totalInvestedPercentEarned = view.findViewById(R.id.Prcent_change_earnings_period);
-        double totalEarnedPercent = StockCalculations.getInstance().getTotalPercentEarnings(parent.getViewModel().getStockMap().getValue());
+        double totalEarnedPercent = API.getTotalPercentEarnings();
         totalInvestedPercentEarned.setText(String.valueOf(totalEarnedPercent)+ " %");
     }
 }
