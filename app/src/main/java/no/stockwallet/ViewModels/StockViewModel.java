@@ -31,7 +31,7 @@ public class StockViewModel extends ViewModel {
         return investedStocksTickers;
     }
 
-    //ment for en service for å oppdatere alt
+    //used by service and underway to update the values on the fly
     public void updateValuesFromAPItoInvestmentObjects(){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
@@ -57,6 +57,7 @@ public class StockViewModel extends ViewModel {
         APIhandler.addTotalEarningsNOKToSingleInvestment(newInvestment);
         APIhandler.addIntradayChangePercentToSingleInvestment(newInvestment);
         APIhandler.addCurrentStockPriceToSingleInvestment(newInvestment);
+        APIhandler.findBiggestGainerAndLoserInInvestedStocks();
     }
 
     public void addInvestment(Investment newInvestment) {

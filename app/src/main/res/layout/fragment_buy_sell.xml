@@ -7,129 +7,137 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.BuySellFragments.BuySellFragment" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="402dp"
-        android:layout_height="728dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.019">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/BuySellDropdown"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:entries="@array/dropdown_array"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/StockNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/stock_name_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BuySellDropdown" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="720dp">
 
-        <EditText
-            android:id="@+id/InputStockName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:autoText="false"
-            android:ems="10"
-            android:hint="@string/input_stock_name"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StockNameLabel" />
+                <Spinner
+                    android:id="@+id/BuySellDropdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:entries="@array/dropdown_array"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/StockVolumeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/stock_volume_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/InputStockPrice" />
+                <TextView
+                    android:id="@+id/StockNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/stock_name_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/BuySellDropdown" />
 
-        <EditText
-            android:id="@+id/InputStockVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/input_stock_volume"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StockVolumeLabel" />
+                <EditText
+                    android:id="@+id/InputStockName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:autoText="false"
+                    android:ems="10"
+                    android:hint="@string/input_stock_name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/StockNameLabel" />
 
-        <TextView
-            android:id="@+id/StockFeeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/stock_fee_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/InputStockVolume" />
+                <TextView
+                    android:id="@+id/StockVolumeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/stock_volume_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/InputStockPrice" />
 
-        <EditText
-            android:id="@+id/InputStockFee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/input_stock_fee"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StockFeeLabel" />
+                <EditText
+                    android:id="@+id/InputStockVolume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/input_stock_volume"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/StockVolumeLabel" />
 
-        <Button
-            android:id="@+id/RegisterBuySellButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
-            android:text="@string/buy_sell_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/StockFeeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/stock_fee_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/InputStockVolume" />
 
-        <TextView
-            android:id="@+id/StockPriceLabel"
-            android:layout_width="163dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/stock_price_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/InputStockName" />
+                <EditText
+                    android:id="@+id/InputStockFee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/input_stock_fee"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/StockFeeLabel" />
 
-        <EditText
-            android:id="@+id/InputStockPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/aksje_pris_ph"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/StockPriceLabel" />
+                <Button
+                    android:id="@+id/RegisterBuySellButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buy_sell_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.86" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/StockPriceLabel"
+                    android:layout_width="163dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/stock_price_label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/InputStockName" />
+
+                <EditText
+                    android:id="@+id/InputStockPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/aksje_pris_ph"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/StockPriceLabel" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
