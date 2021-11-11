@@ -5,11 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.HashMap;
-import java.util.Map;
 
 import no.stockwallet.Handlers.API_InvestmentDataHandler;
 import no.stockwallet.Model.Investment;
@@ -46,15 +42,15 @@ public class StockViewModel extends ViewModel {
         }
         else {
             Investment existingInvestment = temp.get(newInvestment.getTicker());
-            double existPrice = existingInvestment.getPrice() * existingInvestment.getVolum();
+            double existPrice = existingInvestment.getAvgBuyPrice() * existingInvestment.getVolume();
             Log.d("MATTE", "ExistPrice = " + " " + String.valueOf(existPrice));
-            double newPrice = newInvestment.getPrice() * newInvestment.getVolum();
+            double newPrice = newInvestment.getAvgBuyPrice() * newInvestment.getVolume();
             Log.d("MATTE", "NewPrice = " + " " + String.valueOf(newPrice));
-            existingInvestment.setVolum(existingInvestment.getVolum() + newInvestment.getVolum());
-            Log.d("MATTE", "VOLUME = " + " " + String.valueOf(existingInvestment.getVolum()));
-            double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolum());
+            existingInvestment.setVolume(existingInvestment.getVolume() + newInvestment.getVolume());
+            Log.d("MATTE", "VOLUME = " + " " + String.valueOf(existingInvestment.getVolume()));
+            double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolume());
             Log.d("MATTE", "MeanPrice = " + " " + String.valueOf(meanPrice));
-            existingInvestment.setPrice(meanPrice);
+            existingInvestment.setAvgBuyPrice(meanPrice);
         }
         FireBaseJsonSupport.writeDB(stockMap.getValue());
     }

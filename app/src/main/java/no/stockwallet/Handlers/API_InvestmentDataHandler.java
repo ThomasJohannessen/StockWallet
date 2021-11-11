@@ -75,7 +75,7 @@ public class API_InvestmentDataHandler {
 
                 for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
                     Investment updateInvestment = svm.getInvestment(stock.getKey());
-                    updateInvestment.setTotalEarningsStockNOK(temp.get(stock.getKey()));
+                    updateInvestment.setEarningsNOK(temp.get(stock.getKey()));
                 }
                 temp.clear();
             }
@@ -101,7 +101,7 @@ public class API_InvestmentDataHandler {
 
                 for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
                     Investment updateInvestment = svm.getInvestment(stock.getKey());
-                    updateInvestment.setTotalEarningsStockPercent(temp.get(stock.getKey()));
+                    updateInvestment.setEarningsPercent(temp.get(stock.getKey()));
                 }
                 temp.clear();
             }
@@ -127,7 +127,7 @@ public class API_InvestmentDataHandler {
 
                 for (HashMap.Entry<String, Investment> stock : investments.entrySet()) {
                     Investment updateInvestment = svm.getInvestment(stock.getKey());
-                    updateInvestment.setTotalStockMarkedValue(temp.get(stock.getKey()));
+                    updateInvestment.setMarkedValue(temp.get(stock.getKey()));
                 }
                 temp.clear();
             }
@@ -149,7 +149,7 @@ public class API_InvestmentDataHandler {
             }
 
             Investment updateInvestment = svm.getInvestment(ticker);
-            updateInvestment.setTotalEarningsStockPercent(marketValue);
+            updateInvestment.setEarningsPercent(marketValue);
 
     }
 
@@ -168,7 +168,7 @@ public class API_InvestmentDataHandler {
             }
 
             Investment updateInvestment = svm.getInvestment(ticker);
-            updateInvestment.setTotalEarningsStockPercent(earnings);
+            updateInvestment.setEarningsPercent(earnings);
     }
 
     public void addTotalEarningsNOKOnSingleStockToInvestment(Investment investment){
@@ -186,6 +186,6 @@ public class API_InvestmentDataHandler {
             }
 
             Investment updateInvestment = svm.getInvestment(ticker);
-            updateInvestment.setTotalEarningsStockNOK(earnings);
+            updateInvestment.setEarningsNOK(earnings);
     }
 }

@@ -84,9 +84,13 @@ public class StockCalculations {
 
     }
 
+
+
+
     public int getTotalMarkedValue(HashMap<String, Investment> investments){
         //calculated the total of all invedsted stocks and converts to NOK. returns the number
         //fake invest to cache currency-conversion-rate for USD to not use time for this later
+
         Investment USD_currency_get_invest = new Investment("AAPL",0,0,"USD",1);
         currencyCache.put(USD_currency_get_invest.getCurrency(),currencyConverter(USD_currency_get_invest));
         
@@ -125,10 +129,10 @@ public class StockCalculations {
                     currencyCache.put(x.getCurrency(), exchangeCourse);
 
                     BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                    totSumMarkedValue += (currentPriceStock.doubleValue() * exchangeCourse * x.getVolum());
+                    totSumMarkedValue += (currentPriceStock.doubleValue() * exchangeCourse * x.getVolume());
                 } else {
                     BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                    totSumMarkedValue += currentPriceStock.doubleValue() * x.getVolum();
+                    totSumMarkedValue += currentPriceStock.doubleValue() * x.getVolume();
                 }
             }
 
@@ -168,8 +172,6 @@ public class StockCalculations {
             totalChange = Double.parseDouble(df.format(totalChange));
 
             totalChangeReturnArr.add(Double.parseDouble(df.format(totalChange)));
-
-            getIntradayChangesInStocksPercent(investments);
         });
         thread.start();
 
@@ -185,6 +187,7 @@ public class StockCalculations {
         //gets the change for in inputed stocks this day in percent. Returns hashmap with ticker-change percent
 
         ArrayList<HashMap<String, BigDecimal>> investedStockChangePercentReturnArr = new ArrayList<>();
+
         Thread thread = new Thread(() -> {
             HashMap<String, BigDecimal> investedStockChangePercent = new HashMap<>();
             String[] investedStocksTickers = new String[investments.size()];
@@ -283,11 +286,11 @@ public class StockCalculations {
                     currencyCache.put(x.getCurrency(),exchangeCourse);
 
                     BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                    markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * exchangeCourse * x.getVolum()));
+                    markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * exchangeCourse * x.getVolume()));
                 }
                 else {
                     BigDecimal currentPriceStock = investedStockPrices.get(x.getTicker());
-                    markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * x.getVolum()));
+                    markedValueNOK.put(x.getTicker(),(currentPriceStock.doubleValue() * x.getVolume()));
                 }
             }
 
@@ -322,11 +325,11 @@ public class StockCalculations {
                 double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
 
                 BigDecimal currentPriceStock = investedStockPrice.get("Stock");
-                markedValueNOK = (currentPriceStock.doubleValue() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                markedValueNOK = (currentPriceStock.doubleValue() * exchangeCourse * investment.get(investedStocksTicker).getVolume());
             }
             else {
                 BigDecimal currentPriceStock = investedStockPrice.get("Stock");
-                markedValueNOK = currentPriceStock.doubleValue() * investment.get(investedStocksTicker).getVolum();
+                markedValueNOK = currentPriceStock.doubleValue() * investment.get(investedStocksTicker).getVolume();
             }
             markedValueNOKReturnArr.add(markedValueNOK);
         });
@@ -350,10 +353,10 @@ public class StockCalculations {
 
             if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
                 double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
-                buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                buyingCost = (investment.get(investedStocksTicker).getAvgBuyPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolume());
             }
             else{
-                 buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
+                 buyingCost = investment.get(investedStocksTicker).getVolume() * investment.get(investedStocksTicker).getAvgBuyPrice();
             }
             earningsNOKReturnArr.add((markedValue - buyingCost));
         });
@@ -377,10 +380,10 @@ public class StockCalculations {
 
             if (!(investment.get(investedStocksTicker).getCurrency().equals("NOK"))){
                 double exchangeCourse = currencyConverter(investment.get(investedStocksTicker));
-                buyingCost = (investment.get(investedStocksTicker).getPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolum());
+                buyingCost = (investment.get(investedStocksTicker).getAvgBuyPrice() * exchangeCourse * investment.get(investedStocksTicker).getVolume());
             }
             else{
-                buyingCost = investment.get(investedStocksTicker).getVolum() * investment.get(investedStocksTicker).getPrice();
+                buyingCost = investment.get(investedStocksTicker).getVolume() * investment.get(investedStocksTicker).getAvgBuyPrice();
             }
             earningsPercentReturnArr.add(((markedValue / buyingCost) * 100 - 100));
         });
@@ -409,12 +412,12 @@ public class StockCalculations {
                 if (!x.getCurrency().equals("NOK")){
                     double exchangeCourse = currencyConverter(x);
                     currencyCache.put(x.getCurrency(),exchangeCourse);
-                    buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
+                    buyingCost = x.getVolume() * x.getAvgBuyPrice() * exchangeCourse;
                     markedValue = (currentPriceStocks.get(x.getTicker()));
                     earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
                 }
                 else {
-                    buyingCost = x.getVolum() * x.getPrice();
+                    buyingCost = x.getVolume() * x.getAvgBuyPrice();
                     markedValue = (currentPriceStocks.get(x.getTicker()));
                     earningsNOK.put(x.getTicker(), (markedValue - buyingCost));
                 }
@@ -449,11 +452,11 @@ public class StockCalculations {
                 if (!x.getCurrency().equals("NOK")) {
                     double exchangeCourse = currencyConverter(x);
                     currencyCache.put(x.getCurrency(), exchangeCourse);
-                    buyingCost = x.getVolum() * x.getPrice() * exchangeCourse;
+                    buyingCost = x.getVolume() * x.getAvgBuyPrice() * exchangeCourse;
                     markedValue = (currentPriceStocks.get(x.getTicker()));
                     earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
                 } else {
-                    buyingCost = x.getVolum() * x.getPrice();
+                    buyingCost = x.getVolume() * x.getAvgBuyPrice();
                     markedValue = (currentPriceStocks.get(x.getTicker()));
                     earningsNOK.put(x.getTicker(), (markedValue / buyingCost) * 100 - 100);
                 }

@@ -53,7 +53,7 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Investment object = data.get(position);
         holder.getDummy1().setText(object.getTicker());
-        holder.getDummy2().setText(String.valueOf(object.getPrice()));
+        holder.getDummy2().setText(String.valueOf(object.getAvgBuyPrice()));
     }
 
     @Override
