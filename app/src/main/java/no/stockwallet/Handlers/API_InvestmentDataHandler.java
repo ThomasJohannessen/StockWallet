@@ -1,5 +1,6 @@
 package no.stockwallet.Handlers;
 
+import android.util.Log;
 import android.util.Pair;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -292,14 +294,12 @@ public class API_InvestmentDataHandler {
             catch (InterruptedException e) {e.printStackTrace();}
         }
 
-
-
         if (!(investment.getCurrency().equals("NOK"))){
             double exchangeCourse = currencyConverter(investment);
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * exchangeCourse * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * exchangeCourse * investment.getVolume());
         }
         else{
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * investment.getVolume());
         }
         Investment updateInvestment = svm.getInvestment(ticker);
         updateInvestment.setMarkedValueNOK(markedValue);
@@ -320,11 +320,11 @@ public class API_InvestmentDataHandler {
 
         if (!(investment.getCurrency().equals("NOK"))){
             double exchangeCourse = currencyConverter(investment);
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * exchangeCourse * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * exchangeCourse * investment.getVolume());
             buyingCost = (investment.getAvgBuyPrice() * exchangeCourse * investment.getVolume());
         }
         else{
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * investment.getVolume());
             buyingCost = investment.getAvgBuyPrice() * investment.getVolume();
         }
         Investment updateInvestment = svm.getInvestment(ticker);
@@ -346,11 +346,11 @@ public class API_InvestmentDataHandler {
 
         if (!(investment.getCurrency().equals("NOK"))){
             double exchangeCourse = currencyConverter(investment);
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * exchangeCourse * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * exchangeCourse * investment.getVolume());
             buyingCost = (investment.getAvgBuyPrice() * exchangeCourse * investment.getVolume());
         }
         else{
-            markedValue = (temp.get(investment.getTicker()).doubleValue() * investment.getVolume());
+            markedValue = (temp.get("Stock").doubleValue() * investment.getVolume());
             buyingCost = investment.getAvgBuyPrice() * investment.getVolume();
         }
         Investment updateInvestment = svm.getInvestment(ticker);
@@ -360,6 +360,7 @@ public class API_InvestmentDataHandler {
     public void addIntradayChangePercentToSingleInvestment(Investment investment){
         HashMap<String, BigDecimal> temp = new HashMap<>();
         String[] ticker =  {investment.getTicker()};
+        Log.d("KJØP", Arrays.toString(ticker));
 
         StockDataRetriever.getInstance().getIntradayChangePercent(temp,ticker);
 
@@ -369,7 +370,8 @@ public class API_InvestmentDataHandler {
         }
 
         Investment updateInvestment = svm.getInvestment(investment.getTicker());
-        updateInvestment.setIntradayChange(temp.get("Stock").doubleValue());
+
+        updateInvestment.setIntradayChange(temp.get(investment.getTicker()).doubleValue());
         temp.clear();
     }
 
