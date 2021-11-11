@@ -7,24 +7,20 @@
     <string name="menu_search">Søk</string>
     <string name="menu_buy_sell">Kjøp og Salg</string>
     <string name="menu_settings">Innstillinger</string>
-    <string name="percent_earning">Avkast %:</string>
+    <string name="percent_earning">Avkastning %:</string>
     <string name="stock_value">Verdi:</string>
-    <string name="stock_earning">Avkastning:</string>
-    <string name="stock_name_label">Navn/Ticker</string>
-    <string name="input_stock_name">F eks: \"IBM\"</string>
+    <string name="stock_earning">Avkastning NOK:</string>
+
+    <string name="stock_name_label">Ticker</string>
+    <string name="input_stock_name">Eks: \"MSFT\"</string>
+    <string name="stock_price_label">Kurs (Aksjens valuta)</string>
+    <string name="aksje_pris_ph">Eks: \"15.3\"</string>
     <string name="stock_volume_label">Volum</string>
-    <string name="stock_exchange_label">Kurs</string>
-    <string name="input_stock_volume">F eks: "15"</string>
-    <string name="input_stock_exchange">1,42</string>
-    <string name="stock_currency_label">Valuta</string>
-    <string name="input_stock_currency">NOK</string>
+    <string name="input_stock_volume">Eks: \"126\"</string>
     <string name="stock_fee_label">Kurtasje</string>
-    <string name="input_stock_fee">175</string>
-    <string name="stock_date_label">Dato</string>
-    <string name="input_stock_date">25.05.2015</string>
-    <string name="buy_sell_button">Registrer</string>
-    <string name="stock_price_label">Pris</string>
-    <string name="aksje_pris_ph">15.3</string>
+    <string name="input_stock_fee">Eks: \"12\"</string>
+    <string name="buy_sell_button">Registrer handel</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
