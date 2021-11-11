@@ -1,6 +1,5 @@
 package no.stockwallet.Handlers;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
@@ -360,7 +359,7 @@ public class API_InvestmentDataHandler {
     public void addIntradayChangePercentToSingleInvestment(Investment investment){
         HashMap<String, BigDecimal> temp = new HashMap<>();
         String[] ticker =  {investment.getTicker()};
-        Log.d("KJØP", Arrays.toString(ticker));
+
 
         StockDataRetriever.getInstance().getIntradayChangePercent(temp,ticker);
 
