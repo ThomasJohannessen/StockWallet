@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,29 +71,33 @@ public class GainFragment extends Fragment {
 
         API_InvestmentDataHandler API = new API_InvestmentDataHandler(viewModel);
 
-
+        API.findBiggestGainerAndLoserInInvestedStocks();
 
         ArrayList<Pair<String, Double>> topp3Arr = API.getTopThreeGainerStocks();
         ArrayList<Pair<String, Double>> bottom3Arr = API.getBottomThreeLoserStocks();
 
         String[] tickers = new String[6];
 
-        for(int i=0; i<6; i++){
-            if (i<3) {
+        Log.d("KJØP-b", String.valueOf(bottom3Arr.size()));
+        Log.d("KJØP-t", String.valueOf(topp3Arr.size()));
+
+        for(int i=0; i<6; i++) {
+            if (i < 3) {
                 if (bottom3Arr.get(i).first == null)
                     underSixInvestments = true;
-            }
-            else if(i>3){
-                if (topp3Arr.get(i-3).first == null)
+            } else if (i > 3) {
+                if (topp3Arr.get(i - 3).first == null)
                     underSixInvestments = true;
             }
-
-            if (i<3) {
-                tickers[i] = bottom3Arr.get(i).first;
+        }
+        for(int j=0; j<6; j++){
+            if (j<3) {
+                tickers[j] = bottom3Arr.get(j).first;
             }else{
-                tickers[i] = topp3Arr.get(i-3).first;
+                tickers[j] = topp3Arr.get(j-3).first;
             }
         }
+
 
         stockPrcnt1 = view.findViewById(R.id.stockPCR1);
         stockName1 = view.findViewById(R.id.stockNameR1);
