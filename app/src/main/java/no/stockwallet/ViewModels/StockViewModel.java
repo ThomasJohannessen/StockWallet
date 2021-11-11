@@ -59,11 +59,6 @@ public class StockViewModel extends ViewModel {
         HashMap<String, Investment> temp = stockMap.getValue();
         if(temp.get(newInvestment.getTicker()) == null) {
             temp.put(newInvestment.getTicker(), newInvestment);
-            API_InvestmentDataHandler api = new API_InvestmentDataHandler(this);
-            api.addTotalEarningsNOKToSingleInvestment(newInvestment);
-            api.addTotalMarkedValueNOKToSingleInvestment(newInvestment);
-            api.addTotalEarningsPercentToSingleInvestment(newInvestment);
-            api.addFullStockNamesAndCurrencyToInvestments();
             stockMap.setValue(temp);
         }
         else {
