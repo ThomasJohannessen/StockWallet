@@ -28,7 +28,7 @@ public class OverviewFragmentsWrapper extends Fragment {
         super.onCreate(savedInstanceState);
         ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
-        viewModel.addAPIvaluesToInvestmentObjects();
+        viewModel.updateValuesFromAPItoInvestmentObjects();
     }
 
     @Override

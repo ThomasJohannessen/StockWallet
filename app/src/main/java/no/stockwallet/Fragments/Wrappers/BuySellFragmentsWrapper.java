@@ -1,6 +1,5 @@
 package no.stockwallet.Fragments.Wrappers;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import no.stockwallet.Model.Investment;
 import no.stockwallet.MainActivity;
@@ -45,6 +43,6 @@ public class BuySellFragmentsWrapper extends Fragment {
 
     public void registerStockSale(Investment investment) {
         viewModel.addInvestment(investment);
-        viewModel.addAPIvaluesToInvestmentObjects();
+        viewModel.updateValuesFromAPItoInvestmentObjects();
     }
 }

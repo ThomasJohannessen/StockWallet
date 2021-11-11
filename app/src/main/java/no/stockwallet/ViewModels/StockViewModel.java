@@ -1,5 +1,7 @@
 package no.stockwallet.ViewModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -30,7 +32,7 @@ public class StockViewModel extends ViewModel {
     }
 
     //ment for en service for å oppdatere alt
-    public void addAPIvaluesToInvestmentObjects(){
+    public void updateValuesFromAPItoInvestmentObjects(){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
         APIhandler.addFullStockNamesAndCurrencyToInvestments();
@@ -40,9 +42,12 @@ public class StockViewModel extends ViewModel {
         APIhandler.addIntradayChangePercentToInvestments();
         APIhandler.addCurrentStockPriceToInvestments();
         APIhandler.findBiggestGainerAndLoserInInvestedStocks();
+
+        //writes new values to db
+        FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
-    //ment for å legeg til data i et nyopprettet objekt
+    //used when a new investment is added
     public void addAPIvaluesToNewInvestmentObject(Investment newInvestment){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
