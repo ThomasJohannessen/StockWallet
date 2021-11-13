@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Locale;
+
 import no.stockwallet.Fragments.Wrappers.BuySellFragmentsWrapper;
 import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
@@ -53,7 +55,7 @@ public class BuySellFragment extends Fragment {
     private void handleRegisterClick(View view) {
 
             EditText tickerName = view.findViewById(R.id.InputStockName);
-            String ticker = tickerName.getText().toString();
+            String ticker = tickerName.getText().toString().toUpperCase(Locale.ROOT);
 
             EditText stockPrice = view.findViewById(R.id.InputStockPrice);
             float price = Math.round(Float.parseFloat(stockPrice.getText().toString()) * 100) / 100;
@@ -61,20 +63,11 @@ public class BuySellFragment extends Fragment {
             EditText stockVolume = view.findViewById(R.id.InputStockVolume);
             int volume = Integer.parseInt(stockVolume.getText().toString());
 
-            EditText stockExchange = view.findViewById(R.id.InputStockExchange);
-            String exchange = stockExchange.getText().toString();
-
-            EditText stockCurrency = view.findViewById(R.id.InputStockCurrency);
-            String currency = stockCurrency.getText().toString();
-
             EditText stockFee = view.findViewById(R.id.InputStockFee);
             float fee = Math.round(Float.parseFloat(stockFee.getText().toString()) * 100) / 100;
 
-            EditText stockDate = view.findViewById(R.id.InputStockDate);
-            String date = stockDate.getText().toString();
-
             BuySellFragmentsWrapper parent = (BuySellFragmentsWrapper) getParentFragment();
-            Investment newInvestment = new Investment(ticker, volume, price, currency, fee);
+            Investment newInvestment = new Investment(ticker, volume, price, fee);
             parent.registerStockSale(newInvestment);
 
             try {

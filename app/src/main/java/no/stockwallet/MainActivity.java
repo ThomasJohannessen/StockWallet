@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("onPause", "signing out");
-        auth.signOut();
     }
 
     @Override

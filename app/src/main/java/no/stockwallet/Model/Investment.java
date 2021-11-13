@@ -3,21 +3,31 @@ package no.stockwallet.Model;
 public class Investment {
 
     private String ticker,currency;
-    private double price;
-    private int volum;
+    private double avgBuyPrice;
+    private int volume;
     private String fullName;
-    private double totalStockMarkedValue;
-    private double totalEarningsStockNOK,totalEarningsStockPercent;
+    private double markedValueNOK;
+    private double earningsNOK, earningsPercent;
+    private double intradayChange;
+    private double currentStockPrice;
 
     public Investment(){}
 
-    public Investment(String ticker, int volum, double price, String currency, double brokerage) {
+    public Investment(String ticker, int volume, double buyPrice, double brokerage) {
         this.ticker = ticker;
-        this.volum = volum;
+        this.volume = volume;
+
+        double brokeragePrStock = brokerage / this.volume;
+        this.avgBuyPrice = buyPrice + brokeragePrStock;
+    }
+
+    public Investment(String ticker, int volum, double buyPrice, String currency, double brokerage) {
+        this.ticker = ticker;
+        this.volume = volum;
         this.currency = currency;
 
-        double brokeragePrStock = brokerage / this.volum;
-        this.price = price + brokeragePrStock;
+        double brokeragePrStock = brokerage / this.volume;
+        this.avgBuyPrice = buyPrice + brokeragePrStock;
     }
 
     public String getTicker() {
@@ -36,20 +46,20 @@ public class Investment {
         this.currency = currency;
     }
 
-    public double getPrice() {
-        return price;
+    public double getAvgBuyPrice() {
+        return avgBuyPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setAvgBuyPrice(double avgBuyPrice) {
+        this.avgBuyPrice = avgBuyPrice;
     }
 
-    public int getVolum() {
-        return volum;
+    public int getVolume() {
+        return volume;
     }
 
-    public void setVolum(int volum) {
-        this.volum = volum;
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 
     public String getFullName() {
@@ -60,27 +70,43 @@ public class Investment {
         this.fullName = fullName;
     }
 
-    public double getTotalStockMarkedValue() {
-        return totalStockMarkedValue;
+    public double getMarkedValueNOK() {
+        return markedValueNOK;
     }
 
-    public void setTotalStockMarkedValue(double totalStockMarkedValue) {
-        this.totalStockMarkedValue = totalStockMarkedValue;
+    public void setMarkedValueNOK(double markedValueNOK) {
+        this.markedValueNOK = markedValueNOK;
     }
 
-    public double getTotalEarningsStockNOK() {
-        return totalEarningsStockNOK;
+    public double getEarningsNOK() {
+        return earningsNOK;
     }
 
-    public void setTotalEarningsStockNOK(double totalEarningsStockNOK) {
-        this.totalEarningsStockNOK = totalEarningsStockNOK;
+    public void setEarningsNOK(double earningsNOK) {
+        this.earningsNOK = earningsNOK;
     }
 
-    public double getTotalEarningsStockPercent() {
-        return totalEarningsStockPercent;
+    public double getEarningsPercent() {
+        return earningsPercent;
     }
 
-    public void setTotalEarningsStockPercent(double totalEarningsStockPercent) {
-        this.totalEarningsStockPercent = totalEarningsStockPercent;
+    public void setEarningsPercent(double earningsPercent) {
+        this.earningsPercent = earningsPercent;
+    }
+
+    public double getIntradayChange() {
+        return intradayChange;
+    }
+
+    public void setIntradayChange(double intradayChange) {
+        this.intradayChange = intradayChange;
+    }
+
+    public double getCurrentStockPrice() {
+        return currentStockPrice;
+    }
+
+    public void setCurrentStockPrice(double currentStockPrice) {
+        this.currentStockPrice = currentStockPrice;
     }
 }

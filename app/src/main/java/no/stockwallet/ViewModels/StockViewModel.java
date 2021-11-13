@@ -5,9 +5,6 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,39 +20,62 @@ public class StockViewModel extends ViewModel {
         FireBaseJsonSupport.readDB(this);
     }
 
-    public void addAPIvaluesToInvestmentObjects(){
+    public String[] getInvestmentTickers() {
+        String[] investedStocksTickers = new String[getStockMap().getValue().size()];
+        int i = 0;
+
+        for (HashMap.Entry<String, Investment> x : getStockMap().getValue().entrySet()) {
+            investedStocksTickers[i] = x.getValue().getTicker();
+            i++;
+        }
+        return investedStocksTickers;
+    }
+
+    //used by service and underway to update the values on the fly
+    public void updateValuesFromAPItoInvestmentObjects(){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
-        APIhandler.addTotalMarkedValueNOKOnStockToInvestment();
-        APIhandler.addFullStockNamesToInvestments();
-        APIhandler.addTotalEarningsPercentOnStockToInvestment();
-        APIhandler.addTotalEarningsNOKOnStockToInvestments();
+        APIhandler.addFullStockNamesAndCurrencyToInvestments();
+        APIhandler.addTotalEarningsNOKToInvestments();
+        APIhandler.addTotalEarningsPercentToInvestments();
+        APIhandler.addTotalMarkedValueNOKToInvestments();
+        APIhandler.addIntradayChangePercentToInvestments();
+        APIhandler.addCurrentStockPriceToInvestments();
+        APIhandler.findBiggestGainerAndLoserInInvestedStocks();
+
+        //writes new values to db
+        FireBaseJsonSupport.writeDB(stockMap.getValue());
+    }
+
+    //used when a new investment is added
+    public void addAPIvaluesToNewInvestmentObject(Investment newInvestment){
+        API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
+
+        APIhandler.addFullStockNameAndCurrencyToSingleInvestment(newInvestment);
+        APIhandler.addTotalMarkedValueNOKToSingleInvestment(newInvestment);
+        APIhandler.addTotalEarningsPercentToSingleInvestment(newInvestment);
+        APIhandler.addTotalEarningsNOKToSingleInvestment(newInvestment);
+        APIhandler.addIntradayChangePercentToSingleInvestment(newInvestment);
+        APIhandler.addCurrentStockPriceToSingleInvestment(newInvestment);
+        APIhandler.findBiggestGainerAndLoserInInvestedStocks();
     }
 
     public void addInvestment(Investment newInvestment) {
-        // TODO: Hvis eksisterer
+
         HashMap<String, Investment> temp = stockMap.getValue();
         if(temp.get(newInvestment.getTicker()) == null) {
             temp.put(newInvestment.getTicker(), newInvestment);
-            API_InvestmentDataHandler api = new API_InvestmentDataHandler(this);
-            api.addTotalEarningsNOKOnSingleStockToInvestment(newInvestment);
-            api.addTotalMarkedValueNOKOnSingleStockToInvestment(newInvestment);
-            api.addTotalEarningsPercentOnSingleStockToInvestment(newInvestment);
-            api.addFullStockNamesToInvestments();
             stockMap.setValue(temp);
         }
         else {
             Investment existingInvestment = temp.get(newInvestment.getTicker());
-            double existPrice = existingInvestment.getPrice() * existingInvestment.getVolum();
-            Log.d("MATTE", "ExistPrice = " + " " + String.valueOf(existPrice));
-            double newPrice = newInvestment.getPrice() * newInvestment.getVolum();
-            Log.d("MATTE", "NewPrice = " + " " + String.valueOf(newPrice));
-            existingInvestment.setVolum(existingInvestment.getVolum() + newInvestment.getVolum());
-            Log.d("MATTE", "VOLUME = " + " " + String.valueOf(existingInvestment.getVolum()));
-            double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolum());
-            Log.d("MATTE", "MeanPrice = " + " " + String.valueOf(meanPrice));
-            existingInvestment.setPrice(meanPrice);
+            double existPrice = existingInvestment.getAvgBuyPrice() * existingInvestment.getVolume();
+            double newPrice = newInvestment.getAvgBuyPrice() * newInvestment.getVolume();
+            existingInvestment.setVolume(existingInvestment.getVolume() + newInvestment.getVolume());
+            double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolume());
+            existingInvestment.setAvgBuyPrice(meanPrice);
         }
+        addAPIvaluesToNewInvestmentObject(newInvestment);
         FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
