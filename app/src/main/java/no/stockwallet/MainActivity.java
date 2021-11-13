@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
 
+import no.stockwallet.Handlers.API_InvestmentDataHandler;
 import no.stockwallet.Login.LoginActivity;
 import no.stockwallet.Model.Investment;
 import no.stockwallet.ViewModels.StockViewModel;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        AlphaVantageInit();
         user = auth.getCurrentUser();
         if(user == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);

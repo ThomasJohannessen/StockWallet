@@ -1,5 +1,7 @@
 package no.stockwallet.Fragments.SearchFragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +11,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.crazzyghost.alphavantage.AlphaVantage;
 
 import no.stockwallet.Adapters.SearchResultRecyclerAdapter;
 import no.stockwallet.R;
 
 public class SearchHistoryFragment extends Fragment {
+    private SearchResultRecyclerAdapter adapter;
+    private RequestQueue queue;
 
     public SearchHistoryFragment() {
         // Required empty public constructor
@@ -37,11 +48,58 @@ public class SearchHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUpRecyclerView(view);
+        setUpSearchClickListener(view);
     }
 
     private void setUpRecyclerView(View view) {
         RecyclerView searchRecycler = view.findViewById(R.id.searchRecyclerView);
-        searchRecycler.setAdapter(new SearchResultRecyclerAdapter());
+        adapter = new SearchResultRecyclerAdapter();
+        searchRecycler.setAdapter(adapter);
         searchRecycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
+
+    private void setUpSearchClickListener(View view) {
+        SearchView searchView = (SearchView) view.findViewById(R.id.searchBar);
+        view.findViewById(R.id.searchRecyclerView).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                searchView.setIconified(true);
+                view.requestFocus();
+                hideKeyboard();
+                return false;
+            }
+        });
+
+        setUpQueryTextChangeListener(searchView);
+    }
+
+    private void setUpQueryTextChangeListener(SearchView searchView) {
+        queue = Volley.newRequestQueue(getContext());
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String search) {
+                requestAPISearch(search);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String search) {
+                return false;
+            }
+        });
+    }
+
+    private void requestAPISearch(String search) {
+        String baseURL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=04C7U8DGXKH0OY8B&datatype=json&keywords=";
+
+    }
+
+    private void hideKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
