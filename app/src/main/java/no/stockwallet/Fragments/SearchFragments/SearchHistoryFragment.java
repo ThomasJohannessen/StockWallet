@@ -111,10 +111,15 @@ public class SearchHistoryFragment extends Fragment {
                 StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("RESPONSE", response);
-                        ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArray(response);
-                        //adapter.setData(stockPairs);
-                        //adapter.notifyDataSetChanged();
+                        try {
+                            Log.d("RESPONSE", response);
+                            ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArray(response);
+                            //adapter.setData(stockPairs);
+                            //adapter.notifyDataSetChanged();
+                        }
+                        catch(Exception e) {
+                            Snackbar.make(view, "Error in response from server, try again later", Snackbar.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
