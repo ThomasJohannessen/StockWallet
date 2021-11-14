@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,9 +26,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crazzyghost.alphavantage.AlphaVantage;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import no.stockwallet.Adapters.SearchResultRecyclerAdapter;
 import no.stockwallet.R;
+import no.stockwallet.Support.JsonSupport;
 
 public class SearchHistoryFragment extends Fragment {
     private SearchResultRecyclerAdapter adapter;
@@ -85,20 +90,20 @@ public class SearchHistoryFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String keyword) {
                 queue.cancelAll(QUEUE_TAG);
-                requestAPISearch(keyword);
+                requestAPISearch(keyword, searchView);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String keyword) {
                 queue.cancelAll(QUEUE_TAG);
-                requestAPISearch(keyword);
+                requestAPISearch(keyword, searchView);
                 return false;
             }
         });
     }
 
-    private void requestAPISearch(String keyword) {
+    private void requestAPISearch(String keyword, View view) {
         if(keyword.equals("") == false) {
             new Thread(() -> {
                 String baseURL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=04C7U8DGXKH0OY8B&datatype=json&keywords=";
@@ -107,17 +112,21 @@ public class SearchHistoryFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Log.d("RESPONSE", response);
+                        ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArray(response);
+                        //adapter.setData(stockPairs);
+                        //adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR", error.toString());
+                        Log.d("RESPONSE", error.toString());
+                        Snackbar.make(view, "Something went wrong, check your internet connection", Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 request.setTag(QUEUE_TAG);
                 queue.add(request);
 
-            });
+            }).start();
         }
     }
 
