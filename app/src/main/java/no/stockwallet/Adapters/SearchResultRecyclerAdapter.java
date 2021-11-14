@@ -18,17 +18,17 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
     private ArrayList<Pair<String, String>> data;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView dummy1;
-        private TextView dummy2;
+        private TextView tickerTextView;
+        private TextView nameTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            dummy1 = itemView.findViewById(R.id.dummyName);
-            dummy2 = itemView.findViewById(R.id.dummyValue);
+            tickerTextView = itemView.findViewById(R.id.dummyName);
+            nameTextView = itemView.findViewById(R.id.dummyValue);
         }
 
-        public TextView getDummy1() {return dummy1;}
-        public TextView getDummy2() {return dummy2;}
+        public TextView getTickerTextView() {return tickerTextView;}
+        public TextView getNameTextView() {return nameTextView;}
     }
 
     public SearchResultRecyclerAdapter() {
@@ -44,7 +44,9 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        Pair<String, String> stock = data.get(position);
+        holder.getTickerTextView().setText(stock.first);
+        holder.getNameTextView().setText(stock.second);
     }
 
     @Override
