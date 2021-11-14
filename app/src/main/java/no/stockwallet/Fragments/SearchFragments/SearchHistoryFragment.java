@@ -114,8 +114,8 @@ public class SearchHistoryFragment extends Fragment {
                         try {
                             Log.d("RESPONSE", response);
                             ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArray(response);
-                            //adapter.setData(stockPairs);
-                            //adapter.notifyDataSetChanged();
+                            adapter.setData(stockPairs);
+                            adapter.notifyDataSetChanged();
                         }
                         catch(Exception e) {
                             Snackbar.make(view, "Error in response from server, try again later", Snackbar.LENGTH_SHORT).show();
