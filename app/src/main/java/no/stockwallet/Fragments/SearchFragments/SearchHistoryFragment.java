@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crazzyghost.alphavantage.AlphaVantage;
 
@@ -27,6 +32,7 @@ import no.stockwallet.R;
 public class SearchHistoryFragment extends Fragment {
     private SearchResultRecyclerAdapter adapter;
     private RequestQueue queue;
+    private String QUEUE_TAG = "SEARCHAPI";
 
     public SearchHistoryFragment() {
         // Required empty public constructor
@@ -77,21 +83,42 @@ public class SearchHistoryFragment extends Fragment {
         queue = Volley.newRequestQueue(getContext());
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String search) {
-                requestAPISearch(search);
+            public boolean onQueryTextSubmit(String keyword) {
+                queue.cancelAll(QUEUE_TAG);
+                requestAPISearch(keyword);
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String search) {
+            public boolean onQueryTextChange(String keyword) {
+                queue.cancelAll(QUEUE_TAG);
+                requestAPISearch(keyword);
                 return false;
             }
         });
     }
 
-    private void requestAPISearch(String search) {
-        String baseURL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=04C7U8DGXKH0OY8B&datatype=json&keywords=";
+    private void requestAPISearch(String keyword) {
+        if(keyword.equals("") == false) {
+            new Thread(() -> {
+                String baseURL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=04C7U8DGXKH0OY8B&datatype=json&keywords=";
+                String url = baseURL + keyword;
+                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("RESPONSE", response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ERROR", error.toString());
+                    }
+                });
+                request.setTag(QUEUE_TAG);
+                queue.add(request);
 
+            });
+        }
     }
 
     private void hideKeyboard() {
