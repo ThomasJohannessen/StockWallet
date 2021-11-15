@@ -34,4 +34,8 @@
     <string name="login_password">Password</string>
     <string name="stock_wallet_logo">Stock Wallet</string>
     <string name="register_user_title">Register new user</string>
+    <string name="stock_volume">Volum:</string>
+    <string name="stock_average_price">Snitt innkjøps pris:</string>
+    <string name="stock_intraday">"Endring idag: "</string>
+    <string name="stock_nowday_price">Aksjepris idag: </string>
 </resources>
