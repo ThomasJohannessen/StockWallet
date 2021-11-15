@@ -33,7 +33,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
         private Group detailGroup;
-        private TextView volumeView, averageBuyView, intradayView, currentPriceView;
+        private TextView volumeView, averageBuyView, intradayView, currentPriceView, tickerView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -47,6 +47,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             averageBuyView = itemView.findViewById(R.id.StockAveragePH);
             intradayView = itemView.findViewById(R.id.StockIntradayPH);
             currentPriceView = itemView.findViewById(R.id.StockCurrentPricePH);
+            tickerView = itemView.findViewById(R.id.StockTickerPH);
         }
     }
 
@@ -85,21 +86,25 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     }
 
     private void fillWithData(ViewHolder holder, int position) {
-        String stockName = data.get(position).getFullName();
-        double earning = Double.parseDouble(df.format(data.get(position).getEarningsNOK()));
-        double earningsPrcent = Double.parseDouble(df.format(data.get(position).getEarningsPercent()));
-        int markedValue = (int) Double.parseDouble(df.format(data.get(position).getMarkedValueNOK()));
+        Investment stockObject = data.get(position);
+
+        String stockName = stockObject.getFullName();
+        double earning = Double.parseDouble(df.format(stockObject.getEarningsNOK()));
+        double earningsPrcent = Double.parseDouble(df.format(stockObject.getEarningsPercent()));
+        int markedValue = (int) Double.parseDouble(df.format(stockObject.getMarkedValueNOK()));
 
         holder.stockEarning.setText(String.valueOf(earning + " NOK"));
         holder.stockNameView.setText(stockName);
         holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
         holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + "%"));
 
-        int volume = data.get(position).getVolume();
-        double averageBuy = Double.parseDouble(df.format(data.get(position).getAvgBuyPrice()));
-        double intraDay = Double.parseDouble(df.format(data.get(position).getIntradayChange()));
-        double currentPrice = Double.parseDouble(df.format(data.get(position).getCurrentStockPrice()));
+        String ticker = stockObject.getTicker();
+        int volume = stockObject.getVolume();
+        double averageBuy = Double.parseDouble(df.format(stockObject.getAvgBuyPrice()));
+        double intraDay = Double.parseDouble(df.format(stockObject.getIntradayChange()));
+        double currentPrice = Double.parseDouble(df.format(stockObject.getCurrentStockPrice()));
 
+        holder.tickerView.setText(ticker);
         holder.volumeView.setText(String.valueOf(volume));
         holder.averageBuyView.setText(String.valueOf(averageBuy));
         holder.intradayView.setText(String.valueOf(intraDay + " %"));

@@ -38,4 +38,5 @@
     <string name="stock_average_price">Snitt innkjøps pris:</string>
     <string name="stock_intraday">"Endring idag: "</string>
     <string name="stock_nowday_price">Aksjepris idag: </string>
+    <string name="stock_ticker">Ticker:</string>
 </resources>
