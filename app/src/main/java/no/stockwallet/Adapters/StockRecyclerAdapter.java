@@ -19,15 +19,17 @@ import no.stockwallet.R;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;
-    DecimalFormat df = new DecimalFormat("#.##");
+    private int previousExpandednPosition = -1;
+    private int mExpandedPosition = -1;
 
+    DecimalFormat df = new DecimalFormat("#.##");
 
     public StockRecyclerAdapter(HashMap<String, Investment> data) {
         this.data = new ArrayList<>(data.values());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
+        private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning, testView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -35,6 +37,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockValueView = itemView.findViewById(R.id.StockValuePH);
             stockPercentEarning = itemView.findViewById(R.id.StockEarningPCPH);
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
+            testView = itemView.findViewById(R.id.testView1);
         }
     }
 
@@ -53,7 +56,26 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        setUpDetailedView(holder, position);
+        fillWithData(holder, position);
+    }
 
+    private void setUpDetailedView(ViewHolder holder, int position) {
+        final boolean isExpanded = position == mExpandedPosition;
+        holder.testView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setActivated(isExpanded);
+
+        if(isExpanded)
+            previousExpandednPosition = position;
+
+        holder.itemView.setOnClickListener(view -> {
+            mExpandedPosition = isExpanded ? -1 : position;
+            notifyItemChanged(previousExpandednPosition);
+            notifyItemChanged(position);
+        });
+    }
+
+    private void fillWithData(ViewHolder holder, int position) {
         String stockName = data.get(position).getFullName();
         double earning = Double.parseDouble(df.format(data.get(position).getEarningsNOK()));
         double earningsPrcent = Double.parseDouble(df.format(data.get(position).getEarningsPercent()));
@@ -63,6 +85,8 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         holder.stockNameView.setText(stockName);
         holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
         holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + " %"));
+
+        holder.testView.setText("LOOOL");
     }
 
     @Override
