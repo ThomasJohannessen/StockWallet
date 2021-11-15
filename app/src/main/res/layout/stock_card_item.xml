@@ -123,6 +123,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:text="@string/stock_volume"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/StockValuePH" />
 
@@ -142,6 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/stock_average_price"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/Volume"
             app:layout_constraintTop_toBottomOf="@+id/Volume" />
 
@@ -160,6 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/stock_nowday_price"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/IntradayShift"
             app:layout_constraintTop_toBottomOf="@+id/IntradayShift" />
 
@@ -187,6 +190,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/stock_intraday"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/StockAverageBuy"
             app:layout_constraintTop_toBottomOf="@+id/StockAverageBuy" />
 

@@ -33,6 +33,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
         private Group detailGroup;
+        private TextView volumeView, averageBuyView, intradayView, currentPriceView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +42,11 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockPercentEarning = itemView.findViewById(R.id.StockEarningPCPH);
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
             detailGroup = itemView.findViewById(R.id.detailGroup);
+
+            volumeView = itemView.findViewById(R.id.StockVolumePH);
+            averageBuyView = itemView.findViewById(R.id.StockAveragePH);
+            intradayView = itemView.findViewById(R.id.StockIntradayPH);
+            currentPriceView = itemView.findViewById(R.id.StockCurrentPricePH);
         }
     }
 
@@ -87,7 +93,17 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         holder.stockEarning.setText(String.valueOf(earning + " NOK"));
         holder.stockNameView.setText(stockName);
         holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
-        holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + " %"));
+        holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + "%"));
+
+        int volume = data.get(position).getVolume();
+        double averageBuy = Double.parseDouble(df.format(data.get(position).getAvgBuyPrice()));
+        double intraDay = Double.parseDouble(df.format(data.get(position).getIntradayChange()));
+        double currentPrice = Double.parseDouble(df.format(data.get(position).getCurrentStockPrice()));
+
+        holder.volumeView.setText(String.valueOf(volume));
+        holder.averageBuyView.setText(String.valueOf(averageBuy));
+        holder.intradayView.setText(String.valueOf(intraDay + " %"));
+        holder.currentPriceView.setText(String.valueOf(currentPrice));
     }
 
     @Override
