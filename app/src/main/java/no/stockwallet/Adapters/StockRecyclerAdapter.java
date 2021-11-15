@@ -2,6 +2,7 @@ package no.stockwallet.Adapters;
 
 import static java.lang.Math.round;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,8 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning, testView;
+        private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
+        private TextView
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -37,7 +39,6 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockValueView = itemView.findViewById(R.id.StockValuePH);
             stockPercentEarning = itemView.findViewById(R.id.StockEarningPCPH);
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
-            testView = itemView.findViewById(R.id.testView1);
         }
     }
 
@@ -85,8 +86,6 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         holder.stockNameView.setText(stockName);
         holder.stockValueView.setText(String.valueOf(markedValue + " NOK"));
         holder.stockPercentEarning.setText(String.valueOf(earningsPrcent + " %"));
-
-        holder.testView.setText("LOOOL");
     }
 
     @Override
