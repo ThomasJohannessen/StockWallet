@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="Volume,StockVolumePH,StockAverageBuy,StockAveragePH,
-            TodaysPrice,StockCurrentPricePH,StockIntradayPH,IntradayShift" />
+            TodaysPrice,StockCurrentPricePH,StockIntradayPH,IntradayShift,SeeStockButton" />
 
         <TextView
             android:id="@+id/Volume"
@@ -193,6 +193,16 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/StockAverageBuy"
             app:layout_constraintTop_toBottomOf="@+id/StockAverageBuy" />
+
+        <Button
+            android:id="@+id/SeeStockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Se Aksjeinfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TodaysPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
