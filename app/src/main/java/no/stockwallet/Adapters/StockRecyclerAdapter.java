@@ -103,12 +103,13 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         double averageBuy = Double.parseDouble(df.format(stockObject.getAvgBuyPrice()));
         double intraDay = Double.parseDouble(df.format(stockObject.getIntradayChange()));
         double currentPrice = Double.parseDouble(df.format(stockObject.getCurrentStockPrice()));
+        String currency = stockObject.getCurrency();
 
         holder.tickerView.setText(ticker);
         holder.volumeView.setText(String.valueOf(volume));
         holder.averageBuyView.setText(String.valueOf(averageBuy));
         holder.intradayView.setText(String.valueOf(intraDay + " %"));
-        holder.currentPriceView.setText(String.valueOf(currentPrice));
+        holder.currentPriceView.setText(String.valueOf(currentPrice + " " + currency));
     }
 
     @Override
