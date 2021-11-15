@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
@@ -31,7 +32,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
-        private TextView
+        private Group detailGroup;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -39,6 +40,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             stockValueView = itemView.findViewById(R.id.StockValuePH);
             stockPercentEarning = itemView.findViewById(R.id.StockEarningPCPH);
             stockEarning = itemView.findViewById(R.id.StockEarningPH);
+            detailGroup = itemView.findViewById(R.id.detailGroup);
         }
     }
 
@@ -63,7 +65,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
     private void setUpDetailedView(ViewHolder holder, int position) {
         final boolean isExpanded = position == mExpandedPosition;
-        holder.testView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.detailGroup.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.itemView.setActivated(isExpanded);
 
         if(isExpanded)
