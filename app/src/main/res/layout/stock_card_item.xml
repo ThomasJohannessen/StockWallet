@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/testView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
@@ -29,44 +30,44 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/earning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/percent_earning"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView10"
-            app:layout_constraintEnd_toStartOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="@+id/value"
+            app:layout_constraintEnd_toStartOf="@+id/earningNOK"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="@+id/textView10" />
+            app:layout_constraintStart_toEndOf="@+id/value"
+            app:layout_constraintTop_toTopOf="@+id/value" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/stock_value"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView9"
+            app:layout_constraintEnd_toStartOf="@+id/earning"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/StockNamePH" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/earningNOK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/stock_earning"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView9"
+            app:layout_constraintBottom_toBottomOf="@+id/earning"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/textView9" />
+            app:layout_constraintStart_toEndOf="@+id/earning"
+            app:layout_constraintTop_toTopOf="@+id/earning" />
 
         <TextView
             android:id="@+id/StockValuePH"
@@ -74,9 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Value PH"
-            app:layout_constraintEnd_toEndOf="@+id/textView10"
-            app:layout_constraintStart_toStartOf="@+id/textView10"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintEnd_toEndOf="@+id/value"
+            app:layout_constraintStart_toStartOf="@+id/value"
+            app:layout_constraintTop_toBottomOf="@+id/value" />
 
         <TextView
             android:id="@+id/StockEarningPCPH"
@@ -84,9 +85,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Percent earning PH"
-            app:layout_constraintEnd_toEndOf="@+id/textView9"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintEnd_toEndOf="@+id/earning"
+            app:layout_constraintStart_toStartOf="@+id/earning"
+            app:layout_constraintTop_toBottomOf="@+id/earning" />
 
         <TextView
             android:id="@+id/StockEarningPH"
@@ -94,19 +95,135 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Earning PH"
-            app:layout_constraintEnd_toEndOf="@+id/textView11"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintEnd_toEndOf="@+id/earningNOK"
+            app:layout_constraintStart_toStartOf="@+id/earningNOK"
+            app:layout_constraintTop_toBottomOf="@+id/earningNOK" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/earningNOK"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_more" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/detailGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="Volume,StockVolumePH,StockAverageBuy,StockAveragePH,
+            TodaysPrice,StockCurrentPricePH,StockIntradayPH,IntradayShift,SeeStockButton, ticker, StockTickerPH" />
+
+        <TextView
+            android:id="@+id/Volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_volume"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ticker" />
+
+        <TextView
+            android:id="@+id/StockVolumePH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="VolumePH"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StockTickerPH" />
+
+        <TextView
+            android:id="@+id/StockAverageBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_average_price"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/Volume"
+            app:layout_constraintTop_toBottomOf="@+id/Volume" />
+
+        <TextView
+            android:id="@+id/StockAveragePH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Average Buy PH"
+            app:layout_constraintEnd_toEndOf="@+id/StockVolumePH"
+            app:layout_constraintTop_toBottomOf="@+id/StockVolumePH" />
+
+        <TextView
+            android:id="@+id/TodaysPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_nowday_price"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/IntradayShift"
+            app:layout_constraintTop_toBottomOf="@+id/IntradayShift" />
+
+        <TextView
+            android:id="@+id/StockCurrentPricePH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="CurrentPrice PH"
+            app:layout_constraintEnd_toEndOf="@+id/StockIntradayPH"
+            app:layout_constraintTop_toBottomOf="@+id/StockIntradayPH" />
+
+        <TextView
+            android:id="@+id/StockIntradayPH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Intraday PH"
+            app:layout_constraintEnd_toEndOf="@+id/StockAveragePH"
+            app:layout_constraintTop_toBottomOf="@+id/StockAveragePH" />
+
+        <TextView
+            android:id="@+id/IntradayShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_intraday"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/StockAverageBuy"
+            app:layout_constraintTop_toBottomOf="@+id/StockAverageBuy" />
+
+        <Button
+            android:id="@+id/SeeStockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Se Aksjeinfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TodaysPrice" />
+
+        <TextView
+            android:id="@+id/ticker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/stock_ticker"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StockValuePH" />
+
+        <TextView
+            android:id="@+id/StockTickerPH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="StockTickerPH"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StockEarningPH" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
