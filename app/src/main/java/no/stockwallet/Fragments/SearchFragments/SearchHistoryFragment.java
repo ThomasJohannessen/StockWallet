@@ -69,7 +69,7 @@ public class SearchHistoryFragment extends Fragment {
 
     private void setUpRecyclerView(View view) {
         RecyclerView searchRecycler = view.findViewById(R.id.searchRecyclerView);
-        adapter = new SearchResultRecyclerAdapter(view);
+        adapter = new SearchResultRecyclerAdapter(getActivity());
         searchRecycler.setAdapter(adapter);
         searchRecycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
