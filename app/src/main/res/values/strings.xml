@@ -39,4 +39,11 @@
     <string name="stock_intraday">"Endring idag: "</string>
     <string name="stock_nowday_price">Aksjepris idag: </string>
     <string name="stock_ticker">Ticker:</string>
+    <string name="stock_last_24">Siste 24t</string>
+    <string name="stock_last_tick">Siste Tick:</string>
+    <string name="stock_current_price">Nåværende pris:</string>
+    <string name="stock_currency">Valuta: </string>
+    <string name="stock_market_value">Markeds Verdi:</string>
+    <string name="stock_single_earning">Avkastning: </string>
+    <string name="stock_single_earning_total">Total avkastning: </string>
 </resources>

@@ -48,11 +48,15 @@
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/activity_login.xml" value="0.27717391304347827" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/activity_register_user.xml" value="0.27717391304347827" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_additional_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_buy_sell.xml" value="0.33" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_buy_sell_fragments_wrapper.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_detail_stock_fragments_wrapper.xml" value="0.33" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_detailed_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_gain.xml" value="0.33" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_graph.xml" value="0.22327898550724637" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_graph2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_graph_single_stock.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_home_fragments_wrapper.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_loading.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_overview_fragments_wrapper.xml" value="0.36666666666666664" />
@@ -60,8 +64,10 @@
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_search_fragments_wrapper.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_search_history.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_stock_list.xml" value="0.24427083333333333" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_stock_value.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_stock_view_fragments_wrapper.xml" value="0.3446557971014493" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_total.xml" value="0.23143115942028986" />
+        <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/fragment_value.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/search_list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/stock_card_item.xml" value="0.33" />
         <entry key="..\:/Users/mkowa/Desktop/Mobilprogrammering/StockWallet/app/src/main/res/layout/stock_list_item.xml" value="0.24427083333333333" />

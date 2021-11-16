@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detailStockWrapper"
+    android:id="@+id/DetailStockWrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Wrappers.DetailStockFragmentsWrapper">
@@ -23,16 +23,6 @@
             android:layout_height="wrap_content">
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/SingleStockValueFragmentContainer"
-                android:name="no.stockwallet.Fragments.StockViewFragments.StockValueFragment"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout="@layout/fragment_stock_value" />
-
-            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/SingeStockGraphFragmentContainer"
                 android:name="no.stockwallet.Fragments.DetailedStockFragments.GraphFragment"
                 android:layout_width="match_parent"
@@ -40,14 +30,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/SingleStockValueFragmentContainer"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView9"
                 tools:layout="@layout/fragment_graph2" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/SingleStockAdditionalDataFragmentContainer"
                 android:name="no.stockwallet.Fragments.DetailedStockFragments.AdditionalDataFragment"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="400dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SingeStockGraphFragmentContainer"
@@ -64,6 +54,16 @@
                 app:layout_constraintBottom_toBottomOf="@+id/SingeStockGraphFragmentContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView9"
+                android:name="no.stockwallet.Fragments.DetailedStockFragments.ValueFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout="@layout/fragment_value" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

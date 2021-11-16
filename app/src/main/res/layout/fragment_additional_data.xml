@@ -1,14 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AdditionalDataLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.DetailedStockFragments.AdditionalDataFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/SingleStockVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_volume"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockAVGPrice"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockAVGPrice"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SingleStockVolumePH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VolumePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockAVGPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockAVGPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockAVGPH"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SingleStockAVGPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_average_price"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCostPrice"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCostPrice"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockVolume" />
+
+    <TextView
+        android:id="@+id/SingleStockAVGPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AvgPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCostPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockCostPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCostPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockVolumePH" />
+
+    <TextView
+        android:id="@+id/SingleStockCostPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_current_price"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockLastTick"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockLastTick"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockAVGPrice" />
+
+    <TextView
+        android:id="@+id/SingleStockCostPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CurrentpricePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockLastTickPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockLastTickPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockLastTickPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockAVGPH" />
+
+    <TextView
+        android:id="@+id/SingleStockLastTick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_last_tick"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCurrency"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCostPrice" />
+
+    <TextView
+        android:id="@+id/SingleStockLastTickPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LasttickPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCurrencyPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockCurrencyPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCurrencyPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCostPH" />
+
+    <TextView
+        android:id="@+id/SingleStockCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_currency"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockMarketValue"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockMarketValue"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockLastTick" />
+
+    <TextView
+        android:id="@+id/SingleStockCurrencyPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CurrencyPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockMarketPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockMarketPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockMarketPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockLastTickPH" />
+
+    <TextView
+        android:id="@+id/SingleStockMarketValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_market_value"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockEarning"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockEarning"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCurrency" />
+
+    <TextView
+        android:id="@+id/SingleStockMarketPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MarketvaluePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockEarningPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockEarningPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockEarningPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCurrencyPH" />
+
+    <TextView
+        android:id="@+id/SingleStockEarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_single_earning"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockEarningTotal"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockEarningTotal"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockMarketValue" />
+
+    <TextView
+        android:id="@+id/SingleStockEarningPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="earningPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockEarningTotalPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockEarningTotalPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockEarningTotalPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockMarketPH" />
+
+    <TextView
+        android:id="@+id/SingleStockEarningTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/stock_single_earning_total"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockEarning" />
+
+    <TextView
+        android:id="@+id/SingleStockEarningTotalPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="totalearnPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockEarningPH" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88888" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buy_sell_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+</androidx.constraintlayout.widget.ConstraintLayout>
