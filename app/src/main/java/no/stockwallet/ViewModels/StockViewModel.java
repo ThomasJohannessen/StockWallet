@@ -97,6 +97,22 @@ public class StockViewModel extends ViewModel {
 
     public ArrayList<Integer> getHistoryArrayInvestmentTotalValueForGraph() {
 
+        //placeholder data for getting history view on graph
+                API_InvestmentDataHandler calc = new API_InvestmentDataHandler(this);
+                int totValue = calc.getTotalMarkedValue();
+
+                historyArrayInvestmentTotalValueForGraph.add(0);
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.1));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.4));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.2));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.7));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*(-0.15)));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.8));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.6));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.9));
+                historyArrayInvestmentTotalValueForGraph.add((int) (totValue*0.8));
+                historyArrayInvestmentTotalValueForGraph.add(totValue);
+
         return historyArrayInvestmentTotalValueForGraph;
     }
 
