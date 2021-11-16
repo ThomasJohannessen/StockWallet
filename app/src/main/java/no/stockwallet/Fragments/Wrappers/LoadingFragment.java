@@ -90,6 +90,7 @@ public class LoadingFragment extends Fragment {
                    }
                }
                viewModel.setStockMap(temp);
+               viewModel.updateValuesFromAPItoInvestmentObjects();
                Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
         }});
     }
