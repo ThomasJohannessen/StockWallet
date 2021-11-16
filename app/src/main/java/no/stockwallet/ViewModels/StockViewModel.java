@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import no.stockwallet.Support.FireBaseJsonSupport;
 public class StockViewModel extends ViewModel {
 
     private MutableLiveData<HashMap<String, Investment>> stockMap = new MutableLiveData<>();
+    private ArrayList<Integer> historyArrayInvestmentTotalValueForGraph = new ArrayList<Integer>();
 
     public void fetchUserData() {
         FireBaseJsonSupport.readDB(this);
@@ -91,6 +93,15 @@ public class StockViewModel extends ViewModel {
 
     public void setStockMap(HashMap<String, Investment> stockMap) {
         this.stockMap.setValue(stockMap);
+    }
+
+    public ArrayList<Integer> getHistoryArrayInvestmentTotalValueForGraph() {
+
+        return historyArrayInvestmentTotalValueForGraph;
+    }
+
+    public void addDailyDataToHistoryArray(int todaysTotalValue) {
+        historyArrayInvestmentTotalValueForGraph.add(todaysTotalValue);
     }
 }
 
