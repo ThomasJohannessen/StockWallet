@@ -96,7 +96,7 @@ public class StockViewModel extends ViewModel {
         }
 
         if(deleted == false)
-            addAPIvaluesToNewInvestmentObject(stockToUpdate);
+            addValuesToNewInvestment(stockToUpdate);
 
         setStockMap(temp);
         FireBaseJsonSupport.writeDB(stockMap.getValue());
