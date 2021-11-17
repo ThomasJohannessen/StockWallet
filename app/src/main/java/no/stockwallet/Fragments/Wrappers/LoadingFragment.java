@@ -78,14 +78,16 @@ public class LoadingFragment extends Fragment {
 
                HashMap<String, Investment> temp = new HashMap<>();
 
-               for (Map.Entry<String, Object> entry : map.entrySet()) {
-                   if (entry.getKey().equals("stocks")) {
-                       ObjectMapper mapper = new ObjectMapper();
-                       Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
+               if(map != null) {
+                   for (Map.Entry<String, Object> entry : map.entrySet()) {
+                       if (entry.getKey().equals("stocks")) {
+                           ObjectMapper mapper = new ObjectMapper();
+                           Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
 
-                       for(Object inv : objectMap.values()) {
-                           Investment investment = mapper.convertValue(inv, Investment.class);
-                           temp.put(investment.getTicker(), investment);
+                           for(Object inv : objectMap.values()) {
+                               Investment investment = mapper.convertValue(inv, Investment.class);
+                               temp.put(investment.getTicker(), investment);
+                           }
                        }
                    }
                }
