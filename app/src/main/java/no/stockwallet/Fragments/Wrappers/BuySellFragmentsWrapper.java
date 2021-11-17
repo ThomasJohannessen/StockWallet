@@ -47,6 +47,5 @@ public class BuySellFragmentsWrapper extends Fragment {
 
     public void sellStock(Investment investment) {
         viewModel.sellInvestment(investment);
-        viewModel.updateValuesFromAPItoInvestmentObjects();
     }
 }
