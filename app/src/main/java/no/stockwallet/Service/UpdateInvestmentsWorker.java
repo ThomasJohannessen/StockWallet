@@ -21,10 +21,14 @@ public class UpdateInvestmentsWorker extends Worker {
     @Override
     public Result doWork() {
         StockViewModel model = new StockViewModel();
-        model.updateModel();
-        Log.i("WorkManager","Worker running. Updating Investments");
-        return Result.success();
+        if (model.getStockMap().getValue() != null){
+            model.updateModel();
+            Log.i("WorkManager","Worker running. Updating Investments");
+            return Result.success();
+        }
+        else {
+            return Result.failure();
+        }
     }
-
 
 }
