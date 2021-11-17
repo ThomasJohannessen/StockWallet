@@ -45,16 +45,6 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null) {
-            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-            startActivity(loginIntent);
-        }
-        else {
-            fetchViewModel();
-        }
     }
 
     @Override
@@ -67,6 +57,16 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+            startActivity(loginIntent);
+        }
+        else {
+            fetchViewModel();
+        }
     }
 
     private void fetchViewModel() {
