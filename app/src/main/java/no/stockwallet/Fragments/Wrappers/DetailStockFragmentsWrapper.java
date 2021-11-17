@@ -20,9 +20,17 @@ import java.util.HashMap;
 
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
+import no.stockwallet.ViewModels.StockViewModel;
 import yahoofinance.Stock;
 
 public class DetailStockFragmentsWrapper extends Fragment {
+
+    private StockViewModel viewModel;
+
+    public StockViewModel getViewModel(){
+        return viewModel;
+    }
+
 
     public DetailStockFragmentsWrapper() {
         // Required empty public constructor
