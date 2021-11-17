@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class StockViewModel extends ViewModel {
         APIhandler.addIntradayChangePercentToInvestments();
         APIhandler.addCurrentStockPriceToInvestments();
         APIhandler.findBiggestGainerAndLoserInInvestedStocks();
+        addDailyDataToHistoryArray();
 
         //writes new values to db
         FireBaseJsonSupport.writeDB(stockMap.getValue());
@@ -116,8 +119,17 @@ public class StockViewModel extends ViewModel {
         return historyArrayInvestmentTotalValueForGraph;
     }
 
-    public void addDailyDataToHistoryArray(int todaysTotalValue) {
-        historyArrayInvestmentTotalValueForGraph.add(todaysTotalValue);
+    public void addDailyDataToHistoryArray() {
+        API_InvestmentDataHandler API = new API_InvestmentDataHandler(this);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        if (dtf.format(now).equals("23:50:00")){
+            int todaysMarkedValue = API.getTotalMarkedValue();
+
+            historyArrayInvestmentTotalValueForGraph.add(todaysMarkedValue);
+        }
     }
 }
 
