@@ -32,6 +32,7 @@ public class GraphFragment extends Fragment {
 
     private View view;
     private StockViewModel viewModel;
+    LineGraphSeries<DataPoint> series;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -49,26 +50,31 @@ public class GraphFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        final GraphView graph = (GraphView) view.findViewById(R.id.graph);
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
         graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.HORIZONTAL );
-
         graph.setVisibility(View.VISIBLE);
 
-        ArrayList<Integer> historyData = viewModel.getHistoryArrayInvestmentTotalValueForGraph();
+        ArrayList<Long> historyData = viewModel.getHistoryArrayInvestmentTotalValueForGraph();
 
         DataPoint[] dataPoints = new DataPoint[historyData.size()];
 
         for (int i=0; i<historyData.size();i++){
-            dataPoints[i] = new DataPoint(i, historyData.get(i));
+            long temp = historyData.get(i);
+            dataPoints[i] = new DataPoint(i, temp);
         }
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(dataPoints);
+        series = new LineGraphSeries<DataPoint>(dataPoints);
+
         graph.addSeries(series);
+
+
     }
 }

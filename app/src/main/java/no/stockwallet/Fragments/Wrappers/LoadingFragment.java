@@ -9,29 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import no.stockwallet.MainActivity;
-import no.stockwallet.Model.Investment;
 import no.stockwallet.Login.LoginActivity;
 import no.stockwallet.R;
+import no.stockwallet.Support.FireBaseJsonSupport;
 import no.stockwallet.ViewModels.StockViewModel;
 
 public class LoadingFragment extends Fragment {
@@ -74,23 +64,12 @@ public class LoadingFragment extends Fragment {
         db.get().addOnCompleteListener(task -> {
            if(task.isSuccessful()) {
                DocumentSnapshot ss = task.getResult();
-               Map<String, Object> map = ss.getData();
 
-               HashMap<String, Investment> temp = new HashMap<>();
+               FireBaseJsonSupport.readDB(viewModel,ss);
+               FireBaseJsonSupport.readHistoryArrayFromDB(viewModel, ss);
 
-               for (Map.Entry<String, Object> entry : map.entrySet()) {
-                   if (entry.getKey().equals("stocks")) {
-                       ObjectMapper mapper = new ObjectMapper();
-                       Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
+               viewModel.updateModel();
 
-                       for(Object inv : objectMap.values()) {
-                           Investment investment = mapper.convertValue(inv, Investment.class);
-                           temp.put(investment.getTicker(), investment);
-                       }
-                   }
-               }
-               viewModel.setStockMap(temp);
-               viewModel.updateValuesFromAPItoInvestmentObjects();
                Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
         }});
     }
