@@ -79,6 +79,29 @@ public class StockViewModel extends ViewModel {
         FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
+    public void sellInvestment(Investment investmentToSell) {
+        HashMap<String, Investment> temp = getStockMap().getValue();
+        if(temp.isEmpty())
+            return;
+
+        Investment stockToUpdate = temp.get(investmentToSell.getTicker());
+        if(stockToUpdate == null)
+            return;
+
+        stockToUpdate.setVolume(stockToUpdate.getVolume() - investmentToSell.getVolume());
+        boolean deleted = false;
+        if(stockToUpdate.getVolume() < 1) {
+            temp.remove(stockToUpdate.getTicker());
+            deleted = true;
+        }
+
+        if(deleted == false)
+            addAPIvaluesToNewInvestmentObject(stockToUpdate);
+
+        setStockMap(temp);
+        FireBaseJsonSupport.writeDB(stockMap.getValue());
+    }
+
     public Investment getInvestment(String ticker){
         return stockMap.getValue().get(ticker);
     }

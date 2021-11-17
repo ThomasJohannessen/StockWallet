@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -53,30 +57,43 @@ public class BuySellFragment extends Fragment {
     }
 
     private void handleRegisterClick(View view) {
+        EditText tickerName = view.findViewById(R.id.InputStockName);
+        String ticker = tickerName.getText().toString().toUpperCase(Locale.ROOT);
 
-            EditText tickerName = view.findViewById(R.id.InputStockName);
-            String ticker = tickerName.getText().toString().toUpperCase(Locale.ROOT);
+        EditText stockPrice = view.findViewById(R.id.InputStockPrice);
+        float price = Math.round(Float.parseFloat(stockPrice.getText().toString()) * 100) / 100;
 
-            EditText stockPrice = view.findViewById(R.id.InputStockPrice);
-            float price = Math.round(Float.parseFloat(stockPrice.getText().toString()) * 100) / 100;
+        EditText stockVolume = view.findViewById(R.id.InputStockVolume);
+        int volume = Integer.parseInt(stockVolume.getText().toString());
 
-            EditText stockVolume = view.findViewById(R.id.InputStockVolume);
-            int volume = Integer.parseInt(stockVolume.getText().toString());
+        EditText stockFee = view.findViewById(R.id.InputStockFee);
+        float fee = Math.round(Float.parseFloat(stockFee.getText().toString()) * 100) / 100;
 
-            EditText stockFee = view.findViewById(R.id.InputStockFee);
-            float fee = Math.round(Float.parseFloat(stockFee.getText().toString()) * 100) / 100;
+        BuySellFragmentsWrapper parent = (BuySellFragmentsWrapper) getParentFragment();
 
-            BuySellFragmentsWrapper parent = (BuySellFragmentsWrapper) getParentFragment();
-            Investment newInvestment = new Investment(ticker, volume, price, fee);
-            parent.registerStockSale(newInvestment);
+        Investment newInvestment = new Investment(ticker, volume, price, fee);
 
-            try {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        Spinner dropdown = view.findViewById(R.id.BuySellDropdown);
+        String selected = dropdown.getSelectedItem().toString();
+        switch (selected) {
+            case "Kjøp":
+                parent.purchaseStock(newInvestment);
+                break;
+            case "Salg":
+                parent.sellStock(newInvestment);
+                break;
+            default:
+                Snackbar.make(view, "Something went wrong when handling the request", BaseTransientBottomBar.LENGTH_SHORT);
+                break;
+        }
 
-            Navigation.findNavController(view).navigate(R.id.overviewFragmentsWrapper);
+        try {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Navigation.findNavController(view).navigate(R.id.overviewFragmentsWrapper);
     }
 }
