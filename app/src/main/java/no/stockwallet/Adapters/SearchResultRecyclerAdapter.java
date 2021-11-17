@@ -59,22 +59,13 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
     }
 
     private void setUpClickListener(ViewHolder holder, String stockTicker) {
+        HashMap<String, Stock> stock = new HashMap<>();
+        StockDataRetriever.getInstance().getStockObject(stock, stockTicker);
         holder.itemView.setOnClickListener(view -> {
-            new Thread(() -> {
-                HashMap<String, Stock> stock = new HashMap<>();
                 Bundle bundle = new Bundle();
-                StockDataRetriever.getInstance().getStockObject(stock, stockTicker);
-                while(stock.isEmpty()) {
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
                 bundle.putSerializable("hashmap", stock);
 
-                activity.runOnUiThread(() -> Navigation.findNavController(view).navigate(R.id.detailStockFragmentsWrapper, bundle));
-            }).start();
+                Navigation.findNavController(view).navigate(R.id.detailStockFragmentsWrapper, bundle);
         });
     }
 
