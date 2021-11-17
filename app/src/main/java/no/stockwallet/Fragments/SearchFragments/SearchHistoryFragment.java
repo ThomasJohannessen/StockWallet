@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,10 +31,13 @@ import com.crazzyghost.alphavantage.AlphaVantage;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import no.stockwallet.Adapters.SearchResultRecyclerAdapter;
+import no.stockwallet.Handlers.StockDataRetriever;
 import no.stockwallet.R;
 import no.stockwallet.Support.JsonSupport;
+import yahoofinance.Stock;
 
 public class SearchHistoryFragment extends Fragment {
     private SearchResultRecyclerAdapter adapter;
@@ -64,7 +69,7 @@ public class SearchHistoryFragment extends Fragment {
 
     private void setUpRecyclerView(View view) {
         RecyclerView searchRecycler = view.findViewById(R.id.searchRecyclerView);
-        adapter = new SearchResultRecyclerAdapter();
+        adapter = new SearchResultRecyclerAdapter(getActivity());
         searchRecycler.setAdapter(adapter);
         searchRecycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
