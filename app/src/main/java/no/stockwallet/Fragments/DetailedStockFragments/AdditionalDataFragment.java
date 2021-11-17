@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
@@ -63,7 +65,7 @@ public class AdditionalDataFragment extends Fragment {
             tickerView.setText(stock.getSymbol() == null ? "N/A" : stock.getSymbol());
             dailyChangeView.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(df.format(stock.getQuote().getChange())));
             costView.setText(stock.getQuote().getPrice() == null ? "N/A" : String.valueOf(stock.getQuote().getPrice()+ " " + stock.getCurrency()));
-            marketValueView.setText(stock.getStats().getMarketCap() == null ? "N/A" : String.valueOf(stock.getStats().getMarketCap().doubleValue()));
+            marketValueView.setText(stock.getStats().getMarketCap() == null ? "N/A" : String.valueOf(stock.getStats().getMarketCap().unscaledValue()));
             BVPSView.setText(stock.getStats().getBookValuePerShare() == null ? "N/A" : String.valueOf(stock.getStats().getBookValuePerShare()));
             PEView.setText(stock.getStats().getPe() == null ? "N/A" : String.valueOf(stock.getStats().getPe()));
             yearLow.setText(stock.getQuote().getChangeFromYearLowInPercent() == null ? "N/A" : String.valueOf(stock.getQuote().getChangeFromYearLowInPercent()));

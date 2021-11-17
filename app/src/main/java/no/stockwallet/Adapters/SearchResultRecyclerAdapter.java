@@ -55,10 +55,10 @@ public class SearchResultRecyclerAdapter extends RecyclerView.Adapter<SearchResu
         holder.getTickerTextView().setText(stock.first);
         holder.getNameTextView().setText(stock.second);
 
-        setUpClickListener(holder, stock.first);
+        setUpClickListeners(holder, stock.first);
     }
 
-    private void setUpClickListener(ViewHolder holder, String stockTicker) {
+    private void setUpClickListeners(ViewHolder holder, String stockTicker) {
         HashMap<String, Stock> stock = new HashMap<>();
         StockDataRetriever.getInstance().getStockObject(stock, stockTicker);
         holder.itemView.setOnClickListener(view -> {
