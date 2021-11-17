@@ -94,7 +94,7 @@ public class StockViewModel extends ViewModel {
     }
 
     public ArrayList<Long> getHistoryArrayInvestmentTotalValueForGraph() {
-        Log.d("Kjøplengde far view", String.valueOf(historyArrayInvestmentTotalValueForGraph.size()));
+
         return historyArrayInvestmentTotalValueForGraph;
     }
 
