@@ -27,7 +27,11 @@
         android:id="@+id/overviewFragmentsWrapper"
         android:name="no.stockwallet.Fragments.Wrappers.OverviewFragmentsWrapper"
         android:label="fragment_overview_fragments_wrapper"
-        tools:layout="@layout/fragment_overview_fragments_wrapper" />
+        tools:layout="@layout/fragment_overview_fragments_wrapper" >
+        <action
+            android:id="@+id/action_overviewFragmentsWrapper_to_detailStockFragmentsWrapper"
+            app:destination="@id/detailStockFragmentsWrapper" />
+    </fragment>
     <fragment
         android:id="@+id/buySellFragmentsWrapper"
         android:name="no.stockwallet.Fragments.Wrappers.BuySellFragmentsWrapper"
@@ -37,7 +41,11 @@
         android:id="@+id/searchFragmentsWrapper"
         android:name="no.stockwallet.Fragments.Wrappers.SearchFragmentsWrapper"
         android:label="fragment_search_fragments_wrapper"
-        tools:layout="@layout/fragment_search_fragments_wrapper" />
+        tools:layout="@layout/fragment_search_fragments_wrapper">
+        <action
+            android:id="@+id/action_searchFragmentsWrapper_to_detailStockFragmentsWrapper"
+            app:destination="@id/detailStockFragmentsWrapper" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragmentsWrapper"
         android:name="no.stockwallet.Fragments.Wrappers.SettingsFragmentsWrapper"
@@ -52,4 +60,9 @@
             android:id="@+id/action_loadingFragment2_to_homeFragmentsWrapper"
             app:destination="@id/homeFragmentsWrapper" />
     </fragment>
+    <fragment
+        android:id="@+id/detailStockFragmentsWrapper"
+        android:name="no.stockwallet.Fragments.Wrappers.DetailStockFragmentsWrapper"
+        android:label="fragment_detail_stock_fragments_wrapper"
+        tools:layout="@layout/fragment_detail_stock_fragments_wrapper" />
 </navigation>

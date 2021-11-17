@@ -1,4 +1,4 @@
-package no.stockwallet.Fragments.StockViewFragments;
+package no.stockwallet.Fragments.DetailedStockFragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import no.stockwallet.R;
 
 public class GraphFragment extends Fragment {
+
     public GraphFragment() {
         // Required empty public constructor
     }
@@ -23,6 +24,7 @@ public class GraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_graph_single_stock, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_graph2, container, false);
     }
 }

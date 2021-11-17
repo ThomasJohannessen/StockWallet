@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AdditionalDataLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.DetailedStockFragments.AdditionalDataFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/SingleStockTicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_ticker"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockDailyChange"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockDailyChange"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SingleStockTickerPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TickerPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockChangePH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockChangePH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockChangePH"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SingleStockDailyChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_intraday"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCostPrice"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCostPrice"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockTicker" />
+
+    <TextView
+        android:id="@+id/SingleStockChangePH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ChangePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockCostPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockCostPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockCostPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockTickerPH" />
+
+    <TextView
+        android:id="@+id/SingleStockCostPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_current_price"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockMarketValue"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockMarketValue"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockDailyChange" />
+
+    <TextView
+        android:id="@+id/SingleStockCostPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CurrentpricePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockMarketPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockMarketPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockMarketPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockChangePH" />
+
+    <TextView
+        android:id="@+id/SingleStockMarketValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_market_value"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockBVS"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockBVS"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCostPrice" />
+
+    <TextView
+        android:id="@+id/SingleStockMarketPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MarketValuePH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockBVSPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockBVSPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockBVSPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockCostPH" />
+
+    <TextView
+        android:id="@+id/SingleStockBVS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_bvs"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockPE"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockPE"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockMarketValue" />
+
+    <TextView
+        android:id="@+id/SingleStockBVSPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BVSPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockPEPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockPEPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockPEPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockMarketPH" />
+
+    <TextView
+        android:id="@+id/SingleStockPE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_PE"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockYearBottom"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockYearBottom"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockBVS" />
+
+    <TextView
+        android:id="@+id/SingleStockPEPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PEPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockYearBottomPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockYearBottomPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockYearBottomPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockBVSPH" />
+
+    <TextView
+        android:id="@+id/SingleStockYearBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock_low"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockYearTop"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockYearTop"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockPE" />
+
+    <TextView
+        android:id="@+id/SingleStockYearBottomPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="yearLowPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/SingleStockYearTopPH"
+        app:layout_constraintEnd_toEndOf="@+id/SingleStockYearTopPH"
+        app:layout_constraintStart_toStartOf="@+id/SingleStockYearTopPH"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockPEPH" />
+
+    <TextView
+        android:id="@+id/SingleStockYearTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/stock_high"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockYearBottom" />
+
+    <TextView
+        android:id="@+id/SingleStockYearTopPH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="yearHighPH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toBottomOf="@+id/SingleStockYearBottomPH" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88888" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buy_sell_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,8 +41,13 @@ public class BuySellFragmentsWrapper extends Fragment {
         return inflater.inflate(R.layout.fragment_buy_sell_fragments_wrapper, container, false);
     }
 
-    public void registerStockSale(Investment investment) {
+    public void purchaseStock(Investment investment) {
         viewModel.addInvestment(investment);
         viewModel.updateModel();
+    }
+
+    public void sellStock(Investment investment) {
+        viewModel.sellInvestment(investment);
+        viewModel.updateValuesFromAPItoInvestmentObjects();
     }
 }

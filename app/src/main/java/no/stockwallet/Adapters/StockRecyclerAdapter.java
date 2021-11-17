@@ -2,22 +2,27 @@ package no.stockwallet.Adapters;
 
 import static java.lang.Math.round;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import no.stockwallet.Handlers.StockDataRetriever;
 import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
+import yahoofinance.Stock;
 
 public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdapter.ViewHolder>{
     ArrayList<Investment> data;
@@ -34,6 +39,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         private TextView stockNameView, stockValueView, stockPercentEarning, stockEarning;
         private Group detailGroup;
         private TextView volumeView, averageBuyView, intradayView, currentPriceView, tickerView;
+        private Button detailViewButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +54,7 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
             intradayView = itemView.findViewById(R.id.StockIntradayPH);
             currentPriceView = itemView.findViewById(R.id.StockCurrentPricePH);
             tickerView = itemView.findViewById(R.id.StockTickerPH);
+            detailViewButton = itemView.findViewById(R.id.SeeStockButton);
         }
     }
 
@@ -68,6 +75,21 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         setUpDetailedView(holder, position);
         fillWithData(holder, position);
+
+        Investment investment = data.get(position);
+        String ticker = investment.getTicker();
+        setUpClickListeners(holder, ticker);
+    }
+
+    private void setUpClickListeners(ViewHolder holder, String stockTicker) {
+        HashMap<String, Stock> stock = new HashMap<>();
+        StockDataRetriever.getInstance().getStockObject(stock, stockTicker);
+        holder.detailViewButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("hashmap", stock);
+
+            Navigation.findNavController(view).navigate(R.id.detailStockFragmentsWrapper, bundle);
+        });
     }
 
     private void setUpDetailedView(ViewHolder holder, int position) {

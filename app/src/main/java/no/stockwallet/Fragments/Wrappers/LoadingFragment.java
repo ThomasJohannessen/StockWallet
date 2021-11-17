@@ -35,16 +35,6 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null) {
-            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-            startActivity(loginIntent);
-        }
-        else {
-            fetchViewModel();
-        }
     }
 
     @Override
@@ -57,6 +47,16 @@ public class LoadingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+            startActivity(loginIntent);
+        }
+        else {
+            fetchViewModel();
+        }
     }
 
     private void fetchViewModel() {
@@ -68,8 +68,21 @@ public class LoadingFragment extends Fragment {
                FireBaseJsonSupport.readDB(viewModel,ss);
                FireBaseJsonSupport.readHistoryArrayFromDB(viewModel, ss);
 
-               viewModel.updateModel();
 
+               if(map != null) {
+                   for (Map.Entry<String, Object> entry : map.entrySet()) {
+                       if (entry.getKey().equals("stocks")) {
+                           ObjectMapper mapper = new ObjectMapper();
+                           Map<String, Investment> objectMap = mapper.convertValue(entry.getValue(), Map.class);
+
+                           for(Object inv : objectMap.values()) {
+                               Investment investment = mapper.convertValue(inv, Investment.class);
+                               temp.put(investment.getTicker(), investment);
+                           }
+                       }
+                   }
+               }
+               viewModel.setStockMap(temp);
                Navigation.findNavController(requireActivity(), R.id.loadingLayout).navigate(R.id.homeFragmentsWrapper);
         }});
     }
