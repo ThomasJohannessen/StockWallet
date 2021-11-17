@@ -5,8 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import no.stockwallet.Handlers.API_InvestmentDataHandler;
 import no.stockwallet.Model.Investment;
@@ -15,10 +17,7 @@ import no.stockwallet.Support.FireBaseJsonSupport;
 public class StockViewModel extends ViewModel {
 
     private MutableLiveData<HashMap<String, Investment>> stockMap = new MutableLiveData<>();
-
-    public void fetchUserData() {
-        FireBaseJsonSupport.readDB(this);
-    }
+    private ArrayList<Long> historyArrayInvestmentTotalValueForGraph = new ArrayList<>();
 
     public String[] getInvestmentTickers() {
         String[] investedStocksTickers = new String[getStockMap().getValue().size()];
@@ -32,7 +31,7 @@ public class StockViewModel extends ViewModel {
     }
 
     //used by service and underway to update the values on the fly
-    public void updateValuesFromAPItoInvestmentObjects(){
+    public void updateModel(){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
         APIhandler.addFullStockNamesAndCurrencyToInvestments();
@@ -42,13 +41,14 @@ public class StockViewModel extends ViewModel {
         APIhandler.addIntradayChangePercentToInvestments();
         APIhandler.addCurrentStockPriceToInvestments();
         APIhandler.findBiggestGainerAndLoserInInvestedStocks();
+        addDailyDataToHistoryArray();
 
         //writes new values to db
         FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
     //used when a new investment is added
-    public void addAPIvaluesToNewInvestmentObject(Investment newInvestment){
+    public void addValuesToNewInvestment(Investment newInvestment){
         API_InvestmentDataHandler APIhandler = new API_InvestmentDataHandler(this);
 
         APIhandler.addFullStockNameAndCurrencyToSingleInvestment(newInvestment);
@@ -75,7 +75,7 @@ public class StockViewModel extends ViewModel {
             double meanPrice = (existPrice + newPrice) / (existingInvestment.getVolume());
             existingInvestment.setAvgBuyPrice(meanPrice);
         }
-        addAPIvaluesToNewInvestmentObject(newInvestment);
+        addValuesToNewInvestment(newInvestment);
         FireBaseJsonSupport.writeDB(stockMap.getValue());
     }
 
@@ -114,6 +114,29 @@ public class StockViewModel extends ViewModel {
 
     public void setStockMap(HashMap<String, Investment> stockMap) {
         this.stockMap.setValue(stockMap);
+    }
+
+    public ArrayList<Long> getHistoryArrayInvestmentTotalValueForGraph() {
+
+        return historyArrayInvestmentTotalValueForGraph;
+    }
+
+    public void addDailyDataToHistoryArray() {
+        API_InvestmentDataHandler API = new API_InvestmentDataHandler(this);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        if (dtf.format(now).equals("23:50:00")) {
+            int todaysMarkedValue = API.getTotalMarkedValue();
+
+            historyArrayInvestmentTotalValueForGraph.add((long)todaysMarkedValue);
+            FireBaseJsonSupport.writeHistoryArrayToDB(historyArrayInvestmentTotalValueForGraph);
+        }
+    }
+
+    public void setHistoryArrayInvestmentTotalValueForGraph(ArrayList<Long> historyArrayInvestmentTotalValueForGraph) {
+        this.historyArrayInvestmentTotalValueForGraph = historyArrayInvestmentTotalValueForGraph;
     }
 }
 

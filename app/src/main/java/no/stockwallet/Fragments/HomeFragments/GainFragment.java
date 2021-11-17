@@ -78,9 +78,6 @@ public class GainFragment extends Fragment {
 
         String[] tickers = new String[6];
 
-        Log.d("KJØP-b", String.valueOf(bottom3Arr.size()));
-        Log.d("KJØP-t", String.valueOf(topp3Arr.size()));
-
         for(int i=0; i<6; i++) {
             if (i < 3) {
                 if (bottom3Arr.get(i).first == null)

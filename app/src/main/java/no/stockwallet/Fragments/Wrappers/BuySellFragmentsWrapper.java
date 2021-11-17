@@ -43,7 +43,7 @@ public class BuySellFragmentsWrapper extends Fragment {
 
     public void purchaseStock(Investment investment) {
         viewModel.addInvestment(investment);
-        viewModel.updateValuesFromAPItoInvestmentObjects();
+        viewModel.updateModel();
     }
 
     public void sellStock(Investment investment) {
