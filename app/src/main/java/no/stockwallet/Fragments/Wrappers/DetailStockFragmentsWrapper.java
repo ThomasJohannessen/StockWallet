@@ -44,26 +44,13 @@ public class DetailStockFragmentsWrapper extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
-        fillWithData(view, bundle);
+        Bundle arguments = getArguments();
+        setToolbarText(view, arguments);
     }
 
-    private void fillWithData(View view, Bundle bundle) {
-        HashMap<String, Stock> map = (HashMap<String, Stock>) bundle.getSerializable("hashmap");
+    private void setToolbarText(View view, Bundle arguments) {
+        HashMap<String, Stock> map = (HashMap<String, Stock>) arguments.getSerializable("hashmap");
         Stock stock = map.get("Stock");
-        setToolbarText(view, stock);
-        fillTextView(view, stock);
-    }
-
-    private void fillTextView(View view, Stock stock) {
-        TextView volumeView, avgView, costView, lastTickView, currencyView,
-                marketValueView, earningView, earningTotalView;
-
-
-    }
-
-    private void setToolbarText(View view, Stock stock) {
-
         try {
             if(stock.getName().length() > 50)
                 throw new Exception();

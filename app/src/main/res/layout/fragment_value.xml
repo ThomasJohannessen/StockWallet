@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/stock_last_tick"
+        android:text="@string/stock_last"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
     <TextView
-        android:id="@+id/StockLastTickPH"
+        android:id="@+id/StockLastPH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

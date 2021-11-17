@@ -36,14 +36,21 @@
     <string name="register_user_title">Register new user</string>
     <string name="stock_volume">Volum:</string>
     <string name="stock_average_price">Snitt innkjøps pris:</string>
-    <string name="stock_intraday">"Endring idag: "</string>
+    <string name="stock_intraday">Endring idag: </string>
     <string name="stock_nowday_price">Aksjepris idag: </string>
     <string name="stock_ticker">Ticker:</string>
     <string name="stock_last_24">Siste 24t</string>
-    <string name="stock_last_tick">Siste Tick:</string>
-    <string name="stock_current_price">Nåværende pris:</string>
+    <string name="stock_last">Siste:</string>
+    <string name="stock_current_price">Pris (Valuta):</string>
     <string name="stock_currency">Valuta: </string>
-    <string name="stock_market_value">Markeds Verdi:</string>
+    <string name="stock_market_value">Markeds verdi:</string>
     <string name="stock_single_earning">Avkastning: </string>
     <string name="stock_single_earning_total">Total avkastning: </string>
+    <string name="stock_revenue">Inntjening: </string>
+    <string name="stock_PE">P/E:</string>
+    <string name="stock_stocks">Aksjer:</string>
+    <string name="stock_short_ratio">Short forhold:</string>
+    <string name="stock_bvs">BV/S</string>
+    <string name="stock_low">Endring fra årlig bunn:</string>
+    <string name="stock_high">Endring fra årlig topp:</string>
 </resources>
