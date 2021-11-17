@@ -34,7 +34,6 @@ public class HomeFragmentsWrapper extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
-        viewModel.updateModel();
     }
 
     @Override
