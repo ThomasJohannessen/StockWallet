@@ -43,6 +43,5 @@ public class BuySellFragmentsWrapper extends Fragment {
 
     public void registerStockSale(Investment investment) {
         viewModel.addInvestment(investment);
-        viewModel.updateModel();
     }
 }

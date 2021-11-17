@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,10 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import no.stockwallet.Handlers.API_InvestmentDataHandler;
 import no.stockwallet.Login.LoginActivity;
 import no.stockwallet.Model.Investment;
+import no.stockwallet.Service.UpdateInvestmentsWorker;
 import no.stockwallet.ViewModels.StockViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.NavigationViewMain);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //viewModel = new ViewModelProvider(this).get(StockViewModel.class)
+        PeriodicWorkRequest updateRequest =
+                new PeriodicWorkRequest.Builder(UpdateInvestmentsWorker.class, 15, TimeUnit.MINUTES).build();
+        WorkManager.getInstance().enqueue(updateRequest);
+
         findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.openDrawer(Gravity.LEFT);
@@ -95,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
-        //viewModel.fetchUserData();
     }
 
 }
