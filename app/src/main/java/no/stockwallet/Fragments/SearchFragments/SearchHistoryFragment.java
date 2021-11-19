@@ -118,7 +118,7 @@ public class SearchHistoryFragment extends Fragment {
                     public void onResponse(String response) {
                         try {
                             Log.d("RESPONSE", response);
-                            ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArray(response);
+                            ArrayList<Pair<String, String>> stockPairs = JsonSupport.getInstance().jsonToPairArraySearch(response);
                             adapter.setData(stockPairs);
                             adapter.notifyDataSetChanged();
                         }

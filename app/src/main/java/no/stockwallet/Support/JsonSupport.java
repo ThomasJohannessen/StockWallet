@@ -6,9 +6,13 @@ import android.util.Pair;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map;
+
+import no.stockwallet.Fragments.DetailedStockFragments.GraphFragment;
 
 public class JsonSupport {
     public static JsonSupport instance;
@@ -19,7 +23,7 @@ public class JsonSupport {
         return instance;
     }
 
-    public ArrayList<Pair<String, String>> jsonToPairArray(String json) throws Exception {
+    public ArrayList<Pair<String, String>> jsonToPairArraySearch(String json) throws Exception {
         ArrayList<Pair<String, String>> pairs = new ArrayList<>();
         try {
             Map map = new Gson().fromJson(json, Map.class);
@@ -36,6 +40,27 @@ public class JsonSupport {
             throw new Exception();
         }
         return pairs;
+    }
+
+    public ArrayList<Double> jsonToPairArrayGraph(String json) throws Exception {
+        ArrayList<Double> historyValues = new ArrayList<>();
+
+        try {
+            JSONObject jsonObjectOuter = new JSONObject(json);
+            JSONObject jsonObject = jsonObjectOuter.getJSONObject("Weekly Adjusted Time Series");
+            Iterator<String> dates = jsonObject.keys();
+
+            while(dates.hasNext()) {
+                String date = dates.next();
+                JSONObject jsonObjectData = jsonObject.getJSONObject(date);
+                String value = jsonObjectData.getString("4. close");
+                historyValues.add(Double.parseDouble(value));
+            }
+        }
+        catch(Exception e) {
+            throw new Exception();
+        }
+        return historyValues;
     }
 
 }
