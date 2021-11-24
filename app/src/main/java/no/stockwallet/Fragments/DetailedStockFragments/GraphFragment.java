@@ -42,6 +42,7 @@ public class GraphFragment extends Fragment {
     private View view;
     private StockViewModel viewModel;
     TextView errMsg1;
+    GraphView graph;
     ArrayList<Double> historyValues = new ArrayList<>();
 
     public GraphFragment() {
@@ -84,7 +85,9 @@ public class GraphFragment extends Fragment {
                 public void onResponse(String response) {
                     if (response.equals("{}")) {
                         errMsg1 = view.findViewById(R.id.errorGraph);
+                        graph = view.findViewById(R.id.graphDetailed);
                         errMsg1.setVisibility(View.VISIBLE);
+                        graph.setVisibility(View.INVISIBLE);
                         Snackbar.make(view, "Denne aksjen har dessverre ikke støtte for historisk visning", Snackbar.LENGTH_LONG).show();
                     }else{
                         try {
