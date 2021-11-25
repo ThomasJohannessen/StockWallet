@@ -9,9 +9,11 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(isNetworkAvailable() != true) {
+            finish();
+            System.exit(1);
+        }
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
@@ -102,6 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
     }
 
 }
