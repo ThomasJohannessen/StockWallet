@@ -61,6 +61,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(isNetworkAvailable() != true) {
+            createDialog();
+        }
+
+        setUpNetworkCallback();
+    }
+
+    private void setUpNetworkCallback() {
+        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onLost(Network network) {
+                createDialog();
+            }
+        };
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.registerDefaultNetworkCallback(networkCallback);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         AlphaVantageInit();
@@ -76,21 +99,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if(isNetworkAvailable() != true) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    moveTaskToBack(false);
-                    finish();
-                }
-            })
-            .setTitle("INTERNET CONNECTION REQUIRED")
-            .setMessage("Internet connection is required for StockWallet to function properly" +
-                    "the application will now shut down.");
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            createDialog();
         }
-
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -136,6 +146,24 @@ public class MainActivity extends AppCompatActivity {
                 activeNetwork.isConnectedOrConnecting();
 
         return isConnected;
+    }
+
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                moveTaskToBack(false);
+                finish();
+                System.exit(0);
+            }
+        })
+            .setTitle("INTERNET CONNECTION REQUIRED")
+            .setMessage("Internet connection is required for StockWallet to function properly" +
+                    "the application will now shut down.");
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

@@ -32,6 +32,14 @@ public class RegisterUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
+        auth = FirebaseAuth.getInstance();
+        setUpButtonListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         if(isNetworkAvailable() != true) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -39,6 +47,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     moveTaskToBack(true);
                     finish();
+                    System.exit(0);
                 }
             })
             .setTitle("INTERNET CONNECTION REQUIRED")
@@ -47,9 +56,6 @@ public class RegisterUserActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-
-        auth = FirebaseAuth.getInstance();
-        setUpButtonListeners();
     }
 
     private void setUpButtonListeners() {
@@ -75,6 +81,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Intent toMainActivity = new Intent(this, MainActivity.class);
                         startActivity(toMainActivity);
+                        finish();
                     });
                 }
                 else {

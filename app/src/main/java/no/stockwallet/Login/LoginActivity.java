@@ -48,6 +48,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
+        auth = FirebaseAuth.getInstance();
+        setUpGoogleClient();
+        setUpButtonListeners();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         if(isNetworkAvailable() != true) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -55,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     moveTaskToBack(true);
                     finish();
+                    System.exit(0);
                 }
             })
             .setTitle("INTERNET CONNECTION REQUIRED")
@@ -65,11 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         auth = FirebaseAuth.getInstance();
-        setUpGoogleClient();
-        setUpButtonListeners();
-
     }
-
 
     private void setUpButtonListeners() {
         Intent signInIntent = googleClient.getSignInIntent();
@@ -83,12 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Button registerButton = findViewById(R.id.buttonRegisterEmail);
         registerButton.setOnClickListener(view -> handleRegisterNewUserClick());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        auth = FirebaseAuth.getInstance();
     }
 
     public void handleRegisterNewUserClick() {
@@ -189,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
     private void changeActivity() {
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(mainActivityIntent);
+        finish();
     }
 
     private void hideKeyboard() {
