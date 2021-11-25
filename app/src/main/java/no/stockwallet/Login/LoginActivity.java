@@ -192,7 +192,6 @@ public class LoginActivity extends AppCompatActivity {
     private void changeActivity() {
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(mainActivityIntent);
-        finish();
     }
 
     private void hideKeyboard() {

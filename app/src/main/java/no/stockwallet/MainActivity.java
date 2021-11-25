@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         if(isNetworkAvailable() != true) {
             createDialog();
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(loginIntent);
         }
 
-        setContentView(R.layout.activity_main);
+
 
         NavController navController = Navigation.findNavController(this, R.id.NavHost);
         NavigationView navView = findViewById(R.id.NavigationViewMain);
@@ -155,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 moveTaskToBack(false);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
                 System.exit(0);
             }

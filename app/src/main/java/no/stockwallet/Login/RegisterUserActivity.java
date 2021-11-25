@@ -81,7 +81,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Intent toMainActivity = new Intent(this, MainActivity.class);
                         startActivity(toMainActivity);
-                        finish();
                     });
                 }
                 else {
