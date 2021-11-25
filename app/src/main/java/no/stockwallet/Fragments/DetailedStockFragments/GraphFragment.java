@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.collect.Lists;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
@@ -43,7 +44,7 @@ public class GraphFragment extends Fragment {
     private StockViewModel viewModel;
     TextView errMsg1;
     GraphView graph;
-    ArrayList<Double> historyValues = new ArrayList<>();
+    ArrayList<Double> reversedHistoryValues = new ArrayList<>();
 
     public GraphFragment() {
         // Required empty public constructor
@@ -77,7 +78,7 @@ public class GraphFragment extends Fragment {
         queue = Volley.newRequestQueue(getContext());
 
         if (!stock.getSymbol().equals("")) {
-            String baseURL = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&outputsize=compact&apikey=04C7U8DGXKH0OY8B&symbol=";
+            String baseURL = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&outputsize=compact&apikey=04C7U8DGXKH0OY8B&symbol=";
             String url = baseURL + stock.getSymbol();
             StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
@@ -91,7 +92,7 @@ public class GraphFragment extends Fragment {
                         Snackbar.make(view, "Denne aksjen har dessverre ikke støtte for historisk visning", Snackbar.LENGTH_LONG).show();
                     }else{
                         try {
-                            historyValues = JsonSupport.getInstance().jsonToPairArrayGraph(response);
+                            reversedHistoryValues = JsonSupport.getInstance().jsonToPairArrayGraph(response);
                         } catch (Exception e) {
                             Snackbar.make(view, "Error in response from server, try again later", Snackbar.LENGTH_SHORT).show();
                         }
@@ -117,51 +118,22 @@ public class GraphFragment extends Fragment {
     }
 
 
-    private LineGraphSeries<DataPoint> makeDataPoints(){
+    private LineGraphSeries makeDataPoints(){
 
-        DataPoint[] dataPoints = new DataPoint[historyValues.size()];
+        ArrayList<Double> historyValues = new ArrayList<>();
 
-        for(int i = historyValues.size()-1; i >= 0; i--){
-            Double temp = historyValues.get(i);
-            dataPoints[i] = new DataPoint(i, temp);
+        for (int j = reversedHistoryValues.size() - 1; j >= 0; j--) {
+            historyValues.add(reversedHistoryValues.get(j));
         }
-        return new LineGraphSeries<DataPoint>(dataPoints);
-    }
 
-    private void requestHistorydata(String keyword) {
-        if (keyword.equals("") == false) {
-            new Thread(() -> {
-                String baseURL = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&outputsize=compact&apikey=04C7U8DGXKH0OY8B&symbol=";
-                String url = baseURL + keyword;
-                Log.d("ARESPONSE123", "starter henting");
-                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        LineGraphSeries series = new LineGraphSeries<>();
 
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            Log.d("RESPONSE", response);
-                            historyValues = JsonSupport.getInstance().jsonToPairArrayGraph(response);
-                            Log.d("ARESPONSE123", "ferig hentet");
-                            Log.d("ARESPONSE123return", String.valueOf(historyValues));
-
-
-                        } catch (Exception e) {
-                            Snackbar.make(view, "Error in response from server, try again later", Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("ARESPONSE", error.toString());
-                        Snackbar.make(view, "Something went wrong, check your internet connection", Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-
-                request.setTag(QUEUE_TAG);
-                queue.add(request);
-
-            }).start();
+        for(int x = 0; x < historyValues.size(); x++){
+            Double y = historyValues.get(x);
+            DataPoint point = new DataPoint(x,y);
+            series.appendData(point,true,historyValues.size()+1);
         }
+        return series;
     }
 }
 
