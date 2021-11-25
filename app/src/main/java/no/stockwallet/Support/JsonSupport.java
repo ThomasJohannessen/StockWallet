@@ -47,7 +47,7 @@ public class JsonSupport {
 
         try {
             JSONObject jsonObjectOuter = new JSONObject(json);
-            JSONObject jsonObject = jsonObjectOuter.getJSONObject("Weekly Adjusted Time Series");
+            JSONObject jsonObject = jsonObjectOuter.getJSONObject("Monthly Adjusted Time Series");
             Iterator<String> dates = jsonObject.keys();
 
             while(dates.hasNext()) {
