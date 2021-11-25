@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -60,15 +61,12 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(isNetworkAvailable() != true) {
-            createDialog();
-        }
 
-        setUpNetworkCallback();
     }
 
     private void setUpNetworkCallback() {
@@ -86,47 +84,57 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AlphaVantageInit();
-        user = auth.getCurrentUser();
-        if(user == null) {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+        Log.d("Test", "Inside onstart");
+        Log.d("Test", "Onstartvalue " + isNetworkAvailable());
+        if(isNetworkAvailable() != true) {
+            createDialog();
+        }
+        else {
+            setUpNetworkCallback();
+
+            AlphaVantageInit();
+            auth = FirebaseAuth.getInstance();
+            user = auth.getCurrentUser();
+            if (user == null) {
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        Log.d("Test", "Inside oncreate");
         if(isNetworkAvailable() != true) {
             createDialog();
         }
+        else {
+            setContentView(R.layout.activity_main);
+            PeriodicWorkRequest updateRequest =
+                    new PeriodicWorkRequest.Builder(UpdateInvestmentsWorker.class, 15, TimeUnit.MINUTES).build();
+            WorkManager.getInstance().enqueue(updateRequest);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+            auth = FirebaseAuth.getInstance();
+            user = auth.getCurrentUser();
 
-        setUpViewModel();
+            setUpViewModel();
 
-        if(user == null) {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            if (user == null) {
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+
+            NavController navController = Navigation.findNavController(this, R.id.NavHost);
+            NavigationView navView = findViewById(R.id.NavigationViewMain);
+            NavigationUI.setupWithNavController(navView, navController);
+
+            findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.LEFT);
+            });
         }
 
-
-
-        NavController navController = Navigation.findNavController(this, R.id.NavHost);
-        NavigationView navView = findViewById(R.id.NavigationViewMain);
-        NavigationUI.setupWithNavController(navView, navController);
-
-        PeriodicWorkRequest updateRequest =
-                new PeriodicWorkRequest.Builder(UpdateInvestmentsWorker.class, 15, TimeUnit.MINUTES).build();
-        WorkManager.getInstance().enqueue(updateRequest);
-
-        findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.openDrawer(Gravity.LEFT);
-        });
     }
 
     public void setToolbarTitle(String title) {
@@ -167,8 +175,7 @@ public class MainActivity extends AppCompatActivity {
             .setTitle("INTERNET CONNECTION REQUIRED")
             .setMessage("Internet connection is required for StockWallet to function properly" +
                     "the application will now shut down.");
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.show();
     }
 
 }
