@@ -1,7 +1,13 @@
 package no.stockwallet.Login;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +31,22 @@ public class RegisterUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
+        if(isNetworkAvailable() != true) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    moveTaskToBack(true);
+                    finish();
+                }
+            })
+            .setTitle("INTERNET CONNECTION REQUIRED")
+            .setMessage("Internet connection is required for StockWallet to function properly" +
+                    "the application will now shut down.");
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
 
         auth = FirebaseAuth.getInstance();
         setUpButtonListeners();
@@ -75,5 +97,16 @@ public class RegisterUserActivity extends AppCompatActivity {
         credMap.put("lastName", lastNameField.getText().toString());
 
         db.collection("StockWallet").document(user.getUid()).set(credMap);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
     }
 }

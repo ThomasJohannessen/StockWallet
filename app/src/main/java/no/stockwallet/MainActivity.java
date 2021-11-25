@@ -1,5 +1,7 @@
 package no.stockwallet;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,8 +12,10 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -72,9 +76,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if(isNetworkAvailable() != true) {
-            finish();
-            System.exit(1);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    moveTaskToBack(false);
+                    finish();
+                }
+            })
+            .setTitle("INTERNET CONNECTION REQUIRED")
+            .setMessage("Internet connection is required for StockWallet to function properly" +
+                    "the application will now shut down.");
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
+
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
