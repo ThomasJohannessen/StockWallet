@@ -62,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
-
     private void setUpNetworkCallback() {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
@@ -84,21 +77,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Test", "Inside onstart");
-        Log.d("Test", "Onstartvalue " + isNetworkAvailable());
-        if(isNetworkAvailable() != true) {
-            createDialog();
-        }
-        else {
-            setUpNetworkCallback();
+        setUpNetworkCallback();
 
-            AlphaVantageInit();
-            auth = FirebaseAuth.getInstance();
-            user = auth.getCurrentUser();
-            if (user == null) {
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
+        AlphaVantageInit();
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if (user == null) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
         }
     }
 
