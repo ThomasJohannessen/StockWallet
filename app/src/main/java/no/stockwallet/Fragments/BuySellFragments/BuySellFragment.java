@@ -105,7 +105,7 @@ public class BuySellFragment extends Fragment {
             Navigation.findNavController(view).navigate(R.id.overviewFragmentsWrapper);
         }
         catch(NullPointerException e) {
-            Snackbar.make(view, e.getMessage() + " can't be empty", Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(view, e.getMessage() + " can't be empty", Snackbar.LENGTH_SHORT).show();
             e.printStackTrace();
         }
         catch(NumberFormatException e) {
