@@ -275,6 +275,8 @@ public class API_InvestmentDataHandler {
             catch (InterruptedException e) {e.printStackTrace();}
         }
 
+        investment.setCurrency(temp.get("Stock").getCurrency());
+
         Investment updateInvestment = svm.getInvestment(investment.getTicker());
         updateInvestment.setFullName(temp.get("Stock").getName());
         updateInvestment.setCurrency(temp.get("Stock").getCurrency());
