@@ -1,10 +1,14 @@
 package no.stockwallet.Login;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,10 +48,36 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         auth = FirebaseAuth.getInstance();
         setUpGoogleClient();
         setUpButtonListeners();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(isNetworkAvailable() != true) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    moveTaskToBack(true);
+                    finish();
+                    System.exit(0);
+                }
+            })
+            .setTitle("INTERNET CONNECTION REQUIRED")
+            .setMessage("Internet connection is required for StockWallet to function properly" +
+                    "the application will now shut down.");
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
+        auth = FirebaseAuth.getInstance();
     }
 
     private void setUpButtonListeners() {
@@ -62,12 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Button registerButton = findViewById(R.id.buttonRegisterEmail);
         registerButton.setOnClickListener(view -> handleRegisterNewUserClick());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        auth = FirebaseAuth.getInstance();
     }
 
     public void handleRegisterNewUserClick() {
@@ -178,5 +202,16 @@ public class LoginActivity extends AppCompatActivity {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
     }
 }

@@ -1,5 +1,7 @@
 package no.stockwallet;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,7 +11,12 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,12 +61,28 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
+    private void setUpNetworkCallback() {
+        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onLost(Network network) {
+                createDialog();
+            }
+        };
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.registerDefaultNetworkCallback(networkCallback);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        setUpNetworkCallback();
+
         AlphaVantageInit();
+        auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        if(user == null) {
+        if (user == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
@@ -68,31 +91,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Test", "Inside oncreate");
+        if(isNetworkAvailable() != true) {
+            createDialog();
+        }
+        else {
+            setContentView(R.layout.activity_main);
+            PeriodicWorkRequest updateRequest =
+                    new PeriodicWorkRequest.Builder(UpdateInvestmentsWorker.class, 15, TimeUnit.MINUTES).build();
+            WorkManager.getInstance().enqueue(updateRequest);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+            auth = FirebaseAuth.getInstance();
+            user = auth.getCurrentUser();
 
-        setUpViewModel();
+            setUpViewModel();
 
-        if(user == null) {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
+            if (user == null) {
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+
+            NavController navController = Navigation.findNavController(this, R.id.NavHost);
+            NavigationView navView = findViewById(R.id.NavigationViewMain);
+            NavigationUI.setupWithNavController(navView, navController);
+
+            findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.openDrawer(Gravity.LEFT);
+            });
         }
 
-        setContentView(R.layout.activity_main);
-
-        NavController navController = Navigation.findNavController(this, R.id.NavHost);
-        NavigationView navView = findViewById(R.id.NavigationViewMain);
-        NavigationUI.setupWithNavController(navView, navController);
-
-        PeriodicWorkRequest updateRequest =
-                new PeriodicWorkRequest.Builder(UpdateInvestmentsWorker.class, 15, TimeUnit.MINUTES).build();
-        WorkManager.getInstance().enqueue(updateRequest);
-
-        findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.openDrawer(Gravity.LEFT);
-        });
     }
 
     public void setToolbarTitle(String title) {
@@ -102,6 +130,38 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+    }
+
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                moveTaskToBack(false);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                System.exit(0);
+            }
+        })
+            .setTitle("INTERNET CONNECTION REQUIRED")
+            .setMessage("Internet connection is required for StockWallet to function properly" +
+                    "the application will now shut down.");
+        builder.show();
     }
 
 }
