@@ -2,18 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout8"
+    android:id="@+id/DetailedStockGraph"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.DetailedStockFragments.GraphFragment" >
+    tools:context=".Fragments.DetailedStockFragments.GraphFragment">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GRAPH PLACEHOLDER"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graphDetailed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/errorGraph"
+        android:layout_width="354dp"
+        android:layout_height="126dp"
+        android:text="Denne aksjen har dessverre ikke støtte for historisk visning."
+        android:textAlignment="center"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/graphDetailed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/graphDetailed" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
