@@ -5,8 +5,11 @@
     <color name="white">#ffffff</color>
     <color name="black">#FF000000</color>
     <color name="primaryColor_blue">#1565c0</color>
-    <color name="secondaryColor_blue">#003c8f</color>
+    <color name="secondaryColor_blue_dark">#003c8f</color>
+    <color name="secondaryColor_blue_light">#3E93F4</color>
+    <color name="secondaryColor_light">#FF7C7575</color>
     <color name="buttonColor">#5e92f3</color>
+    <color name="buttonColor_gray">#EFE9E9</color>
 
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
