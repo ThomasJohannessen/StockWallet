@@ -1,5 +1,6 @@
 package no.stockwallet.Fragments.Wrappers;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
@@ -24,6 +26,7 @@ public class HomeFragmentsWrapper extends Fragment {
     public void onResume() {
         super.onResume();
         ((MainActivity)getActivity()).setToolbarTitle("Hjem");
+        hideKeyboard();
     }
 
     public HomeFragmentsWrapper() {
@@ -41,5 +44,14 @@ public class HomeFragmentsWrapper extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_fragments_wrapper, container, false);
+    }
+
+    private void hideKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
