@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,13 @@ public class AdditionalDataFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fillWithData(view);
+        setUpButtons(view);
+    }
+
+    private void setUpButtons(View mainView) {
+        mainView.findViewById(R.id.buyButton).setOnClickListener(view -> {
+            Navigation.findNavController(mainView).navigate(R.id.buySellFragmentsWrapper);
+        });
     }
 
     private void fillWithData(View view) {
