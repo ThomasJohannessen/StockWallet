@@ -26,14 +26,14 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Velkommen!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="login_username">email</string>
     <string name="login_password">Password</string>
     <string name="stock_wallet_logo">Stock Wallet</string>
-    <string name="register_user_title">Register new user</string>
+    <string name="register_user_title">Registrer ny bruker</string>
     <string name="stock_volume">Volum:</string>
     <string name="stock_average_price">Snitt innkjøps pris:</string>
     <string name="stock_intraday">Endring idag: </string>
@@ -53,4 +53,9 @@
     <string name="stock_bvs">BV/S</string>
     <string name="stock_low">Endring fra årlig bunn:</string>
     <string name="stock_high">Endring fra årlig topp:</string>
+    <string name="registrer">Registrer</string>
+    <string name="etternavn">Etternavn</string>
+    <string name="e_mail">E-mail</string>
+    <string name="passord">Passord</string>
+    <string name="fornavn">Fornavn</string>
 </resources>
