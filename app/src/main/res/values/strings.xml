@@ -58,4 +58,6 @@
     <string name="e_mail">E-mail</string>
     <string name="passord">Passord</string>
     <string name="fornavn">Fornavn</string>
+    <string name="logg_inn">Logg Inn</string>
+    <string name="registrer_med_e_mail">Registrer med E-mail</string>
 </resources>
