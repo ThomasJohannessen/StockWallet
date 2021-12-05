@@ -35,11 +35,6 @@ public class StockDataRetriever {
         return StockRetrieverInstance;
     }
 
-    private BigDecimal alphaVantageStockRetriever(String ticker){
-        return null;
-        //TODO: TBD
-    }
-
     public void getStockPrice(Map<String, BigDecimal> returVar, String ticker){
         Thread thread = new Thread(() -> {
             try {
@@ -60,11 +55,6 @@ public class StockDataRetriever {
             catch (Exception e) {
                 e.printStackTrace();
             }
-
-                /*
-                if (stock == null){
-                    //stock = alphaVantageStockRetriever(ticker);
-                }*/
         });
         thread.start();
     }
@@ -89,10 +79,6 @@ public class StockDataRetriever {
             catch (Exception e) {
                 e.printStackTrace();
             }
-                /*
-                if (stock == null){
-                    //stock = alphaVantageStockRetriever(ticker);
-                }*/ //TODO:fix if not found: send to Alpha Vantage
         });
         thread.start();
     }
