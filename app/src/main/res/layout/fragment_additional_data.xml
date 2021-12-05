@@ -172,7 +172,7 @@
         android:id="@+id/SingleStockYearTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:text="@string/stock_high"
         android:textSize="20sp"
         android:textStyle="bold"

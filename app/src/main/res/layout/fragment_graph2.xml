@@ -16,11 +16,11 @@
 
     <TextView
         android:id="@+id/errorGraph"
-        android:layout_width="354dp"
-        android:layout_height="126dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="Denne aksjen har dessverre ikke støtte for historisk visning."
         android:textAlignment="center"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

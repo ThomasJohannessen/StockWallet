@@ -51,8 +51,8 @@
     <string name="stock_stocks">Aksjer:</string>
     <string name="stock_short_ratio">Short forhold:</string>
     <string name="stock_bvs">BV/S</string>
-    <string name="stock_low">Endring fra årlig bunn:</string>
-    <string name="stock_high">Endring fra årlig topp:</string>
+    <string name="stock_low">Endring årlig bunn:</string>
+    <string name="stock_high">Endring årlig topp:</string>
     <string name="registrer">Registrer</string>
     <string name="etternavn">Etternavn</string>
     <string name="e_mail">E-mail</string>
