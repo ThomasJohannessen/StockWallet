@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.HashMap;
 
 import no.stockwallet.R;
@@ -44,6 +46,11 @@ public class ValueFragment extends Fragment {
 
         TextView last24View = view.findViewById(R.id.StockLast24PH);
         TextView lastView = view.findViewById(R.id.StockLastPH);
+
+        if (stock == null){
+            Snackbar.make(view, "This stock does not have the requested values.", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         last24View.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(stock.getQuote().getChange() + " %"));
         lastView.setText(stock.getQuote().getPrice() == null ? "N/A" : String.valueOf(stock.getQuote().getPrice() + " " + stock.getCurrency()));
