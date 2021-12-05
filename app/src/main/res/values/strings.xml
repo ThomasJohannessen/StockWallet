@@ -11,9 +11,9 @@
     <string name="stock_value">Verdi:</string>
     <string name="stock_earning">Avkastning NOK:</string>
 
-    <string name="stock_name_label">Ticker</string>
+    <string name="stock_name_label">Ticker:</string>
     <string name="input_stock_name">Eks: \"MSFT\"</string>
-    <string name="stock_price_label">Kurs (Aksjens valuta)</string>
+    <string name="stock_price_label">Aksjens fulle navn:</string>
     <string name="aksje_pris_ph">Eks: \"15.3\"</string>
     <string name="stock_volume_label">Volum</string>
     <string name="input_stock_volume">Eks: \"126\"</string>

@@ -33,19 +33,19 @@ public class OverviewFragmentsWrapper extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
 
-        try {
-            ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
-
-        }catch (NullPointerException e){
-            ((MainActivity) requireActivity()).setToolbarTitle("Oversikt");
-        }
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         hideKeyboard();
+
+        try {
+            ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
+
+        }catch (NullPointerException e){
+            ((MainActivity) requireActivity()).setToolbarTitle("Oversikt");
+        }
     }
 
     @Override

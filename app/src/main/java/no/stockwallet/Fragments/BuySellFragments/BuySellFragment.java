@@ -27,6 +27,7 @@ import no.stockwallet.Model.Investment;
 import no.stockwallet.R;
 
 public class BuySellFragment extends Fragment {
+    private View fragmentView;
 
     public BuySellFragment() {
         // Required empty public constructor
@@ -48,8 +49,13 @@ public class BuySellFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fragmentView = view;
+    }
 
-        setUpButtonListeners(view);
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpButtonListeners(fragmentView);
     }
 
     private void setUpButtonListeners(View view) {
@@ -84,6 +90,7 @@ public class BuySellFragment extends Fragment {
             Investment newInvestment = new Investment(ticker, volume, price, fee);
             Spinner dropdown = view.findViewById(R.id.BuySellDropdown);
             String selected = dropdown.getSelectedItem().toString();
+
             switch (selected) {
                 case "Kjøp":
                     parent.purchaseStock(newInvestment);

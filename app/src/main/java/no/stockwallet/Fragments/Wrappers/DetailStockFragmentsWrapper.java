@@ -27,6 +27,8 @@ import yahoofinance.Stock;
 public class DetailStockFragmentsWrapper extends Fragment {
 
     private StockViewModel viewModel;
+    private Bundle arguments;
+    private View fragmentView;
 
     public StockViewModel getViewModel(){
         return viewModel;
@@ -53,8 +55,15 @@ public class DetailStockFragmentsWrapper extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle arguments = getArguments();
-        setToolbarText(view, arguments);
+        arguments = getArguments();
+        fragmentView = view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setToolbarText(fragmentView, arguments);
     }
 
     private void setToolbarText(View view, Bundle arguments) {
@@ -66,8 +75,9 @@ public class DetailStockFragmentsWrapper extends Fragment {
             ((MainActivity)getActivity()).setToolbarTitle(stock.getName());
         }
         catch (NullPointerException e) {
+            getActivity().onBackPressed();
             ((MainActivity)getActivity()).setToolbarTitle("Aksje");
-            Snackbar.make(view, "Error communicating with the server, some data may be missing", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, "Error from the server: The stock do not have the requested values", Snackbar.LENGTH_LONG).show();
         }
         catch (Exception e) {
             ((MainActivity) requireActivity()).setToolbarTitle(stock.getSymbol());
