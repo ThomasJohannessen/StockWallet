@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import no.stockwallet.MainActivity;
 import no.stockwallet.R;
@@ -69,7 +70,7 @@ public class DetailStockFragmentsWrapper extends Fragment {
             Snackbar.make(view, "Error communicating with the server, some data may be missing", Snackbar.LENGTH_LONG).show();
         }
         catch (Exception e) {
-            ((MainActivity)getActivity()).setToolbarTitle(stock.getSymbol());
+            ((MainActivity) requireActivity()).setToolbarTitle(stock.getSymbol());
         }
     }
 

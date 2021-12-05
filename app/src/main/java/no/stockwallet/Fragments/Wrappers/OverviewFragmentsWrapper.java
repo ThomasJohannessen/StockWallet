@@ -6,12 +6,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import no.stockwallet.Model.Investment;
 import no.stockwallet.MainActivity;
@@ -28,8 +30,16 @@ public class OverviewFragmentsWrapper extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
+
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
+
+        try {
+            ((MainActivity)getActivity()).setToolbarTitle("Oversikt");
+
+        }catch (NullPointerException e){
+            ((MainActivity) requireActivity()).setToolbarTitle("Oversikt");
+        }
+
     }
 
     @Override

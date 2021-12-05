@@ -25,7 +25,14 @@ public class HomeFragmentsWrapper extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity)getActivity()).setToolbarTitle("Hjem");
+
+        try {
+            ((MainActivity)getActivity()).setToolbarTitle("Hjem");
+
+        }catch (NullPointerException e){
+            ((MainActivity) requireActivity()).setToolbarTitle("Hjem");
+        }
+
         hideKeyboard();
     }
 

@@ -23,7 +23,12 @@ public class SearchFragmentsWrapper extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity)getActivity()).setToolbarTitle("Søk");
+        try {
+            ((MainActivity)getActivity()).setToolbarTitle("Søk");
+
+        }catch (NullPointerException e){
+            ((MainActivity) requireActivity()).setToolbarTitle("Søk");
+        }
         viewModel = new ViewModelProvider(requireActivity()).get(StockViewModel.class);
     }
 
