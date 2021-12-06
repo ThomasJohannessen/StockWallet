@@ -86,7 +86,7 @@
           android:id="@+id/registerUserButton"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="160dp"
+          android:layout_marginTop="60dp"
           android:text="@string/registrer"
           android:backgroundTint="@color/buttonColor"
           app:layout_constraintEnd_toEndOf="@+id/emailInput"

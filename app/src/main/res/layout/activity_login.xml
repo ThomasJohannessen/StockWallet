@@ -75,7 +75,7 @@
                 android:id="@+id/buttonRegisterEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="15dp"
                 android:backgroundTint="@color/buttonColor"
                 android:text="@string/registrer_med_e_mail"
                 app:layout_constraintEnd_toEndOf="@+id/buttonLogIn"
