@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
             }
         })
             .setTitle("INTERNET CONNECTION REQUIRED")
-            .setMessage("Internet connection is required for StockWallet to function properly" +
-                    "the application will now shut down.");
+            .setMessage("Internet connection is required for StockWallet to function properly." +
+                    " The application will now shut down.");
         builder.show();
     }
 
