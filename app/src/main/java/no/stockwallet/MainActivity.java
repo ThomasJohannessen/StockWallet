@@ -114,13 +114,22 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.NavHost);
             NavigationView navView = findViewById(R.id.NavigationViewMain);
             NavigationUI.setupWithNavController(navView, navController);
-
-            findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
-                DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                drawer.openDrawer(Gravity.LEFT);
-            });
+            setUpButtons();
         }
 
+    }
+
+    private void setUpButtons() {
+        findViewById(R.id.NavMenuButton).setOnClickListener((view) -> {
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.openDrawer(Gravity.LEFT);
+        });
+
+        findViewById(R.id.nav_footer_textview).setOnClickListener(view -> {
+            auth.signOut();
+            Intent logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
+        });
     }
 
     public void setToolbarTitle(String title) {
