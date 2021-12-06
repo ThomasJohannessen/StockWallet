@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         AlphaVantage.api().init(cfg);
-
     }
 
 
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Test", "Inside oncreate");
         if(isNetworkAvailable() != true) {
             createDialog();
         }

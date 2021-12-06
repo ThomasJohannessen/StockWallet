@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_homeFragmentsWrapper_to_searchFragmentsWrapper"
             app:destination="@id/searchFragmentsWrapper" />
-        <action
-            android:id="@+id/action_homeFragmentsWrapper_to_settingsFragmentsWrapper"
-            app:destination="@id/settingsFragmentsWrapper" />
     </fragment>
     <fragment
         android:id="@+id/overviewFragmentsWrapper"
@@ -46,11 +43,6 @@
             android:id="@+id/action_searchFragmentsWrapper_to_detailStockFragmentsWrapper"
             app:destination="@id/detailStockFragmentsWrapper" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsFragmentsWrapper"
-        android:name="no.stockwallet.Fragments.Wrappers.SettingsFragmentsWrapper"
-        android:label="fragment_settings_fragments_wrapper"
-        tools:layout="@layout/fragment_settings_fragments_wrapper" />
     <fragment
         android:id="@+id/loadingFragment2"
         android:name="no.stockwallet.Fragments.Wrappers.LoadingFragment"

@@ -77,6 +77,9 @@ public class GraphFragment extends Fragment {
         Stock stock = map.get("Stock");
         queue = Volley.newRequestQueue(getContext());
 
+        if (stock == null){
+            return;
+        }
         if (!stock.getSymbol().equals("")) {
             String baseURL = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&outputsize=compact&apikey=04C7U8DGXKH0OY8B&symbol=";
             String url = baseURL + stock.getSymbol();

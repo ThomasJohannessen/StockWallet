@@ -30,14 +30,6 @@ public class API_InvestmentDataHandler {
     private ArrayList<Pair<String, Double>> topThreeGainerStocks = new ArrayList<Pair<String, Double>>();
     private ArrayList<Pair<String, Double>> bottomThreeLoserStocks = new ArrayList<Pair<String, Double>>();
 
-    /*private static API_InvestmentDataHandler API_InvestmentDataHandlerInstance = null;
-
-    public static API_InvestmentDataHandler getInstance() {
-        if (API_InvestmentDataHandlerInstance == null)
-            API_InvestmentDataHandlerInstance = new API_InvestmentDataHandler();
-
-        return API_InvestmentDataHandlerInstance;
-    }*/
 
     private void AlphaVantageInit() {
         Config cfg = Config.builder()
@@ -288,7 +280,7 @@ public class API_InvestmentDataHandler {
         double markedValue;
 
         HashMap<String, BigDecimal> temp = new HashMap<>();
-        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());    //TODO:Mulig dårlig ytelse
+        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());
 
         while (temp.size() < 1){
             try { TimeUnit.MILLISECONDS.sleep(10);}
@@ -310,7 +302,7 @@ public class API_InvestmentDataHandler {
         String ticker = investment.getTicker();
 
         HashMap<String, BigDecimal> temp = new HashMap<>();
-        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());    //TODO:Mulig dårlig ytelse
+        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());
 
         while (temp.size() < 1){
             try { TimeUnit.MILLISECONDS.sleep(10);}
@@ -336,7 +328,7 @@ public class API_InvestmentDataHandler {
         String ticker = investment.getTicker();
 
         HashMap<String, BigDecimal> temp = new HashMap<>();
-        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());    //TODO:Mulig dårlig ytelse
+        StockDataRetriever.getInstance().getStockPrice(temp,investment.getTicker());
 
         while (temp.size() < 1){
             try { TimeUnit.MILLISECONDS.sleep(10);}

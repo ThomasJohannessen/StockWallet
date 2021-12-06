@@ -12,8 +12,10 @@
     <string name="stock_earning">Avkastning NOK:</string>
 
     <string name="stock_name_label">Ticker</string>
+    <string name="stock_ticker_search">Ticker:</string>
+    <string name="stock_full_name">Aksjens fulle navn:</string>
     <string name="input_stock_name">Eks: \"MSFT\"</string>
-    <string name="stock_price_label">Kurs (Aksjens valuta)</string>
+    <string name="stock_price_label">Kurs(I aksjens lokale valuta)</string>
     <string name="aksje_pris_ph">Eks: \"15.3\"</string>
     <string name="stock_volume_label">Volum</string>
     <string name="input_stock_volume">Eks: \"126\"</string>
@@ -22,18 +24,18 @@
     <string name="buy_sell_button">Registrer handel</string>
 
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">Epost</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Velkommen!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="login_username">email</string>
+    <string name="login_username">epost</string>
     <string name="login_password">Password</string>
     <string name="stock_wallet_logo">Stock Wallet</string>
-    <string name="register_user_title">Register new user</string>
+    <string name="register_user_title">Registrer ny bruker</string>
     <string name="stock_volume">Volum:</string>
     <string name="stock_average_price">Snitt innkjøps pris:</string>
     <string name="stock_intraday">Endring idag: </string>
@@ -51,6 +53,13 @@
     <string name="stock_stocks">Aksjer:</string>
     <string name="stock_short_ratio">Short forhold:</string>
     <string name="stock_bvs">BV/S</string>
-    <string name="stock_low">Endring fra årlig bunn:</string>
-    <string name="stock_high">Endring fra årlig topp:</string>
+    <string name="stock_low">Endring årlig bunn:</string>
+    <string name="stock_high">Endring årlig topp:</string>
+    <string name="registrer">Registrer</string>
+    <string name="etternavn">Etternavn</string>
+    <string name="e_mail">Epost</string>
+    <string name="passord">Passord</string>
+    <string name="fornavn">Fornavn</string>
+    <string name="logg_inn">Logg Inn</string>
+    <string name="registrer_med_e_mail">Registrer med E-post</string>
 </resources>

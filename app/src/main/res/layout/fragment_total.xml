@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/Total_Invested"
-        android:layout_width="400dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="Totalt investert PH"
         android:textAlignment="center"
         android:textSize="18dp"
@@ -23,8 +23,8 @@
 
     <TextView
         android:id="@+id/Total_invested_title"
-        android:layout_width="196dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/home_total_title"
         android:textAlignment="center"
         android:textSize="22sp"
@@ -37,8 +37,8 @@
 
     <TextView
         android:id="@+id/Prcent_change_earnings_period"
-        android:layout_width="410dp"
-        android:layout_height="49dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="pros endret pr periode PH"
         android:textAlignment="center"
         android:textSize="18dp"
@@ -51,8 +51,8 @@
 
     <TextView
         android:id="@+id/Prcent_change_earnings_period_Title"
-        android:layout_width="315dp"
-        android:layout_height="39dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="Total Prosent Avkastning:"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -91,20 +91,12 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:background="@color/purple_500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
         android:id="@+id/divider3"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:background="@color/purple_500"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:background="@color/primaryColor_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

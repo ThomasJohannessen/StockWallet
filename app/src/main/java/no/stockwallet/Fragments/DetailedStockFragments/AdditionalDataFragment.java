@@ -71,9 +71,9 @@ public class AdditionalDataFragment extends Fragment {
             DecimalFormat df = new DecimalFormat("#.##");
 
             tickerView.setText(stock.getSymbol() == null ? "N/A" : stock.getSymbol());
-            dailyChangeView.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(df.format(stock.getQuote().getChange())));
+            dailyChangeView.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(df.format(stock.getQuote().getChange()) + " %"));
             costView.setText(stock.getQuote().getPrice() == null ? "N/A" : String.valueOf(stock.getQuote().getPrice()+ " " + stock.getCurrency()));
-            marketValueView.setText(stock.getStats().getMarketCap() == null ? "N/A" : String.valueOf(stock.getStats().getMarketCap().unscaledValue()));
+            marketValueView.setText(stock.getStats().getMarketCap() == null ? "N/A" : String.valueOf(stock.getStats().getMarketCap().unscaledValue()+ " " + stock.getCurrency()));
             BVPSView.setText(stock.getStats().getBookValuePerShare() == null ? "N/A" : String.valueOf(stock.getStats().getBookValuePerShare()));
             PEView.setText(stock.getStats().getPe() == null ? "N/A" : String.valueOf(stock.getStats().getPe()));
             yearLow.setText(stock.getQuote().getChangeFromYearLowInPercent() == null ? "N/A" : String.valueOf(stock.getQuote().getChangeFromYearLowInPercent()));
