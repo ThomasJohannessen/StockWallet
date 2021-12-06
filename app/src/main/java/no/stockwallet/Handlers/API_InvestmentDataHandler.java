@@ -7,9 +7,7 @@ import com.crazzyghost.alphavantage.Config;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -465,14 +463,11 @@ public class API_InvestmentDataHandler {
                 markedValue += x.getMarkedValueNOK();
             }
 
-
             totalChange = ((totalEarned / markedValue) * 100);
 
-            DecimalFormat df = new DecimalFormat("#.##");
-            totalChange = Double.parseDouble(df.format(totalChange));
+            totalChange = Math.round(totalChange*100.0)/100.0;
 
-
-            return Double.parseDouble(df.format(totalChange));
+            return totalChange;
         }
         else{return 0;}
     }

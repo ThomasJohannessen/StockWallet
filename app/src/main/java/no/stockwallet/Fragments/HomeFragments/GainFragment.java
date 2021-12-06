@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +60,6 @@ public class GainFragment extends Fragment {
                 stockPrice1, stockPrice2, stockPrice3, stockPrice4, stockPrice5, stockPrice6,
                 errMsg1,errMsg2;
 
-        DecimalFormat df = new DecimalFormat("#.##");
         Boolean underSixInvestments = false;
 
         HomeFragmentsWrapper parent = (HomeFragmentsWrapper) getParentFragment();
@@ -156,32 +153,33 @@ public class GainFragment extends Fragment {
 
             stockPrcnt1.setText(String.valueOf(topp3Arr.get(0).second + " %"));
             stockName1.setText(String.valueOf(topp3Arr.get(0).first));
-            stockPrice1.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(0).first))) + " "
+            stockPrice1.setText(String.valueOf((Math.round((stockPrices.get(topp3Arr.get(0).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(topp3Arr.get(0).first).getCurrency()));
 
             stockPrcnt2.setText(String.valueOf(topp3Arr.get(1).second + " %"));
             stockName2.setText(String.valueOf(topp3Arr.get(1).first));
-            stockPrice2.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(1).first))) + " "
+
+            stockPrice2.setText(String.valueOf((Math.round((stockPrices.get(topp3Arr.get(1).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(topp3Arr.get(1).first).getCurrency()));
 
             stockPrcnt3.setText(String.valueOf(topp3Arr.get(2).second + " %"));
             stockName3.setText(String.valueOf(topp3Arr.get(2).first));
-            stockPrice3.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(topp3Arr.get(2).first))) + " "
+            stockPrice3.setText(String.valueOf((Math.round((stockPrices.get(topp3Arr.get(2).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(topp3Arr.get(2).first).getCurrency()));
 
             stockPrcnt4.setText(String.valueOf(bottom3Arr.get(0).second + " %"));
             stockName4.setText(String.valueOf(bottom3Arr.get(0).first));
-            stockPrice4.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(0).first))) + " "
+            stockPrice4.setText(String.valueOf((Math.round((stockPrices.get(bottom3Arr.get(0).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(bottom3Arr.get(0).first).getCurrency()));
 
             stockPrcnt5.setText(String.valueOf(bottom3Arr.get(1).second + " %"));
             stockName5.setText(String.valueOf(bottom3Arr.get(1).first));
-            stockPrice5.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(1).first))) + " "
+            stockPrice5.setText(String.valueOf((Math.round((stockPrices.get(bottom3Arr.get(1).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(bottom3Arr.get(1).first).getCurrency()));
 
             stockPrcnt6.setText(String.valueOf(bottom3Arr.get(2).second + " %"));
             stockName6.setText(String.valueOf(bottom3Arr.get(2).first));
-            stockPrice6.setText(String.valueOf(Double.parseDouble(df.format(stockPrices.get(bottom3Arr.get(2).first))) + " "
+            stockPrice6.setText(String.valueOf((Math.round((stockPrices.get(bottom3Arr.get(2).first)).doubleValue()*100.0)/100.0) + " "
                     + viewModel.getStockMap().getValue().get(bottom3Arr.get(2).first).getCurrency()));
         }
     }

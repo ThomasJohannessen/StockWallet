@@ -15,9 +15,6 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import no.stockwallet.R;
@@ -68,10 +65,9 @@ public class AdditionalDataFragment extends Fragment {
             Bundle parentArguments = getParentFragment().getArguments();
             HashMap<String, Stock> map = (HashMap<String, Stock>) parentArguments.getSerializable("hashmap");
             Stock stock = map.get("Stock");
-            DecimalFormat df = new DecimalFormat("#.##");
 
             tickerView.setText(stock.getSymbol() == null ? "N/A" : stock.getSymbol());
-            dailyChangeView.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(df.format(stock.getQuote().getChangeInPercent()) + " %"));
+            dailyChangeView.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(Math.round((stock.getQuote().getChangeInPercent().doubleValue())*100.0)/100.0 + " %"));
             costView.setText(stock.getQuote().getPrice() == null ? "N/A" : String.valueOf(stock.getQuote().getPrice()+ " " + stock.getCurrency()));
             marketValueView.setText(stock.getStats().getMarketCap() == null ? "N/A" : String.valueOf(stock.getStats().getMarketCap().unscaledValue()+ " " + stock.getCurrency()));
             BVPSView.setText(stock.getStats().getBookValuePerShare() == null ? "N/A" : String.valueOf(stock.getStats().getBookValuePerShare()));

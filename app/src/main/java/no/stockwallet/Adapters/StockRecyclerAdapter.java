@@ -15,7 +15,6 @@ import androidx.constraintlayout.widget.Group;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,8 +27,6 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
     ArrayList<Investment> data;
     private int previousExpandednPosition = -1;
     private int mExpandedPosition = -1;
-
-    DecimalFormat df = new DecimalFormat("#.##");
 
     public StockRecyclerAdapter(HashMap<String, Investment> data) {
         this.data = new ArrayList<>(data.values());
@@ -111,9 +108,9 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
         Investment stockObject = data.get(position);
 
         String stockName = stockObject.getFullName();
-        double earning = Double.parseDouble(df.format(stockObject.getEarningsNOK()));
-        double earningsPrcent = Double.parseDouble(df.format(stockObject.getEarningsPercent()));
-        int markedValue = (int) Double.parseDouble(df.format(stockObject.getMarkedValueNOK()));
+        double earning = Math.round((stockObject.getEarningsNOK())*100.0)/100.0;
+        double earningsPrcent = Math.round((stockObject.getEarningsPercent())*100.0)/100.0;
+        int markedValue = (int) (Math.round((stockObject.getMarkedValueNOK())*100.0)/100.0);
 
         holder.stockEarning.setText(String.valueOf(earning + " NOK"));
         holder.stockNameView.setText(stockName);
@@ -122,9 +119,9 @@ public class StockRecyclerAdapter extends RecyclerView.Adapter<StockRecyclerAdap
 
         String ticker = stockObject.getTicker();
         int volume = stockObject.getVolume();
-        double averageBuy = Double.parseDouble(df.format(stockObject.getAvgBuyPrice()));
-        double intraDay = Double.parseDouble(df.format(stockObject.getIntradayChange()));
-        double currentPrice = Double.parseDouble(df.format(stockObject.getCurrentStockPrice()));
+        double averageBuy = Math.round((stockObject.getAvgBuyPrice())*100.0)/100.0;
+        double intraDay = Math.round((stockObject.getIntradayChange())*100.0)/100.0;
+        double currentPrice = Math.round((stockObject.getCurrentStockPrice())*100.0)/100.0;
         String currency = stockObject.getCurrency();
 
         holder.tickerView.setText(ticker);
