@@ -52,7 +52,7 @@ public class ValueFragment extends Fragment {
             return;
         }
 
-        last24View.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(stock.getQuote().getChange() + " %"));
+        last24View.setText(stock.getQuote().getChange() == null ? "N/A" : String.valueOf(stock.getQuote().getChangeInPercent() + " %"));
         lastView.setText(stock.getQuote().getPrice() == null ? "N/A" : String.valueOf(stock.getQuote().getPrice() + " " + stock.getCurrency()));
     }
 }
