@@ -68,8 +68,6 @@ public class RegisterUserActivity extends AppCompatActivity {
             EditText passwordInput = findViewById(R.id.passwordInput);
             EditText emailInput = findViewById(R.id.emailInput);
 
-            Log.d("Heyoheyo", "Inside registerUser");
-
             String password = passwordInput.getText().toString();
             String email = emailInput.getText().toString();
 

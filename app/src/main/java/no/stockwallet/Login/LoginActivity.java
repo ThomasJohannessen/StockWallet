@@ -161,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d("TEST", "AUTH COMPLETED");
                             hideKeyboard();
                             checkIfFirstTimeSignIn(account.getGivenName(), account.getFamilyName());
                         } else {
@@ -179,7 +178,6 @@ public class LoginActivity extends AppCompatActivity {
 
         docRef.get().addOnCompleteListener(task -> {
            if(task.getResult().exists() == false) {
-               Log.d("TEST", "USER CREDS SAVING");
                HashMap<String, String> userCred = new HashMap<>();
                userCred.put("firstName", firstname);
                userCred.put("lastName", lastname);
