@@ -2,22 +2,20 @@
 
 ## Krav for å kunne bruke appen:
 
-·    Enheten må ha Google Play installert
-
+·    Enheten må ha Google Play install
 ·    Enheten må være tilkoblet internett
-
 ·    Enheten må minimum kjøre API 27 (Android 8.1)
 
 ## Ordforklaring:
-
+|    |   |
+|-------------|-------------|
 | (Markeds) Verdi:     | Verdien på aksjene du eier/alle (avhenger  av sammenhengen det brukes i) i et selskap |
-| -------------------- | ------------------------------------------------------------ |
 | Avkastning:          | Hvor mye du har tjent eller tapt  på et selskap. Oppgir i en valuta eller i prosent. |
 | Ticker:              | Hvert aksjeselskap har en  forkortelse som brukes på børsen for å gjøre enklere og mer likt. F.eks. er  Apple sin AAPL og IBM sin IBM. |
 | Kurtasje:            | Avgift man betaler til aksjemegleren  for å kjøpe/selge aksjen for deg. Dette er en sum som er forskjellig fra hver  handel, og kan avhenge blant annet av antall aksjer, hvor i verden. Oppgis i  antall av en valuta. |
 | Kurs:                | Prisen på en aksje                                           |
 | Volum:               | Antall aksjer                                                |
-| Snitt innkjøps pris: | Gjennomsnittsprisen man har  kjøpt det fulle volumet til.    |
+| Snitt innkjøps pris: | Gjennomsnittsprisen man har kjøpt det fulle volumet til.    |
 | BV/E, P/E osv..      | Verdier som er ønskelige for  investorer å vite, men har ingen praktisk forskjell i appen. |
 
 ##  
@@ -55,7 +53,7 @@ Dersom man ønsker å logge ut gjøres dette nederst i menyen.
 ·    Dersom man ønsker å lage en bruker selv har vi klargjort noen aksjer under som kan legges inn som kjøp.
 
 **Eksempelaksjer man kan kjøpe:** (Kurtasje kan alltid være 0)
-
+|    |   |   |
+|------|-------|-------|
 | Ticker: ATEA.OL<br />Kurs:150<br />Volum:50 | Ticker: BP<br />Kurs:29<br />Volum:30  | Ticker: GOOGL<br />Kurs:2900<br />Volum:16 |
-| ------------------------------------------- | ------------------------------------------ | ---------------------------------------------- |
 | Ticker: EC<br />Kurs:12<br />Volum:100  | Ticker: ALV<br />Kurs:14<br />Volum:20 | Ticker: VZ<br />Kurs:60<br />Volum:70      |
